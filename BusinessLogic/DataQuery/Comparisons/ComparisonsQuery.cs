@@ -18,9 +18,9 @@ namespace BusinessLogic.DataQuery.Comparisons {
         private readonly ISentencesQuery _sentencesQuery = new SentencesQuery();
 
         /// <summary>
-        /// Конструктор
+        /// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
         /// </summary>
-        /// <param name="languageId">идентификатор языка, на котором нужно получать группы правил сравнения</param>
+        /// <param name="languageId">РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЏР·С‹РєР°, РЅР° РєРѕС‚РѕСЂРѕРј РЅСѓР¶РЅРѕ РїРѕР»СѓС‡Р°С‚СЊ РіСЂСѓРїРїС‹ РїСЂР°РІРёР» СЃСЂР°РІРЅРµРЅРёСЏ</param>
         public ComparisonsQuery(long languageId) {
             _languageId = languageId;
         }
@@ -28,10 +28,10 @@ namespace BusinessLogic.DataQuery.Comparisons {
         #region IComparisonsQuery Members
 
         /// <summary>
-        /// Возвращает список видимых групп сравнений
+        /// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІРёРґРёРјС‹С… РіСЂСѓРїРї СЃСЂР°РІРЅРµРЅРёР№
         /// </summary>
-        /// <param name="count">кол-во записей, если значение 0 или отрицательное, то все записи</param>
-        /// <returns>список видимых групп сравнений</returns>
+        /// <param name="count">РєРѕР»-РІРѕ Р·Р°РїРёСЃРµР№, РµСЃР»Рё Р·РЅР°С‡РµРЅРёРµ 0 РёР»Рё РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ, С‚Рѕ РІСЃРµ Р·Р°РїРёСЃРё</param>
+        /// <returns>СЃРїРёСЃРѕРє РІРёРґРёРјС‹С… РіСЂСѓРїРї СЃСЂР°РІРЅРµРЅРёР№</returns>
         public List<ComparisonForUser> GetVisibleWithoutRules(int count = 0) {
             List<ComparisonForUser> result = Adapter.ReadByContext(c => {
                 IQueryable<GroupComparison> comparisonsQuery = (from r in c.GroupComparison
@@ -49,11 +49,11 @@ namespace BusinessLogic.DataQuery.Comparisons {
         }
 
         /// <summary>
-        /// Получает группу сравнения по названию
+        /// РџРѕР»СѓС‡Р°РµС‚ РіСЂСѓРїРїСѓ СЃСЂР°РІРЅРµРЅРёСЏ РїРѕ РЅР°Р·РІР°РЅРёСЋ
         /// </summary>
-        /// <param name="userLanguages">языковые настройки пользователя</param>
-        /// <param name="title">название представления</param>
-        /// <returns>представление или null если не найдено</returns>
+        /// <param name="userLanguages">СЏР·С‹РєРѕРІС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</param>
+        /// <param name="title">РЅР°Р·РІР°РЅРёРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ</param>
+        /// <returns>РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РёР»Рё null РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅРѕ</returns>
         public ComparisonForUser GetWithFullInfo(UserLanguages userLanguages, string title) {
             long sourceLanguageId = userLanguages.From.Id;
             long translationLanguageId = userLanguages.To.Id;
@@ -135,7 +135,7 @@ namespace BusinessLogic.DataQuery.Comparisons {
                 GroupComparison groupComparison = GetOrCreateGroupComparison(comparisonForUser, c);
                 if (IdValidator.IsInvalid(groupComparison.Id)) {
                     LoggerWrapper.LogTo(LoggerName.Errors).ErrorFormat(
-                        "ComparisonsQuery.GetOrCreate не удалось создать! Название: {0}, описание: {1}",
+                        "ComparisonsQuery.GetOrCreate РЅРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ! РќР°Р·РІР°РЅРёРµ: {0}, РѕРїРёСЃР°РЅРёРµ: {1}",
                         comparisonForUser.Title,
                         comparisonForUser.Description);
                     isSuccess = false;
@@ -149,8 +149,8 @@ namespace BusinessLogic.DataQuery.Comparisons {
                                                                               orderItem++, c);
                     if (IdValidator.IsInvalid(comparisonItem.Id)) {
                         LoggerWrapper.LogTo(LoggerName.Errors).ErrorFormat(
-                            "ComparisonsQuery.GetOrCreate не удалось создать пункт для сравнения! " +
-                            "Id сравнения: {0}, название {1}, перевод названия {2}, описание {3}",
+                            "ComparisonsQuery.GetOrCreate РЅРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РїСѓРЅРєС‚ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ! " +
+                            "Id СЃСЂР°РІРЅРµРЅРёСЏ: {0}, РЅР°Р·РІР°РЅРёРµ {1}, РїРµСЂРµРІРѕРґ РЅР°Р·РІР°РЅРёСЏ {2}, РѕРїРёСЃР°РЅРёРµ {3}",
                             groupComparison.Id, comparisonItemForUser.Title, comparisonItemForUser.TitleTranslated,
                             comparisonItemForUser.Description);
                         isSuccess = false;
@@ -167,8 +167,8 @@ namespace BusinessLogic.DataQuery.Comparisons {
                         long ruleId = comparisonRule.Id;
                         if (IdValidator.IsInvalid(ruleId)) {
                             LoggerWrapper.LogTo(LoggerName.Errors).ErrorFormat(
-                                "ComparisonsQuery.GetOrCreate не удалось создать правило для сравнения! " +
-                                "Id пункта сравнения: {0}, описание {1}",
+                                "ComparisonsQuery.GetOrCreate РЅРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РїСЂР°РІРёР»Рѕ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ! " +
+                                "Id РїСѓРЅРєС‚Р° СЃСЂР°РІРЅРµРЅРёСЏ: {0}, РѕРїРёСЃР°РЅРёРµ {1}",
                                 comparisonItem.Id, comparisonRule.Description);
                             isSuccess = false;
                             continue;
@@ -183,7 +183,7 @@ namespace BusinessLogic.DataQuery.Comparisons {
                 }
 
                 if (isSuccess) {
-                    //удалить пункты, правила, примеры, которые не были переданы в этот раз
+                    //СѓРґР°Р»РёС‚СЊ РїСѓРЅРєС‚С‹, РїСЂР°РІРёР»Р°, РїСЂРёРјРµСЂС‹, РєРѕС‚РѕСЂС‹Рµ РЅРµ Р±С‹Р»Рё РїРµСЂРµРґР°РЅС‹ РІ СЌС‚РѕС‚ СЂР°Р·
                     DeleteOldInfos(c, result);
                 }
             });
@@ -196,7 +196,7 @@ namespace BusinessLogic.DataQuery.Comparisons {
 
         public bool IncRating(long entityId) {
             bool result = Adapter.ActionByContext(c => {
-                //TODO: написать нормальную поддержку обновления и джоинов
+                //TODO: РЅР°РїРёСЃР°С‚СЊ РЅРѕСЂРјР°Р»СЊРЅСѓСЋ РїРѕРґРґРµСЂР¶РєСѓ РѕР±РЅРѕРІР»РµРЅРёСЏ Рё РґР¶РѕРёРЅРѕРІ
                 const string SQL_COMMAND = "update GroupComparison set Rating=coalesce(Rating, 0)+1 where Id={0}";
                 int count = c.Database.ExecuteSqlCommand(SQL_COMMAND,
                                                          new object[] {
@@ -275,8 +275,8 @@ namespace BusinessLogic.DataQuery.Comparisons {
                 long sentenceTranslationId = sentenceWithTranslation.Id;
                 if (IdValidator.IsInvalid(sentenceTranslationId)) {
                     LoggerWrapper.LogTo(LoggerName.Errors).ErrorFormat(
-                        "ComparisonsQuery.GetOrCreate не удалось создать предложения примера! " +
-                        "Предложение: {0}, перевод предложения {1}",
+                        "ComparisonsQuery.GetOrCreate РЅРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РїСЂРµРґР»РѕР¶РµРЅРёСЏ РїСЂРёРјРµСЂР°! " +
+                        "РџСЂРµРґР»РѕР¶РµРЅРёРµ: {0}, РїРµСЂРµРІРѕРґ РїСЂРµРґР»РѕР¶РµРЅРёСЏ {1}",
                         sentenceWithTranslation.Source.Text, sentenceWithTranslation.Translation.Text);
                     result = false;
                     continue;
@@ -290,8 +290,8 @@ namespace BusinessLogic.DataQuery.Comparisons {
 
                 if (IdValidator.IsInvalid(comparisonRuleExample.Id)) {
                     LoggerWrapper.LogTo(LoggerName.Errors).ErrorFormat(
-                        "ComparisonsQuery.GetOrCreate не удалось создать пример для правила сравнения! " +
-                        "Id примера: {0}, sentenceWithTranslationId {1}",
+                        "ComparisonsQuery.GetOrCreate РЅРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РїСЂРёРјРµСЂ РґР»СЏ РїСЂР°РІРёР»Р° СЃСЂР°РІРЅРµРЅРёСЏ! " +
+                        "Id РїСЂРёРјРµСЂР°: {0}, sentenceWithTranslationId {1}",
                         ruleId, sentenceTranslationId);
                     result = false;
                     continue;

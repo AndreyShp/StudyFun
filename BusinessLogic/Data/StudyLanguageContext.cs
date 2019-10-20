@@ -28,7 +28,7 @@ namespace BusinessLogic.Data {
 
         public DbSet<User> User { get; set; }
 
-        #region Вспомогательные данные
+        #region Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ
 
         public DbSet<CrossReference> CrossReference { get; set; }
 
@@ -36,7 +36,7 @@ namespace BusinessLogic.Data {
 
         #endregion
 
-        #region Представление
+        #region РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ
 
         public DbSet<Representation.Representation> Representation { get; set; }
 
@@ -44,7 +44,7 @@ namespace BusinessLogic.Data {
 
         #endregion
 
-        #region Предложения
+        #region РџСЂРµРґР»РѕР¶РµРЅРёСЏ
 
         public DbSet<Sentence.Sentence> Sentence { get; set; }
 
@@ -56,7 +56,7 @@ namespace BusinessLogic.Data {
 
         #endregion
 
-        #region Слова
+        #region РЎР»РѕРІР°
 
         public DbSet<Word.Word> Word { get; set; }
 
@@ -70,7 +70,7 @@ namespace BusinessLogic.Data {
 
         #endregion
 
-        #region Различия в использовании
+        #region Р Р°Р·Р»РёС‡РёСЏ РІ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё
 
         public DbSet<GroupComparison> GroupComparison { get; set; }
 
@@ -82,7 +82,7 @@ namespace BusinessLogic.Data {
 
         #endregion
 
-        #region Знания
+        #region Р—РЅР°РЅРёСЏ
 
         public DbSet<UserKnowledge> UserKnowledge { get; set; }
 
@@ -90,7 +90,7 @@ namespace BusinessLogic.Data {
 
         #endregion
 
-        #region Видео
+        #region Р’РёРґРµРѕ
 
         public DbSet<Video.Video> Video { get; set; }
 
@@ -100,7 +100,7 @@ namespace BusinessLogic.Data {
 
         #endregion
 
-        #region Деньги
+        #region Р”РµРЅСЊРіРё
 
         public DbSet<Payment> Payment { get; set; }
 
@@ -108,7 +108,7 @@ namespace BusinessLogic.Data {
 
         #endregion
 
-        #region Системные данные
+        #region РЎРёСЃС‚РµРјРЅС‹Рµ РґР°РЅРЅС‹Рµ
 
         public DbSet<LogEntry> LogEntry { get; set; }
 
@@ -283,7 +283,7 @@ namespace BusinessLogic.Data {
             modelBuilder.Entity<CrossReference>().Property(e => e.DestinationType).IsRequired();
             modelBuilder.Entity<CrossReference>().ToTable("CrossReference");
 
-            #region Различия в использовании
+            #region Р Р°Р·Р»РёС‡РёСЏ РІ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё
 
             modelBuilder.Entity<GroupComparison>().HasKey(e => e.Id);
             modelBuilder.Entity<GroupComparison>().Property(e => e.Id).HasDatabaseGeneratedOption(
@@ -341,7 +341,7 @@ namespace BusinessLogic.Data {
             modelBuilder.Entity<User>().Property(e => e.Email).HasMaxLength(Data.User.EMAIL_LENGTH);
             modelBuilder.Entity<User>().ToTable("User");
 
-            #region Мои знания
+            #region РњРѕРё Р·РЅР°РЅРёСЏ
 
             modelBuilder.Entity<UserKnowledge>().HasKey(e => e.Id);
             modelBuilder.Entity<UserKnowledge>().Property(e => e.Id).HasDatabaseGeneratedOption(
@@ -376,7 +376,7 @@ namespace BusinessLogic.Data {
 
             #endregion
 
-            #region Видео
+            #region Р’РёРґРµРѕ
 
             modelBuilder.Entity<Video.Video>().HasKey(e => e.Id);
             modelBuilder.Entity<Video.Video>().Property(e => e.Id).HasDatabaseGeneratedOption(
@@ -413,7 +413,7 @@ namespace BusinessLogic.Data {
 
             #endregion
 
-            #region Деньги
+            #region Р”РµРЅСЊРіРё
 
             modelBuilder.Entity<Payment>().HasKey(e => e.Id);
             modelBuilder.Entity<Payment>().Property(e => e.Id).HasDatabaseGeneratedOption(
@@ -446,7 +446,7 @@ namespace BusinessLogic.Data {
 
             #endregion
 
-            #region Системные данные
+            #region РЎРёСЃС‚РµРјРЅС‹Рµ РґР°РЅРЅС‹Рµ
 
             modelBuilder.Entity<LogEntry>().HasKey(e => e.Id);
             modelBuilder.Entity<LogEntry>().Property(e => e.Id).HasDatabaseGeneratedOption(
