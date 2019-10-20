@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = "jQuery File Upload Demo with Backload - Jquery UI version";
+}
+
+@section styles { 
+    <!-- Optional: We need bootstrap only for the example page. You do not need to include it, when you use the jQuery UI mode (defined in App_Start/BundleConfig.cs) -->
+    <link href="~/Content/FileUpload/css/bootstrap/bootstrap.debug.css" rel="stylesheet" />
+
+    <!-- Optional: Include jQuery ui themes for the themes switcher for demo purposes -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/blitzer/jquery-ui.css" id="theme">
+ 
+    <!-- We use Backloads. bundeling feature to register only those client side javascript and style files of the jQuery File Upload Plugin that are needed  -->
+    @Styles.Render("~/bundles/fileupload/jqueryui/BasicPlusUI/css")
+
+    <!-- Optional: Some styles for this demo page -->
+    <link href="~/Content/demos.jqueryui.styles.css" rel="stylesheet" />
+}    
+    
+@section scripts {
+    <!-- We use jQuery UI mode in this example, so the jQuery UI js file (defined in App_Start/BundleConfig.cs) -->
+    @Scripts.Render("~/bundles/jqueryui")
+
+    <!-- We use Backloads. bundeling feature to register only those client side javascript and style files of the jQuery File Upload Plugin that are needed  -->
+    @Scripts.Render("~/bundles/fileupload/jqueryui/BasicPlusUI/js")
+
+    <!-- Initialize the jQuery File Upload Plugin -->
+    <script src="~/Scripts/demos.jqueryui.basicplusui.js"></script>
+}
+
+
+<div class="page-header">
+    <h1>jQuery File Upload Demo</h1>
+    <h2 class="lead">JQuery UI version</h2>
+    <ul class="nav nav-tabs">
+        <li><a href="/Home/Basic">Basic</a></li>
+        <li><a href="/Home/BasicPlus">Basic Plus</a></li>
+        <li><a href="/Home/Index">Basic Plus UI</a></li>
+        <li><a href="/Home/AngularJS">AngularJS</a></li>
+        <li class="active"><a href="/Home/JQueryUI">JQuery UI</a></li>
+    </ul>
+    <blockquote>
+        <p>File Upload widget with multiple file selection, drag&drop support, progress bars, validation and preview images, audio and video for jQuery.
+        Supports cross-domain, chunked and resumable file uploads and client-side image resizing.</p>
+    </blockquote>
+        <span class="theme-switcher-info">Select a jQuery ui theme:&nbsp;</span>
+    <select id="theme-switcher" class="theme-switcher">
+        <option value="base">Base</option>
+        <option value="black-tie">Black Tie</option>
+        <option value="blitzer" selected>Blitzer</option>
+        <option value="cupertino">Cupertino</option>
+        <option value="dark-hive">Dark Hive</option>
+        <option value="dot-luv">Dot Luv</option>
+        <option value="eggplant">Eggplant</option>
+        <option value="excite-bike">Excite Bike</option>
+        <option value="flick">Flick</option>
+        <option value="hot-sneaks">Hot sneaks</option>
+        <option value="humanity">Humanity</option>
+        <option value="le-frog">Le Frog</option>
+        <option value="mint-choc">Mint Choc</option>
+        <option value="overcast">Overcast</option>
+        <option value="pepper-grinder">Pepper Grinder</option>
+        <option value="redmond">Redmond</option>
+        <option value="smoothness">Smoothness</option>
+        <option value="south-street">South Street</option>
+        <option value="start">Start</option>
+        <option value="sunny">Sunny</option>
+        <option value="swanky-purse">Swanky Purse</option>
+        <option value="trontastic">Trontastic</option>
+        <option value="ui-darkness">UI Darkness</option>
+        <option value="ui-lightness">UI Lightness</option>
+        <option value="vader">Vader</option>
+    </select>
+</div>
+
+<!-- BEGIN: jQuery Fle Upload Plugin -->
+<form id="fileupload" action="/Backload/UploadHandler" method="POST" enctype="multipart/form-data">
+    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+    <div class="row fileupload-buttonbar">
+        <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+                <span>Add files...</span>
+                <input type="file" name="files[]" multiple>
+            </span>
+            <button type="submit" class="btn btn-primary start">
+                <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-warning cancel">
+                <span>Cancel upload</span>
+            </button>
+            <button type="button" class="btn btn-danger delete">
+                <span>Delete</span>
+            </button>
+            <input type="checkbox" class="toggle">
+        </div>
+        <!-- The global progress information -->
+        <div class="span5 fileupload-progress fade">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="bar" style="width:0%;"></div>
+            </div>
+            <!-- The extended global progress information -->
+            <div class="progress-extended">&nbsp;</div>
+        </div>
+    </div>
+    <!-- The loading indicator is shown during file processing -->
+    <div class="fileupload-loading"></div>
+    <br>
+    <!-- The table listing the files available for upload/download -->
+    <table id="demo-fup-table" role="presentation" class="table table-striped ui-widget"><tbody class="files ui-widget-content" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+</form>
+
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade ui-state-hover" data-type="{%=file.main_type%}">
+        <td class="preview"><span class="fade"></span></td>
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+        {% if (file.error) { %}
+            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+        {% } else if (o.files.valid && !i) { %}
+            <td>
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+            </td>
+            <td>{% if (!o.options.autoUpload) { %}
+                <button class="btn btn-primary start">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}</td>
+        {% } else { %}
+            <td colspan="2"></td>
+        {% } %}
+        <td class="action">{% if (!i) { %}
+            <button class="btn btn-warning cancel">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>Cancel</span>
+            </button>
+        {% } %}</td>
+    </tr>
+{% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade ui-state-default" data-type="{%=file.main_type%}" >
+        {% if (file.error) { %}
+            <td></td>
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+        {% } else { %}
+            <td class="preview">{% if (file.thumbnail_url) { %}
+                <a href="{%=file.url%}" target="_blank" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+            {% } %}</td>
+            <td class="name">
+                <a href="{%=file.url%}" target="_blank" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+            </td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td colspan="2"></td>
+        {% } %}
+        <td class="action">
+            <button class="btn btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                <i class="icon-trash icon-white"></i>
+                <span>Delete</span>
+            </button>
+            <input type="checkbox" name="delete" value="1" class="toggle">
+        </td>
+    </tr>
+{% } %}
+</script>
+<!-- END: jQuery Fle Upload Plugin -->
+<br>
+
+<div class="well">
+    <h3>Demo Notes</h3>
+    <ul>
+        <li>If you need a different handling of uploaded images and other file types (e.g. pdf) you may use "uploadContext" or content type subfolders (<a href="https://github.com/blackcity/backload" target="_blank">Backload.</a>).</li>
+        <li>Uploaded files will be stored in the "~/Files" folder by default. This can be easiliy changed in the config file. Please refer to Backloads <a href="https://github.com/blackcity/backload/wiki" target="_blank">projects website</a>.</li>
+        <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage with Google Chrome, Mozilla Firefox and Apple Safari.</li>
+        <li>Please refer to the <a href="https://github.com/blueimp/jQuery-File-Upload" target="_blank">project website</a> and <a href="https://github.com/blueimp/jQuery-File-Upload/wiki" target="_blank">documentation</a> for more information.</li>
+        <li>Built with Twitter's <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap</a> toolkit and Icons from <a href="http://glyphicons.com/" target="_blank">Glyphicons</a>.</li>
+    </ul><br />
+    <h3>Backload server side component</h3>
+    <ul>
+        <li>Project website: <a href="https://github.com/blackcity/backload" target="_blank">Backload on GitHub</a></li>
+        <li>Documentation: <a href="https://github.com/blackcity/backload/wiki" target="_blank">Backload wiki</a></li>
+        <li>NuGet package: <a href="http://nuget.org/packages/Backload/" target="_blank">Backload on NuGet</a></li>
+        <li>Package manager console: <b>PM> Install-Package Backload</b></li>
+    </ul>
+</div>

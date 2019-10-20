@@ -1,0 +1,24 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Main
+@model string
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+    ViewBag.ActiveItem = SectionId.No;
+    ViewData[OurHtmlHelper.ViewDataFlags.SKIP_POPUP_PANEL] = true;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ошибка 404</title>
+</head>
+<body>
+    <h3>Страница не найдена / Page not found</h3>
+    <p>Пожалуйста, проверьте правильность введенного адреса / Please, check the entered address</p>
+    <img src="~/Content/images/404.jpg" alt="Страница не найдена" />
+</body>
+</html>

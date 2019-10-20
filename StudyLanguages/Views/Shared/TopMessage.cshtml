@@ -1,0 +1,21 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@{
+    const string COOKIE_NAME = "closeTopMessage_NewSeries";
+    
+    HttpCookie cookie = Request.Cookies[COOKIE_NAME];
+
+    /*var userId = new UserIdAttribute().GetUserId(Context);
+    bool hasUser = IdValidator.IsValid(userId) && userId <= WebSettingsConfig.Instance.MaxIDUserForTopMessage;*/
+    bool needShow = WebSettingsConfig.Instance.IsSectionAllowed(SectionId.TVSeries) && cookie == null;
+}
+
+@if (needShow) {
+    <div role="alert" class="alert alert-danger alert-dismissible fade in" id="topMessageContainer">
+        <button aria-label="Close" data-dismiss="alert" class="close" type="button" onclick="GlobalBusiness.closeTopMessage('#topMessageContainer', '@COOKIE_NAME');" title="Закрыть сообщение"><span aria-hidden="true">×</span></button>
+        <h4>Уважаемые пользователи!</h4>
+        <p>Появился новый раздел с @Html.ActionLink("сериалом «" + CommonConstants.FRIENDS_TV_SERIES + "»", "Detail", RouteConfig.TV_SERIES_CONTROLLER, new { baseUrlPart = CommonConstants.FRIENDS_TV_SERIES }, new { title = "Перейти на страницу с сериалом «" + CommonConstants.FRIENDS_TV_SERIES + "»" } ). Приятного просмотра.</p>
+    </div>
+}

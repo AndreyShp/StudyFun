@@ -1,0 +1,53 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Helpers
+@{    
+    const SectionId SECTION_ID = SectionId.No;
+    ViewBag.ActiveItem = SECTION_ID;
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+
+    ViewBag.Title = "Проверка оплаты. Проверка оплаты купленного товара";
+    ViewBag.Keywords = "Проверка оплаты";
+    ViewBag.Description = "Проверка оплаты. Проверка оплаты купленного товара";
+}
+
+<div id="contentContainerId">
+    <h3 class="text-center">Проверка оплаты покупок</h3>
+    <div class="row check-sales-message">
+        <div class="col-md-12"><p>На этой странице Вы можете проверить оплату вашей покупки и скачать купленные товары.</p></div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <input type="text" class="form-control" placeholder="Введите идентификатор покупки" id="purchasedGoodsIdField" tabindex="1">
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-success" tabindex="2" id="checkPurchasedGoodsBtn">Проверить покупку</button>
+        </div>
+    </div>
+    <div class="row check-sales-message">
+        <div class="col-md-12" id="resultContainer" style="display:none;"></div>
+    </div>
+    <div class="row check-sales-attention-container">
+        <div class="col-md-12">
+            @Html.Partial("PartialAttentionMessage", 
+                      "Если Вы оплатили покупку, но не можете ее скачать, тогда воспользуйтесь " + @Html.Partial("PartialFeedback", "формой обратной связи") 
+                      + ".<br /><b>Обязательно укажите идентификатор покупки и адрес электронной почты для получения купленного товара</b>.<br />"
+                      + "После проверки нашими специалистами и подтверждения факта оплаты, мы вышлем купленный товар на вашу электронную почту."
+             )
+        </div>
+    </div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Urls = {
+            CheckUrl: '@Url.Action("CheckPurchasedGoods", RouteConfig.PAYMENT_CONTROLLER, null, Request.Url.Scheme)'
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/CheckPayment.js")
+}

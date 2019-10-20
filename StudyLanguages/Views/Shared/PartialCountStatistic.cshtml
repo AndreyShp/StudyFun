@@ -1,0 +1,13 @@
+﻿@using System.Globalization
+@using BusinessLogic.ExternalData.Knowledge
+@model Tuple<string, BusinessLogic.ExternalData.Knowledge.UserKnowledgeStatistic.CountStatistic>
+@{
+    Func<long, string> digitFormatter = digit => digit.ToString("N0", CultureInfo.GetCultureInfo("ru-RU"));
+    UserKnowledgeStatistic.CountStatistic countStatistic = Model.Item2;
+}
+
+<div class="partial-count-statistic">@Model.Item1</div>
+Слов: @digitFormatter(countStatistic.CountWords)<br/>
+Фраз: @digitFormatter(countStatistic.CountPhrases)<br/>
+Предложений: @digitFormatter(countStatistic.CountSentences)<br/>
+Итого: @digitFormatter(countStatistic.Total)

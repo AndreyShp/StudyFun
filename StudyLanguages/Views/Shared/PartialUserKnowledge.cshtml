@@ -1,0 +1,30 @@
+﻿@using BusinessLogic.Data.Enums.Knowledge
+@model StudyLanguages.Models.Knowledge.KnowledgePanelModel
+@{
+    string titlePart;
+    switch (Model.DataType) {
+        case KnowledgeDataType.WordTranslation:
+            titlePart = Model.IsMany ? " все слова" : " слово";
+            break;
+        case KnowledgeDataType.PhraseTranslation:
+            titlePart = Model.IsMany ? " все фразы" : " фразу";
+            break;
+        case KnowledgeDataType.SentenceTranslation:
+            titlePart = Model.IsMany ? " все предложения" : " предложение";
+            break;
+        default:
+            titlePart = string.Empty;
+            break;
+    }
+    string title = string.Format("Добавить{0} к Вам на стену знаний", titlePart);
+    var type = (int) Model.DataType;
+
+    string className = Model.ClassName ?? string.Empty;
+    string visibility = Model.IsVisible ? "visible" : "hidden";
+}
+
+@if (Model.IsMany) {
+    <div class="glyphicon glyphicon-plus cursor-pointer @className" style="display: inline-block; visibility: @visibility;" title="@title" onclick='UserKnowledge.AddMany(@type)' data-knowledge-many='@type'></div>
+} else {
+    <div class="glyphicon glyphicon-plus cursor-pointer @className" style="display: inline-block; visibility: @visibility;" title="@title" onclick='UserKnowledge.Add(this)' data-knowledge-id='@Model.DataId' data-knowledge-type='@type'></div>
+}

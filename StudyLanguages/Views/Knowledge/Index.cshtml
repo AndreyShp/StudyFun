@@ -1,0 +1,90 @@
+﻿@using BusinessLogic.ExternalData
+@using BusinessLogic.ExternalData.Knowledge
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.Knowledge.KnowledgeWallModel
+@{
+    const SectionId SECTION_ID = SectionId.MyKnowledge;
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+    ViewBag.ActiveItem = SECTION_ID;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Description);
+    
+    string urlToRemoveOrRestore = Url.Action("RemoveOrRestore", RouteConfig.USER_KNOWLEDGE_CONTROLLER, null, Request.Url.Scheme);
+    string urlToLoad = Url.Action("Load", RouteConfig.USER_KNOWLEDGE_CONTROLLER, null, Request.Url.Scheme);
+
+    const string CONTAINER_ID = "contentContainerId";
+
+    var today = new Tuple<string, UserKnowledgeStatistic.CountStatistic>("Сегодня:", Model.Statistic.Today);
+    var total = new Tuple<string, UserKnowledgeStatistic.CountStatistic>("За все время:", Model.Statistic.Total);
+    var countLinks = 0;
+
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Header);
+}
+
+<div class="container">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-primary">
+            <div class="panel-heading">@Html.Raw(header)</div>
+            <div class="panel-body">
+                <div class="col-md-3">
+                    @Html.Partial("PartialCountStatistic", today)
+                </div>
+                <div class="col-md-3">
+                    @Html.Partial("PartialCountStatistic", total)
+                </div>
+                <div class="col-md-3">
+                    @if (Model.Statistic.Total.CountWords > 0) {
+                        countLinks++;
+                        @Html.ActionLink("Карточки моих слов", "Index", RouteConfig.USER_TRAINER_WORDS_CONTROLLER)
+                    }
+                    @if (Model.Statistic.Total.CountPhrases > 0) {
+                        countLinks++;
+                        @Html.ActionLink("Карточки моих фраз", "Index", RouteConfig.USER_TRAINER_PHRASES_CONTROLLER)
+                    }
+                    @if (Model.Statistic.Total.CountSentences > 0) {
+                        countLinks++;
+                        @Html.ActionLink("Карточки моих предложений", "Index", RouteConfig.USER_TRAINER_SENTENCES_CONTROLLER)
+                    }
+                    @if (countLinks > 1) {
+                        @Html.ActionLink("Карточки всех моих знаний", "Index", RouteConfig.USER_TRAINER_ALL_CONTROLLER)
+                    }
+                    @Html.ActionLink("Генератор знаний", "Index", RouteConfig.KNOWLEDGE_GENERATOR_CONTROLLER)
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Стена</div>
+            <div class="panel-body" id="@CONTAINER_ID">
+                @foreach (UserKnowledgeItem item in Model.Items) {
+                    @Html.Partial("PartialWallItem", item)
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                RemoveOrRestore: '@urlToRemoveOrRestore',
+                LoadingData: '@urlToLoad'
+            },
+            ItemsContainerId: '@CONTAINER_ID',
+        };
+        ServerData.Languages = {
+            from: @Html.Raw(@Model.JsLanguageFrom),
+            to: @Html.Raw(@Model.JsLanguageTo)
+        };
+    </script>
+}
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/KnowledgeWall.js")
+}

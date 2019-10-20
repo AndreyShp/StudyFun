@@ -1,0 +1,27 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Models.Groups
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.Groups.GroupModel
+@{
+    Layout = "~/Views/Shared/InnerGroup.cshtml";
+    ViewBag.ActiveItem = SectionId.GroupByPhrases;
+    
+    var groupInfo = new GroupInfo {
+        Alt = "Фраза \"{0}\" переводится как \"{1}\"",
+        ControllerName = RouteConfig.GROUP_SENTENCE_CONTROLLER,
+        BaseControllerName = RouteConfig.GROUPS_BY_SENTENCES_CONTROLLER,
+        PrettyControllerName = RouteConfig.PRETTY_GROUP_SENTENCE_CONTROLLER,
+        UserTrainerControllerName = RouteConfig.USER_TRAINER_GROUP_PHRASES_CONTROLLER,
+        LowerManyElems = "фразы",
+        LowerOneElem = "фраз"
+    };
+
+    ViewBag.GroupInfo = groupInfo;
+}
+
+@section inlineScripts {
+    ServerData.getItemForUrl = function(item) {
+        return item.Id;
+    };
+}

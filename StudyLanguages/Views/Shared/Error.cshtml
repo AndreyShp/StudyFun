@@ -1,0 +1,38 @@
+﻿@using BusinessLogic
+@using BusinessLogic.ExternalData
+@using BusinessLogic.Mailer
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Main
+@model HandleErrorInfo
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+    ViewBag.ActiveItem = SectionId.No;
+    ViewData[OurHtmlHelper.ViewDataFlags.SKIP_POPUP_PANEL] = true;
+
+    /*Exception ex = HttpContext.Server.GetLastError();*/
+    var description = Model != null ? Model.Exception.ToString() : string.Empty;
+    ExceptionsRegister.Register(WebSettingsConfig.Instance.Domain, Model != null ? Model.Exception : null);
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width" />
+        <title>Ошибка</title>
+    </head>
+    <body>
+        <h3>
+            Извините, произошла ошибка при обработке вашего запроса / Sorry, an error occurred while processing your request
+        </h3>
+        <p>Пожалуйста, попробуйте позже / Please, try later</p>
+        <img src="~/Content/images/500.jpg" alt="Страница не найдена" />
+        @*@{
+            if (!string.IsNullOrWhiteSpace(description)) {
+                <span>@description</span>
+            }
+        }*@
+    </body>
+</html>

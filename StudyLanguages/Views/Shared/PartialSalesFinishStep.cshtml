@@ -1,0 +1,33 @@
+﻿@using StudyLanguages.Models
+@model StudyLanguages.Models.Sales.SalesFinishStepModel
+
+<div class="modal fade text-left" id="salesFinishStepWindow" role="dialog" aria-labelledby="salesFinishStepWindowLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Один шаг до оплаты покупки</h4>
+            </div>
+            <div class="modal-body sales-finish-step-window">
+                <p>После оплаты Вы будете перенаправлены на страницу с которой сможете скачать купленный материал.</p>
+                <div class="sales-attention-container">@Html.Partial("PartialAttentionMessage", 
+                    "Внимание! Если Вы оплатили покупку, но по какой-то причине Вам не открылась страница для скачивания, то после ввода идентификатора покупки на <a href='" 
+                    + @Model.CheckUrl + "' target='_blank'>странице</a> Вы сможете скачать купленный материал.")
+                </div>
+                Ваш идентификатор покупки:
+                <i id="showMailBlockBtn" class="fa fa-envelope clickable-element show-mail-block-btn" title="Отправить идентификатор покупки на почту"></i>
+                <i id="copyToClipboardBtn" class="fa fa-clipboard clickable-element copy-to-clipboard-btn" title="Скопировать идентификатор покупки в буфер обмена"></i><br />
+                <span class="sales-unique-id" id="salesUniqueId">@Model.UniqueDownloadId</span>
+                <div class="check-unique-id-attention">(Запомните идентификатор покупки. Претензии по оплате принимаются только при наличие идентификатора покупки.)</div>
+                @Html.Partial("PartialEmailBlock", new EmailBlockModel { Cls = "sales-email-block" })
+                <div id="salesMessage" style="display:none;" class="sales-message"></div>
+                <label class="checkbox clickable-element thin-text">
+                    <input type="checkbox" autocomplete="off" class="clickable-element" data-bind="checked: consent" id="consentCbx"> Я запомнил идентификатор покупки
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-lg" id="payBtn" tabindex="3" data-bind="enable: consent">Оплатить</button>
+            </div>
+        </div>
+    </div>
+</div>

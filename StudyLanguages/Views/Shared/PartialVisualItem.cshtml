@@ -1,0 +1,15 @@
+﻿@using BusinessLogic.Data.Enums.Knowledge
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Knowledge
+@model BusinessLogic.ExternalData.Representations.RepresentationAreaForUser
+@{
+    long id = Model.Id;
+}
+
+<div id='wordContainer_@id'>
+    <span id='sourceWord_@id' class='visual-source-word'>@Html.Raw(OurHtmlHelper.GetSpeakerHtml(Model.Source, SpeakerDataType.Word))</span>
+    <span class='visual-translate-word-container'> &dash; 
+        <span id='translatedWord_@id' class='visual-translated-word'>@Html.Raw(OurHtmlHelper.GetSpeakerHtml(Model.Translation, SpeakerDataType.Word))</span>
+    </span>
+    @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel {DataId = @Model.WordTranslationId, DataType = KnowledgeDataType.WordTranslation, IsVisible = true})
+</div>

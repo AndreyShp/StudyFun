@@ -1,0 +1,38 @@
+﻿@using BusinessLogic.Validators
+@using StudyLanguages.Models.Main
+@using StudyLanguages.Models.Sales
+@model StudyLanguages.Models.Main.DescriptionSection
+@{
+    var hasItems = EnumerableValidator.IsNotNullAndNotEmpty(Model.Items);
+    string styleDescription = "";
+    if (!hasItems) {
+        styleDescription = " style='margin-bottom:20px;'";
+    }
+}
+
+<div class="col-md-6">
+    <p class="main-part-description main-clear"@Html.Raw(styleDescription)>@Html.Raw(Model.Description)</p>
+    @if (hasItems) {
+        <div class="main-clear">
+            <div class="main-most-popular-title">@Html.Raw(Model.MostPopularTitle)</div>
+            @for (int i = 0, height = 75, paddingTop = 0; i < Model.Items.Count; i++, height -= 5, paddingTop += 5) {
+                DescriptionSectionItem item = Model.Items[i];
+                if (Model.UrlImageItemGetter != null) {
+                     <div class="pull-left main-popular-container" style="padding-top: @(paddingTop)px;">
+                         <a href="@Model.UrlItemGetter(item)" class="thumbnail">
+                             <img class="main-image-popular" src="@Model.UrlImageItemGetter(item)" style="height: @(height)px;" title="@Model.TitleItemGetter(item)" alt="@item.Title" />
+                         </a>
+                     </div>
+                 } else {
+                    string style = "";
+                    if (i == Model.Items.Count - 1) {
+                        style = " style='margin-bottom:20px;'";
+                    }
+                    <div class="main-list-item"@Html.Raw(style)>
+                         <a href="@Model.UrlItemGetter(item)" title="@Model.TitleItemGetter(item)">@item.Title</a>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

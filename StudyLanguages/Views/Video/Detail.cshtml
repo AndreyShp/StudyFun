@@ -1,0 +1,77 @@
+﻿@using BusinessLogic.Data.Enums
+@using BusinessLogic.Export
+@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@model BusinessLogic.ExternalData.Videos.VideoForUser
+@{
+    const SectionId SECTION_ID = SectionId.Video;
+    
+    ViewBag.ActiveItem = SECTION_ID;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Title, Model.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Keywords, Model.Title);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Description, Model.Title);
+
+    //TODO: настроить класс video-container , чтобы при меньшем экране меньшее видео
+    string urlNewVisitor = Url.Action("NewVisitor", RouteConfig.VIDEO_CONTROLLER, new {id = Model.Id}, Request.Url.Scheme);
+
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Header, Model.Title);
+
+    var urlsByTypes = new Dictionary<DocumentType, string> {
+                    {DocumentType.Pdf, Url.Action("Download", RouteConfig.VIDEO_CONTROLLER, new {group = Model.Title, type = DocumentType.Pdf})},
+                    {DocumentType.Txt, Url.Action("Download", RouteConfig.VIDEO_CONTROLLER, new {group = Model.Title, type = DocumentType.Txt})},
+                };
+
+    var breadcrumbs = new List<BreadcrumbItem> {
+        new BreadcrumbItem { Title = "Все видеоролики", Action = "Index", ControllerName = RouteConfig.VIDEO_CONTROLLER, RouteValues = new { type = VideoType.Clip }},
+        new BreadcrumbItem { IsActive = true, Title = "Видеоролик &laquo;" + @Model.Title + "&raquo;" }
+    };
+                
+}
+
+<div class="row">
+    @Html.Partial("PartialBreadcrumb", breadcrumbs)
+    <h3>@Html.Raw(header)</h3>
+    <div class="col-md-6 col-md-offset-3" id="videoContainer">
+        @Html.Raw(Model.HtmlCode)
+    </div>
+</div>
+
+@if (Model.HasSentences) {
+    <div class="row text-left video-buttons-panel">
+        <div class="col-md-6 col-md-offset-3">
+            @Html.Partial("PartialDownloadBtn", new DownloadBtnModel("Скачать&nbsp;текст", "Видео " + @Model.Title, urlsByTypes))
+            <button id="showTextBtn" type="button" class="btn btn-primary" onclick="return VideoController.ShowHideText();">Спрятать текст <span class="glyphicon glyphicon-arrow-up"></span></button>
+            @if (Model.HasAnyTranslation) {
+                <button id="translationToogleBtn" type="button" class="btn btn-info" onclick="return VideoController.ToogleTranslation();">Спрятать перевод &raquo;</button>
+            }
+        </div>
+    </div>
+    <div class="row text-left" id="textContainer">
+        <div class="col-md-6 col-md-offset-3">
+        @foreach (var sentence in Model.Sentences) {
+            <div class="video-text-source">
+                @sentence.Item1
+                @if (Model.HasTranslation(sentence)) {
+                    <div class="video-text-translation">@sentence.Item2</div>
+                }
+            </div>
+        }
+        </div>
+    </div>
+}
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            UrlNewVisitor: '@urlNewVisitor'
+        };
+    </script>
+}
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Video.js")
+}

@@ -1,0 +1,67 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@model List<BusinessLogic.ExternalData.GroupForUser>
+
+@{
+    const string PATTERN_THUMBNAIL = "group_{0}";
+
+    var sectionId = (SectionId)ViewBag.ActiveItem;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.Description);
+    string header = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.Header);
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+    Func<GroupForUser, string> altGetter = group => WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.ImageAlt, group.Name);
+    Func<GroupForUser, string> thumbnailTipGetter = group => WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.ThumbnailTip, group.Name);
+
+    int counter = 0;
+    var searchPanelModel = new SearchPanelModel(Model) {
+        Tip = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.SearchTip),
+        PatternToSearchContainer = PATTERN_THUMBNAIL,
+        AddNewBtn = new Tuple<string, string>(
+                            WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.AddNewBtn), 
+                            Url.Action("AddNew", ViewBag.InsideGroupController, null, Request.Url.Scheme))
+    };
+}
+
+@Html.Partial("TopBanner")
+<h3 class="h3-groups">@header</h3>
+@Html.Partial("PartialSearchPanel", searchPanelModel)
+
+<div class="row">
+    @RenderBody()
+    @foreach (GroupForUser group in Model) {
+        <div id="@string.Format(PATTERN_THUMBNAIL, group.Id)" class="col-sm-6 col-md-3" style="width: auto;">
+            <a class="thumbnail cover-text" title='@thumbnailTipGetter(group)' href="@Url.Action(ViewBag.InsideGroupAction, ViewBag.InsideGroupController, new {group = group.Name + "/"}, Request.Url.Scheme)">
+                <div class="thumbnail" style="margin-bottom: 0;">
+                    <div class="caption">
+                        <h3>@group.Name</h3>
+                    </div>
+                    @{
+                        string urlToLoad = string.Empty;
+                        string url = CommonConstants.EMPTY_IMAGE_PATH;
+                        if (group.HasImage) {
+                            var imageUrl = Url.Action("GetImageByName", ViewBag.InsideGroupController, new { group = group.Name }, Request.Url.Scheme);
+                            if (counter++ < 15) {
+                                url = imageUrl;
+                            } else {
+                                //подгрузить фоном
+                                urlToLoad = imageUrl;
+                            }
+                        }
+                    }
+                    <img src="@url" data-url-to-load="@urlToLoad" alt="@altGetter(group)" style="display: block; height: 150px; width: auto;">
+                </div>
+            </a>
+        </div>
+    }
+</div>
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Groups.js")
+}

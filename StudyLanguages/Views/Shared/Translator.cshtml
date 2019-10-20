@@ -1,0 +1,68 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.TranslatorModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+
+    var sectionId = (SectionId)ViewBag.ActiveItem;
+    
+    string titlePatternWithoutTranslation = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.Title);
+    string titlePattern = titlePatternWithoutTranslation + ": {0} - {1}";
+    string urlWithoutQuery = UrlBuilder.GetTranslationDefaulUrl(ViewBag.ControllerName);
+    string specialUrl = UrlBuilder.GetTranslationPatternUrl(ViewBag.ControllerName);
+    string searchUrl = UrlBuilder.GetTranslationActionUrl(ViewBag.ControllerName, "Search");
+    string getTranslationsUrl = UrlBuilder.GetTranslationActionUrl(ViewBag.ControllerName, "GetTranslations");
+    
+    ViewBag.Title = Model.HasTranslations ? string.Format(titlePattern, Model.Source, Model.Translations[0].Text) : titlePatternWithoutTranslation;
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.Description);
+    string inputTip = WebSettingsConfig.Instance.GetTemplateText(sectionId, TemplateId.SearchTip);
+}
+
+@RenderBody()
+<div class="row">
+    <div class="pull-left col-lg-6">
+        <div class="input-group">
+            <input id="search" tabindex="1" class="form-control" type="text" style="margin-bottom: 0px" placeholder="@inputTip" @if (Model.HasTranslations) {
+                @: value="@Model.Source"
+            } autocomplete="off" />
+            <span class="input-group-btn">
+                <button id="translationToogleId" tabindex="2" onclick="return TranslatorController.Translate(true);" type="button" class="btn btn-info">Перевести</button>
+            </span>
+        </div>
+    </div>
+</div>
+<div id="translationContainer" style="text-align: left;margin-top: 10px;">
+    @if (Model.HasTranslations) {
+        @:<ol>
+        foreach (PronunciationForUser translation in @Model.Translations) {
+            @:<li>@Html.Raw(OurHtmlHelper.GetSpeakerHtml(translation, SpeakerDataType.Word))</li>
+        }
+        @:</ol>
+    }
+</div>
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                SpecialUrl: '@specialUrl',
+                UrlWithoutQuery: '@urlWithoutQuery',
+                SearchUrl: '@searchUrl',
+                GetTranslations: '@getTranslationsUrl'
+            },
+            Title: '@titlePattern',
+            TitleWithoutQuery: '@titlePatternWithoutTranslation'
+        };
+        ServerData.Languages = {
+            from: @Html.Raw(@Model.JsLanguageFrom),
+            to: @Html.Raw(@Model.JsLanguageTo)
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Translator.js")
+}

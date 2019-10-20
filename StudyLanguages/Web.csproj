@@ -1,0 +1,670 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9AEF1209-2B56-4EA0-8B17-8EEA45325669}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StudyLanguages</RootNamespace>
+    <AssemblyName>StudyLanguages</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxMin">
+      <HintPath>..\packages\AjaxMin.4.48.4489.28432\lib\net20\AjaxMin.dll</HintPath>
+    </Reference>
+    <Reference Include="EcmaScript.NET">
+      <HintPath>..\packages\YUICompressor.NET.2.0.0.0\lib\NET20\EcmaScript.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\YUICompressor.NET.2.0.0.0\lib\NET20\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqKit">
+      <HintPath>..\packages\LinqKit.1.0\lib\35\LinqKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Npgsql.2.0.12.1\lib\net40\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SquishIt.Framework">
+      <HintPath>..\packages\SquishIt.0.9.7\lib\SquishIt.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Yahoo.Yui.Compressor">
+      <HintPath>..\packages\YUICompressor.NET.2.0.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RegexConstraint.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\RepresentationController.cs" />
+    <Compile Include="Configs\AnotherDomainInfo.cs" />
+    <Compile Include="Configs\PageId.cs" />
+    <Compile Include="Configs\TemplateId.cs" />
+    <Compile Include="Configs\IWebSettings.cs" />
+    <Compile Include="Configs\TemplateSection.cs" />
+    <Compile Include="Configs\TextTemplates.cs" />
+    <Compile Include="Configs\WebSettingsConfig.cs" />
+    <Compile Include="Configs\XmlParseHelper.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BaseGroupsController.cs" />
+    <Compile Include="Controllers\BaseTranslatorController.cs" />
+    <Compile Include="Controllers\BaseInnerGroupController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\ComparisonsController.cs" />
+    <Compile Include="Controllers\ComparisonController.cs" />
+    <Compile Include="Controllers\BaseGroupItemsTrainerController.cs" />
+    <Compile Include="Controllers\TVSeriesController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PopularWordsController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\KnowledgeGeneratorController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\UserTasksController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\TrainerVisualDictionaryWordsController.cs" />
+    <Compile Include="Controllers\TrainerGroupPhrasesController.cs" />
+    <Compile Include="Controllers\TrainerGroupWordsController.cs" />
+    <Compile Include="Filters\CacheAttribute.cs" />
+    <Compile Include="Filters\CompressAttribute.cs" />
+    <Compile Include="Filters\NoCacheAttribute.cs" />
+    <Compile Include="Helpers\ApiFactory.cs" />
+    <Compile Include="Helpers\BanHelper.cs" />
+    <Compile Include="Helpers\BreadcrumbsHelper.cs" />
+    <Compile Include="Helpers\Formatters\MoneyFormatter.cs" />
+    <Compile Include="Helpers\HttpContextHelper.cs" />
+    <Compile Include="Helpers\KeyboardLayoutConverter.cs" />
+    <Compile Include="Helpers\Minimizer.cs" />
+    <Compile Include="Helpers\Sitemap\TVSeriesWriter.cs" />
+    <Compile Include="Helpers\Sitemap\SitemapFileGenerator.cs" />
+    <Compile Include="Helpers\Sitemap\UserTasksWriter.cs" />
+    <Compile Include="Helpers\Sitemap\VideosWriter.cs" />
+    <Compile Include="Helpers\Trainer\GapsTrainerHelper.cs" />
+    <Compile Include="Helpers\Trainer\TrainerHelper.cs" />
+    <Compile Include="Controllers\BaseKnowledgeTrainerController.cs" />
+    <Compile Include="Controllers\TrainerSentencesKnowledgeController.cs" />
+    <Compile Include="Controllers\TrainerPhrasesKnowledgeController.cs" />
+    <Compile Include="Controllers\TrainerWordsKnowledgeController.cs" />
+    <Compile Include="Controllers\TrainerAllKnowledgeController.cs" />
+    <Compile Include="Controllers\KnowledgeController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\ShuffleController.cs" />
+    <Compile Include="Controllers\AudioWordsController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\SpeakerController.cs" />
+    <Compile Include="Helpers\GroupsSorter.cs" />
+    <Compile Include="Helpers\OurHtmlHelper.cs" />
+    <Compile Include="Helpers\RemoteClientHelper.cs" />
+    <Compile Include="Helpers\JsonResultHelper.cs" />
+    <Compile Include="Helpers\RedirectHelper.cs" />
+    <Compile Include="Helpers\Sitemap\AudioWordsWriter.cs" />
+    <Compile Include="Helpers\Sitemap\ComparisonsWriter.cs" />
+    <Compile Include="Helpers\Sitemap\HomeWriter.cs" />
+    <Compile Include="Helpers\SpeakerDataType.cs" />
+    <Compile Include="Controllers\VisualDictionariesController.cs" />
+    <Compile Include="Controllers\PhrasalVerbsController.cs" />
+    <Compile Include="Controllers\GroupSentenceController.cs" />
+    <Compile Include="Controllers\GroupsBySentenceController.cs" />
+    <Compile Include="Controllers\GroupsByWordController.cs" />
+    <Compile Include="Controllers\GroupWordController.cs" />
+    <Compile Include="Controllers\VisualDictionaryController.cs" />
+    <Compile Include="Helpers\ImageUtilities.cs" />
+    <Compile Include="Helpers\Sitemap\ChangeFrequency.cs" />
+    <Compile Include="Helpers\Sitemap\BaseGroupsWriter.cs" />
+    <Compile Include="Helpers\Sitemap\VisualDictionariesWriter.cs" />
+    <Compile Include="Helpers\Sitemap\GroupSentencesWriter.cs" />
+    <Compile Include="Helpers\Sitemap\GroupWordsWriter.cs" />
+    <Compile Include="Helpers\Sitemap\SitemapItemWriter.cs" />
+    <Compile Include="Helpers\KnowledgeHelper.cs" />
+    <Compile Include="Helpers\Formatters\VisualWordsFormatter.cs" />
+    <Compile Include="Models\BreadcrumbItem.cs" />
+    <Compile Include="Models\EmailBlockModel.cs" />
+    <Compile Include="Models\Groups\GapsTrainerItem.cs" />
+    <Compile Include="Models\Groups\GapsTrainerModel.cs" />
+    <Compile Include="Models\Messages.cs" />
+    <Compile Include="Models\PageRequiredData.cs" />
+    <Compile Include="Models\PopularItemsModel.cs" />
+    <Compile Include="Models\CrossReferencesModel.cs" />
+    <Compile Include="Models\DownloadBtnModel.cs" />
+    <Compile Include="Models\Groups\GroupInfo.cs" />
+    <Compile Include="Models\Knowledge\GeneratorModel.cs" />
+    <Compile Include="Models\Main\DescriptionSectionItem.cs" />
+    <Compile Include="Models\Main\DescriptionSection.cs" />
+    <Compile Include="Models\Groups\SortType.cs" />
+    <Compile Include="Models\Main\DescriptionTitle.cs" />
+    <Compile Include="Models\Main\MainModel.cs" />
+    <Compile Include="Models\Sales\SalesFinishStepModel.cs" />
+    <Compile Include="Models\Sales\FixedSalesModel.cs" />
+    <Compile Include="Models\Sales\FailPaymentModel.cs" />
+    <Compile Include="Models\Sales\FileModel.cs" />
+    <Compile Include="Models\Sales\SelectableSalesModel.cs" />
+    <Compile Include="Models\Sales\SuccessPaymentModel.cs" />
+    <Compile Include="Models\TopPanel\MenuItem.cs" />
+    <Compile Include="Models\Trainer\PartialTrainerParams.cs" />
+    <Compile Include="Models\Trainer\TrainerItem.cs" />
+    <Compile Include="Models\Trainer\TrainerModel.cs" />
+    <Compile Include="Models\Knowledge\KnowledgePanelModel.cs" />
+    <Compile Include="Models\Knowledge\KnowledgeWallModel.cs" />
+    <Compile Include="Models\SearchPanelModel.cs" />
+    <Compile Include="Models\User\UserTasksModel.cs" />
+    <Compile Include="Models\User\UserTasksSettings.cs" />
+    <Compile Include="Models\Video\TVSeriesModel.cs" />
+    <Compile Include="Models\Video\TVSeriesShortModel.cs" />
+    <Compile Include="Models\VisualDictionaryModel.cs" />
+    <Compile Include="Models\Groups\LinkID.cs" />
+    <Compile Include="Models\Groups\LinkInfo.cs" />
+    <Compile Include="Models\Groups\GroupModel.cs" />
+    <Compile Include="Controllers\WordController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\SelectedGroupAttribute.cs" />
+    <Compile Include="Filters\UserLanguagesAttribute.cs" />
+    <Compile Include="Filters\UserIdAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CommonConstants.cs" />
+    <Compile Include="Helpers\StyleBuilder.cs" />
+    <Compile Include="Helpers\UrlBuilder.cs" />
+    <Compile Include="Models\BaseLanguageModel.cs" />
+    <Compile Include="Models\BaseSeriesModel.cs" />
+    <Compile Include="Models\Groups\GroupModelOptions.cs" />
+    <Compile Include="Models\ShuffleModel.cs" />
+    <Compile Include="Models\TranslatorModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\WebSettings.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\Admin\Site.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-glyphicons.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\images\23FebraryTheme.png" />
+    <Content Include="Content\images\404.jpg" />
+    <Content Include="Content\images\500.jpg" />
+    <Content Include="Content\images\8MarchTheme.png" />
+    <Content Include="Content\images\9may.png" />
+    <Content Include="Content\images\Banner_de.gif" />
+    <Content Include="Content\images\Banner_en.gif" />
+    <Content Include="Content\images\Banner_es.gif" />
+    <Content Include="Content\images\Banner_fr.gif" />
+    <Content Include="Content\images\Banner_it.gif" />
+    <Content Include="Content\images\empty.png" />
+    <Content Include="Content\images\FillDifference.png" />
+    <Content Include="Content\images\France-round.png" />
+    <Content Include="Content\images\France.png" />
+    <Content Include="Content\images\Generator.PNG" />
+    <Content Include="Content\images\Germany-round.png" />
+    <Content Include="Content\images\Germany.png" />
+    <Content Include="Content\images\HelpSharePanel.PNG" />
+    <Content Include="Content\images\Italy-round.png" />
+    <Content Include="Content\images\Italy.png" />
+    <Content Include="Content\images\ListAllPhrases.PNG" />
+    <Content Include="Content\images\ListAllWords.png" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\NewYearTheme.png" />
+    <Content Include="Content\images\pdf.png" />
+    <Content Include="Content\images\RandomSentence.png" />
+    <Content Include="Content\images\Russia.png" />
+    <Content Include="Content\images\Spain-round.png" />
+    <Content Include="Content\images\Spain.png" />
+    <Content Include="Content\images\speaker-big.png" />
+    <Content Include="Content\images\Trainer.png" />
+    <Content Include="Content\images\txt.png" />
+    <Content Include="Content\images\Ukraine.png" />
+    <Content Include="Content\images\United-Kingdom-round.png" />
+    <Content Include="Content\images\United-Kingdom.png" />
+    <Content Include="Content\images\VisualDictionary.png" />
+    <Content Include="Content\imgareaselect\border-h.gif" />
+    <Content Include="Content\imgareaselect\border-v.gif" />
+    <Content Include="Content\imgareaselect\imgareaselect-default.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\videoplugin\background.png" />
+    <Content Include="Content\videoplugin\bigplay.fw.png" />
+    <Content Include="Content\videoplugin\bigplay.png" />
+    <Content Include="Content\videoplugin\bigplay.svg" />
+    <Content Include="Content\videoplugin\controls-ted.png" />
+    <Content Include="Content\videoplugin\controls-wmp-bg.png" />
+    <Content Include="Content\videoplugin\controls-wmp.png" />
+    <Content Include="Content\videoplugin\controls.fw.png" />
+    <Content Include="Content\videoplugin\controls.png" />
+    <Content Include="Content\videoplugin\controls.svg" />
+    <Content Include="Content\videoplugin\flashmediaelement-cdn.swf" />
+    <Content Include="Content\videoplugin\flashmediaelement.swf" />
+    <Content Include="Content\videoplugin\loading.gif" />
+    <Content Include="Content\videoplugin\mediaelement-and-player.min.js" />
+    <Content Include="Content\videoplugin\mediaelementplayer.min.css" />
+    <Content Include="Content\videoplugin\mejs-skins.css" />
+    <Content Include="Content\videoplugin\silverlightmediaelement.xap" />
+    <Content Include="Content\videoplugin\skipback.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\less\wells.less" />
+    <Content Include="Content\less\variables.less" />
+    <Content Include="Content\less\utilities.less" />
+    <Content Include="Content\less\type.less" />
+    <Content Include="Content\less\tooltip.less" />
+    <Content Include="Content\less\thumbnails.less" />
+    <Content Include="Content\less\tables.less" />
+    <Content Include="Content\less\sprites.less" />
+    <Content Include="Content\less\scaffolding.less" />
+    <Content Include="Content\less\responsive-utilities.less" />
+    <Content Include="Content\less\responsive-navbar.less" />
+    <Content Include="Content\less\responsive-768px-979px.less" />
+    <Content Include="Content\less\responsive-767px-max.less" />
+    <Content Include="Content\less\responsive-1200px-min.less" />
+    <Content Include="Content\less\responsive.less" />
+    <Content Include="Content\less\reset.less" />
+    <Content Include="Content\less\progress-bars.less" />
+    <Content Include="Content\less\popovers.less" />
+    <Content Include="Content\less\pagination.less" />
+    <Content Include="Content\less\pager.less" />
+    <Content Include="Content\less\navs.less" />
+    <Content Include="Content\less\navbar.less" />
+    <Content Include="Content\less\modals.less" />
+    <Content Include="Content\less\mixins.less" />
+    <Content Include="Content\less\media.less" />
+    <Content Include="Content\less\layouts.less" />
+    <Content Include="Content\less\labels-badges.less" />
+    <Content Include="Content\less\hero-unit.less" />
+    <Content Include="Content\less\grid.less" />
+    <Content Include="Content\less\forms.less" />
+    <Content Include="Content\less\dropdowns.less" />
+    <Content Include="Content\less\component-animations.less" />
+    <Content Include="Content\less\code.less" />
+    <Content Include="Content\less\close.less" />
+    <Content Include="Content\less\carousel.less" />
+    <Content Include="Content\less\buttons.less" />
+    <Content Include="Content\less\button-groups.less" />
+    <Content Include="Content\less\breadcrumbs.less" />
+    <Content Include="Content\less\bootstrap.less" />
+    <Content Include="Content\less\alerts.less" />
+    <Content Include="Content\less\accordion.less" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="Areas\Admin\Views\Representation\Index.cshtml" />
+    <Content Include="Scripts\Controls\jquery.cookie.js" />
+    <Content Include="Scripts\Controls\jquery.sticky.js" />
+    <Content Include="Scripts\Controls\SeriesToogleElems.js" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\Views\AddNewGroup.js" />
+    <Content Include="Scripts\Views\Admin\TVSeriesDetail.js" />
+    <Content Include="Scripts\Views\CheckPayment.js" />
+    <Content Include="Scripts\Views\AllMaterialsSales.js" />
+    <Content Include="Scripts\Views\TVSeriesDetail.js" />
+    <Content Include="Scripts\Views\VisualDictionarySales.js" />
+    <Content Include="Scripts\Views\GapsTrainer.js" />
+    <Content Include="Scripts\Views\UserTasksDetails.js" />
+    <Content Include="Scripts\Views\UserTasksNew.js" />
+    <Content Include="Scripts\Views\PopularItemsAll.js" />
+    <Content Include="Scripts\Views\Profile.js" />
+    <Content Include="Scripts\Views\KnowledgeGenerator.js" />
+    <Content Include="Scripts\Views\Video.js" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome\less\core.less" />
+    <Content Include="Content\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\font-awesome\less\icons.less" />
+    <Content Include="Content\font-awesome\less\larger.less" />
+    <Content Include="Content\font-awesome\less\list.less" />
+    <Content Include="Content\font-awesome\less\mixins.less" />
+    <Content Include="Content\font-awesome\less\path.less" />
+    <Content Include="Content\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome\less\spinning.less" />
+    <Content Include="Content\font-awesome\less\stacked.less" />
+    <Content Include="Content\font-awesome\less\variables.less" />
+    <Content Include="Content\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome\scss\_core.scss" />
+    <Content Include="Content\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\font-awesome\scss\_list.scss" />
+    <Content Include="Content\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome\scss\_path.scss" />
+    <Content Include="Content\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome\scss\_spinning.scss" />
+    <Content Include="Content\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <Content Include="App_Data\arial.ttf" />
+    <Content Include="App_Data\arialbd.ttf" />
+    <Content Include="App_Data\arialbi.ttf" />
+    <Content Include="App_Data\ariali.ttf" />
+    <Content Include="App_Data\ariblk.ttf" />
+    <None Include="Properties\PublishProfiles\french.pubxml" />
+    <None Include="Properties\PublishProfiles\german.pubxml" />
+    <None Include="Properties\PublishProfiles\italian.pubxml" />
+    <None Include="Properties\PublishProfiles\spanish.pubxml" />
+    <None Include="Scripts\jquery-2.0.2.intellisense.js" />
+    <Content Include="Scripts\Controls\typeahead.js" />
+    <Content Include="Scripts\jquery-2.0.2.js" />
+    <Content Include="Scripts\jquery-2.0.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.10.3.js" />
+    <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.min.js" />
+    <Content Include="Scripts\less.min.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\Views\Audio.js" />
+    <Content Include="Scripts\Views\Comparison.js" />
+    <Content Include="Scripts\Views\Groups.js" />
+    <Content Include="Scripts\Views\Home.js" />
+    <Content Include="Scripts\Views\InnerGroup.js" />
+    <Content Include="Scripts\Views\InnerGroupAll.js" />
+    <Content Include="Scripts\Views\KnowledgeWall.js" />
+    <Content Include="Scripts\Views\Trainer.js" />
+    <Content Include="Scripts\Views\Translator.js" />
+    <Content Include="Scripts\Views\VisualDictionary.js" />
+    <Content Include="Scripts\Views\_Layout.js" />
+    <Content Include="Scripts\Controls\ZeroClipboard.min.js" />
+    <Content Include="Scripts\Controls\ZeroClipboard.swf" />
+    <Content Include="Scripts\_references.js" />
+    <None Include="Properties\PublishProfiles\111.pubxml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Word\Index.cshtml" />
+    <Content Include="Views\GroupWord\Index.cshtml" />
+    <Content Include="Views\GroupsByWord\Index.cshtml" />
+    <Content Include="Views\GroupsBySentence\Index.cshtml" />
+    <Content Include="Views\GroupSentence\Index.cshtml" />
+    <Content Include="Views\Shared\Groups.cshtml" />
+    <Content Include="Views\Shared\Translator.cshtml" />
+    <Content Include="Views\PhrasalVerbs\Index.cshtml" />
+    <Content Include="Views\Shared\InnerGroup.cshtml" />
+    <Content Include="Views\VisualDictionaries\Index.cshtml" />
+    <Content Include="Views\VisualDictionary\Index.cshtml" />
+    <Content Include="Views\Shared\InnerGroupAll.cshtml" />
+    <Content Include="Views\GroupWord\All.cshtml" />
+    <Content Include="Views\GroupSentence\All.cshtml" />
+    <Content Include="Views\AudioWords\Index.cshtml" />
+    <Content Include="Views\Shared\Error404.cshtml" />
+    <Content Include="Views\Shared\PartialCrossReferences.cshtml" />
+    <Content Include="Views\Comparisons\Index.cshtml" />
+    <Content Include="Views\Shared\PartialSearchPanel.cshtml" />
+    <Content Include="Views\Comparison\Index.cshtml" />
+    <Content Include="Views\Shared\PartialComparisonItem.cshtml" />
+    <Content Include="Scripts\jquery-2.0.2.min.map" />
+    <Content Include="Views\Shared\PartialUserKnowledge.cshtml" />
+    <Content Include="Views\Shared\PartialVisualItem.cshtml" />
+    <Content Include="Views\Knowledge\Index.cshtml" />
+    <Content Include="Views\Knowledge\EmptyWall.cshtml" />
+    <Content Include="Views\Shared\PartialWallItem.cshtml" />
+    <Content Include="Views\Shared\PartialCountStatistic.cshtml" />
+    <Content Include="Views\Trainer\Index.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\Shared\PartialBreadcrumb.cshtml" />
+    <Content Include="Views\Shared\PartialTrainer.cshtml" />
+    <Content Include="Views\Main\Index.cshtml" />
+    <Content Include="Views\Shared\PartialDescriptionSection.cshtml" />
+    <Content Include="Views\Video\Index.cshtml" />
+    <Content Include="Views\Video\Detail.cshtml" />
+    <Content Include="Views\Shared\TopPanel.cshtml" />
+    <Content Include="Views\Knowledge\Generator.cshtml" />
+    <Content Include="Views\Shared\PartialKnowledgeItems.cshtml" />
+    <Content Include="Views\Help\Index.cshtml" />
+    <Content Include="Views\Shared\PartialFeedback.cshtml" />
+    <Content Include="Views\Shared\PartialDownloadBtn.cshtml" />
+    <Content Include="Views\Shared\PartialLikeDislikePanel.cshtml" />
+    <Content Include="Views\Shared\AddNewGroup.cshtml" />
+    <Content Include="Views\Shared\PartialInterviewBtn.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\PopularWords\Index.cshtml" />
+    <Content Include="Views\UserTasks\Index.cshtml" />
+    <Content Include="Views\UserTasks\AddNew.cshtml" />
+    <Content Include="Views\UserTasks\Detail.cshtml" />
+    <Content Include="Views\Shared\PartialTaskComment.cshtml" />
+    <Content Include="Views\Shared\PartialAttentionMessage.cshtml" />
+    <Content Include="Views\Shared\GapsTrainer.cshtml" />
+    <Content Include="Views\Sales\SuccessPayment.cshtml" />
+    <Content Include="Views\Sales\FailPayment.cshtml" />
+    <Content Include="Views\Shared\PartialEmailBlock.cshtml" />
+    <Content Include="Views\Sales\CheckPayment.cshtml" />
+    <Content Include="Views\Help\Vacations.cshtml" />
+    <Content Include="Views\Shared\TopBanner.cshtml" />
+    <Content Include="Views\Shared\PartialBtn.cshtml" />
+    <Content Include="Views\Shared\PartialSalesFinishStep.cshtml" />
+    <Content Include="Views\Shared\TopMessage.cshtml" />
+    <Content Include="Views\Video\TVSeriesDetail.cshtml" />
+    <Content Include="Views\Video\TVSeriesIndex.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Helpers\Money\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{fa8d127d-4384-4e3e-9663-db31d31b2bea}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

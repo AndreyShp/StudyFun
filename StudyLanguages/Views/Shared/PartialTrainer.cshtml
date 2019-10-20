@@ -1,0 +1,24 @@
+﻿@using BusinessLogic.Data.Enums
+@model StudyLanguages.Models.Trainer.PartialTrainerParams
+@{
+    Func<KnowledgeMark, int> markConverter = mark => (int) mark;
+
+    string attributes = Model.NeedShow ? "" : " style='display:none;'";
+    IHtmlString btnClass = Html.Raw(Model.BtnClass);
+}
+
+<@Model.TagTitle id="trainerSourceContainer" class="trainer-h1"></@Model.TagTitle>
+<p><button id="trainerTranslationToogleId" type="button" class="btn btn-info @btnClass">Показать перевод &raquo;</button></p>
+<@Model.TagTranslation id="trainerTranslationContainer" class="trainer-h2"></@Model.TagTranslation>
+<!-- TODO: отображать подсказку -->
+<div class="@Html.Raw(Model.TrainerPanelClass)" id="trainerPanelBtns"@Html.Raw(attributes)>
+    <div class="@Html.Raw(Model.LeftBtnContainerClass)">
+        <button type="button" data-mark="@markConverter(KnowledgeMark.DontRemember)" class="btn btn-danger @btnClass"><span class="glyphicon glyphicon-thumbs-down"></span>&nbsp;Не помню</button>
+    </div>
+    <div class="@Html.Raw(Model.CenterBtnContainerClass)">
+        <button type="button" data-mark="@markConverter(KnowledgeMark.Normal)" class="btn btn-primary @btnClass">В самый раз</button>
+    </div>
+    <div class="@Html.Raw(Model.RightBtnContainerClass)">
+        <button type="button" data-mark="@markConverter(KnowledgeMark.VeryEasy)" class="btn btn-success @btnClass"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;Легко вспомнил</button>
+    </div>
+</div>

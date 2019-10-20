@@ -1,0 +1,136 @@
+﻿@using System.Web.Script.Serialization
+@using BusinessLogic.Data.Enums.Knowledge
+@using BusinessLogic.ExternalData
+@using BusinessLogic.ExternalData.Knowledge
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Groups
+@using StudyLanguages.Models.Knowledge
+@using StudyLanguages.Models.Main
+@using HtmlHelper = StudyLanguages.Helpers.OurHtmlHelper
+@model StudyLanguages.Models.Groups.GroupModel
+@{
+    const string ELEM1 = "ELEM1";
+    const string ELEM2 = "ELEM2";
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+
+    var sectionId = (SectionId)ViewBag.ActiveItem;
+
+    string titlePattern = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.ManualTrainer, TemplateId.Title, Model.GroupName, "{0}", "{1}");
+    string keywordsPattern = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.ManualTrainer, TemplateId.Keywords, Model.GroupName, "{0}", "{1}");
+    string descriptionPattern = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.ManualTrainer, TemplateId.Description, Model.GroupName, "{0}", "{1}");
+
+    var groupInfo = (GroupInfo) ViewBag.GroupInfo;
+
+    string patternUrl = Url.Action("ShowSpecialItem", groupInfo.ControllerName, 
+        new { group = Model.GroupName + "/", elem1 = ELEM1, elem2 = ELEM2 + "/" }, Request.Url.Scheme);
+    patternUrl = patternUrl.Replace(ELEM1, "{0}").Replace(ELEM2, "{1}");
+
+    string altPattern = groupInfo.Alt;
+    string lowerManyItemsText = groupInfo.LowerManyElems;
+
+    SourceWithTranslation current = Model.GetCurrent();
+    string sourceText = current.Source.Text;
+    string translationText = current.Translation.Text;
+
+    ViewBag.Title = string.Format(titlePattern, sourceText, current.Translation.Text);
+    ViewBag.Keywords = string.Format(keywordsPattern, sourceText, translationText);
+    ViewBag.Description = string.Format(descriptionPattern, sourceText, translationText);
+
+    var javaScriptSerializer = new JavaScriptSerializer();
+    string @groupElements = javaScriptSerializer.Serialize(Model.ElemsWithTranslations);
+
+    string displayCssImage = Model.HasImage ? "inline" : "none";
+
+    string imagePattern = UrlBuilder.GetImageUrlById(Request, groupInfo.ControllerName, "{0}");
+    string imageUrl = string.Format(imagePattern, Model.Id);
+    string imageAlt = string.Format(altPattern, sourceText, translationText);
+
+    var speakerType = (int) Model.SpeakerDataType;
+    var knowledgeDataType = Model.KnowledgeDataType;
+    
+    var firstLink = Model.GetFirstLink(patternUrl);
+    var prevLink = Model.GetPrevLink(patternUrl);
+    var nextLink = Model.GetNextLink(patternUrl);
+    var lastLink = Model.GetLastLink(patternUrl);
+
+    string speakTip = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.ManualTrainer, TemplateId.SpeakTip);
+    bool canPronounce = WebSettingsConfig.Instance.CanPronounce;
+} 
+
+<div id="contentContainerId" class="row">
+    <ol class="breadcrumb our-breadcrumb breadcrumb-with-controls">
+        <li>@Html.ActionLink("Все темы", "Index", groupInfo.BaseControllerName)</li>
+        <li>
+            <a href="@Url.Action("Index", groupInfo.ControllerName, new {group = Model.GroupName + "/"})">Все @groupInfo.LowerManyElems на тему &laquo;@Model.GroupName&raquo;</a>
+        </li>
+        <li class="active">Тренажер @groupInfo.LowerOneElem на тему &laquo;@Model.GroupName&raquo;</li>
+        <li class="visual-btn-translation-container li-without-divider">
+            <a href="@CommonConstants.EMPTY_LINK" onclick=" return InnerGroupController.Shuffle(); " class="btn btn-info btn-xs" title="Нажмите, чтобы перемешать @lowerManyItemsText">Перемешать @lowerManyItemsText</a>
+        </li>
+        @if (canPronounce) {
+            <li title="@speakTip" class="auto-speak-checkbox li-without-divider">                                                                                                                                                            
+                <label class="checkbox clickable-element thin-text checkbox-in-breadcrumb">
+                    <input type="checkbox" autocomplete="off" class="clickable-element" id="autoPronounce">Произносить при переходе
+                </label>
+            </li>
+        }
+    </ol>
+    <div class="pager our-pager">
+        <ul>
+            <li id="firstBtn" class="@firstLink.Class">
+                <a href="@firstLink.Url" onclick=" return InnerGroupController.MoveToFirst(); ">&laquo; @firstLink.Text</a>
+            </li>
+            <li id="prevBtn" class="@prevLink.Class">
+                <a href="@prevLink.Url" onclick=" return InnerGroupController.MoveToPrev(); ">&#8249; @prevLink.Text</a>
+            </li>
+            <li class="pager-info-panel">
+                <input type="text" value="1" class="pager-page-number" title="Введите номер на который хотите перейти"> из @Model.ElemsWithTranslations.Count
+                <div id="slide_show_btn" class="clickable-element glyphicon glyphicon-pause trainer-panel-btn"></div>
+                @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel {DataId = @current.Id, DataType = knowledgeDataType, IsVisible = true, ClassName = "trainer-panel-btn trainer-side-margin"})
+            </li>
+            <li id="nextBtn" class="@nextLink.Class">
+                <a href="@nextLink.Url" onclick=" return InnerGroupController.MoveToNext(); ">@nextLink.Text &#8250;</a>
+            </li>
+            <li id="lastBtn" class="@lastLink.Class">
+                <a href="@lastLink.Url" onclick=" return InnerGroupController.MoveToLast(); ">@lastLink.Text &raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <h1 id="sourceContainerId" class="trainer-h1">@Html.Raw(HtmlHelper.GetSpeakerHtml(current.Source, Model.SpeakerDataType))</h1>
+    <p><a href="@CommonConstants.EMPTY_LINK" id="translationToogleId" onclick=" return InnerGroupController.ToogleTranslation(); " class="btn btn-info btn-lg">Спрятать перевод &raquo;</a></p>
+    <h2 id="translatedContainerId" class="trainer-h2">@Html.Raw(HtmlHelper.GetSpeakerHtml(current.Translation, Model.SpeakerDataType))</h2>
+    <div class="word-image">
+        <img id="imageContainerId" style="display: @displayCssImage" src="@imageUrl" alt="@imageAlt" class="word-image">
+    </div>
+    @RenderBody()
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Url: '@patternUrl',
+            Title: '@titlePattern',
+            Keywords: '@keywordsPattern',
+            Description: '@descriptionPattern',
+            EmptyLink: '@CommonConstants.EMPTY_LINK',
+            Image: '@imagePattern',
+            ImageAlt: '@altPattern',
+            SpeakerType: @speakerType
+        };
+        ServerData.KnowledgeDataType = @((int) knowledgeDataType);
+        ServerData.Elements = @Html.Raw(@groupElements);
+        ServerData.Languages = {
+            from: @Html.Raw(@Model.JsLanguageFrom),
+            to: @Html.Raw(@Model.JsLanguageTo)
+        };
+        @RenderSection("inlineScripts", required: false);
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/InnerGroup.js")
+}

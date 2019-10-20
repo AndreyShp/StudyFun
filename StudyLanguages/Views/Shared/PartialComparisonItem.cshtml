@@ -1,0 +1,65 @@
+﻿@using BusinessLogic.Data.Enums.Knowledge
+@using BusinessLogic.ExternalData.Comparisons
+@using BusinessLogic.Helpers
+@using BusinessLogic.Validators
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Knowledge
+@model BusinessLogic.ExternalData.Comparisons.ComparisonItemForUser
+@{
+    bool hasDescription = !string.IsNullOrWhiteSpace(Model.Description);
+    bool hasRules = EnumerableValidator.IsNotEmpty(Model.Rules);
+
+    Func<int, string> colorGenerator = index => {
+        if (index % 2 == 0) {
+            return string.Empty;
+        }
+        return "#e0e0ff";
+    };
+
+    string id = ViewBag.ItemId;
+}
+
+<div id="@id" class="col-md-6 partial-comparison-item-container">
+    <h4>@Model.Title @if (Model.HasTranslatedTitle) {
+                         @Html.Raw("&ndash; " + @Model.TitleTranslated)
+                     }
+    </h4>
+    @if (hasDescription) {
+        <p>@TextFormatter.AppendCharIfNeed(Model.Description)</p>
+    }
+    @if (hasRules) {
+        <p>
+            @Html.Raw(Model.GetRuleHeader()) 
+        </p>
+        <ol>
+            @for (var i = 0; i < Model.Rules.Count; i++) {
+                ComparisonRuleForUser rule = Model.Rules[i];
+                <li style="background-color: @colorGenerator(i);" @if (Model.IsOneRule) {
+                                @:class='partial-comparison-one-rule' 
+                            }>
+                    <div>@TextFormatter.AppendCharIfNeed(rule.Description)</div>
+                    @if (EnumerableValidator.IsNotEmpty(rule.Examples))
+                    {
+                        <ul class="partial-comparison-examples-container">
+                            @foreach (ComparisonRuleExampleForUser example in @rule.Examples)
+                            {
+                                <li style="margin-top: 8px">
+                                    <div data-example-container=''>
+                                        @Html.Raw(
+                                            OurHtmlHelper.GetSpeakerHtml(example.Example.Source, SpeakerDataType.Sentence)
+                                            + " &ndash; "
+                                            + OurHtmlHelper.GetSpeakerHtml(example.Example.Translation, SpeakerDataType.Sentence))
+                                        @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel { DataId = example.Example.Id, DataType = KnowledgeDataType.SentenceTranslation, IsVisible = true })
+                                    </div>
+                                    @if (!string.IsNullOrWhiteSpace(example.Description)) {
+                                        <div class="partial-comparison-example-description">Пояснение к примеру: @TextFormatter.AppendCharIfNeed(example.Description)</div>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ol>
+    }
+</div>

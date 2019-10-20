@@ -1,0 +1,1 @@
+﻿TrainerController={Init:function(){var n=new SmartTrainer({setMarkUrl:ServerData.GetPath(ServerData.Patterns.Urls.SetMark),loop:!0});n.SetItems(ServerData.Items)}},$(function(){TrainerController.Init()});

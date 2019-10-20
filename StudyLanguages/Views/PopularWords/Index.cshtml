@@ -1,0 +1,123 @@
+﻿@using System.Web.Script.Serialization
+@using BusinessLogic.Export
+@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Knowledge
+@using StudyLanguages.Models.Sales
+@model PopularItemsModel
+@{
+    const SectionId SECTION_ID = SectionId.PopularWord;
+    ViewBag.ActiveItem = SECTION_ID;
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.Description);
+    
+    var javaScriptSerializer = new JavaScriptSerializer();
+    string elems = javaScriptSerializer.Serialize(Model.ElemsWithTranslations);
+    var speakerType = (int)Model.SpeakerDataType;
+    var knowledgeDataType = Model.KnowledgeDataType;
+
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.Header);
+    string speakTip = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.SpeakTip);
+    bool canPronounce = WebSettingsConfig.Instance.CanPronounce;
+
+    var urlsByTypes = new Dictionary<DocumentType, string> {
+                    {DocumentType.Pdf, Url.Action("Download", Model.ControllerName, new {type = DocumentType.Pdf})},
+                    {DocumentType.Txt, Url.Action("Download", Model.ControllerName, new {type = DocumentType.Txt})},
+                };
+    var downloadBtnModel = new DownloadBtnModel("Скачать&nbsp;минилекс&nbsp;" + Model.LowerOneElem, "минилекс", urlsByTypes);
+}
+
+<div id="contentContainerId" class="row">
+    <h3>@header</h3>
+    @*<div class="text-left">
+        <p>Когда Вы только приступаете к изучению языка, то перед Вами стоит задача пополнения словарного запаса. Но в каждом языке не одна сотня тысяч слов. Какие из них учить в первую очередь? В решении данного вопроса помогает минилекс Гуннемарка.</p>
+        <p>Эрик Гуннемарк, шведский полиглот, анализируя свой опыт изучения языков, определил универсальный минимум, которым следует овладеть прежде всего. Универсальный минимальный запас слов он назвал термином &quot;минилекс&quot;.</p>
+        <p>Независимо от того, какой иностранный язык Вы изучаете, Вы можете пользоваться указанным списком. Овладев минилексом, Вы сможете понимать до 80% текста.<p>
+    </div>  *@                                                                                                                                                     
+    <div style="clear: both;">
+        <div class="col-md-8 col-md-offset-2">
+            <table class="narrow-container-center" style="margin-top:0 !important;">
+                <tr>
+                    <td style="width:250px;min-width: 230px;">
+                        @Html.Partial("PartialDownloadBtn", downloadBtnModel)
+                    </td>
+                    @*<td style="width:120px;">
+                        @Html.ActionLink("Карточки " + @groupInfo.LowerOneElem, "Index", trainerControllerName, new {group = Model.GroupName}, null)
+                    </td>
+                    <td style="text-align:left;width:165px">
+                        @Html.ActionLink("Ручной тренажер " + @groupInfo.LowerOneElem, "Trainer", controllerName, new {group = Model.GroupName + "/"}, null)
+                    </td>*@
+                    @if (canPronounce) {
+                        <td>
+                            <label class="checkbox pull-left clickable-element thin-text checkbox-in-breadcrumb" style="width: 210px;" title="@speakTip">
+                                <input type="checkbox" id="autoPronounce" autocomplete="off" class="clickable-element"> Произносить при наведении
+                            </label>
+                        </td>
+                    }
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div style="clear:both;">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <table class="table table-striped narrow-container-center text-left">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>@Model.TableHeader</th>
+                        <th>Перевод</th>
+                        <th>@*@Html.Partial("PartialUserKnowledge", new KnowledgePanelModel { IsMany = true, IsVisible = true, DataType = knowledgeDataType })*@</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int number = 0;
+                        foreach (SourceWithTranslation item in Model.ElemsWithTranslations) {
+                            ++number;
+                            <tr class="row-with-data">
+                                <td>@number</td>
+                                <td class="source">
+                                    <span data-text="@item.Source.Text">@Html.Raw(OurHtmlHelper.GetSpeakerHtml(item.Source, Model.SpeakerDataType))</span>
+                                </td>
+                                <td class="translation">
+                                    <span data-text="@item.Translation.Text">@Html.Raw(OurHtmlHelper.GetSpeakerHtml(item.Translation, Model.SpeakerDataType))</span>
+                                </td>
+                                <td>
+                                    @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel { DataId = item.Id, DataType = knowledgeDataType, IsVisible = true })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            LowerManyItems: '@Model.LowerManyElems',
+            SpeakerType: @speakerType
+        };
+        ServerData.KnowledgeDataType = @((int) knowledgeDataType);
+        ServerData.Elements = @Html.Raw(elems);
+        ServerData.Languages = {
+            from: @Html.Raw(@Model.JsLanguageFrom),
+            to: @Html.Raw(@Model.JsLanguageTo)
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/PopularItemsAll.js")
+}

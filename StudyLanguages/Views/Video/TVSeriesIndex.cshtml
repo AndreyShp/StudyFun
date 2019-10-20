@@ -1,0 +1,42 @@
+﻿@using BusinessLogic.ExternalData
+@using BusinessLogic.Mailer
+@using StudyLanguages.Configs
+@using StudyLanguages.Models.Video
+@model TVSeriesModel
+
+@{
+    const SectionId SECTION_ID = SectionId.TVSeries;
+    
+    ViewBag.ActiveItem = SECTION_ID;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+    
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Title, Model.Title, Model.OrigTitle);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Keywords, Model.Title, Model.OrigTitle);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Description, Model.Title, Model.OrigTitle);
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Header, Model.Title, Model.OrigTitle);
+
+    string supportMail = MailAddresses.SUPPORT;
+    //TODO: убрать сообщение, когда все серии будут добавлены
+}
+
+<div class="alert alert-success" role="alert">
+    <h4>Уважаемые пользователи! Раздел будет постепенно наполняться новыми сериями.</h4>
+    <p><a href="mailto:@supportMail">Напишите нам</a> или воспользуйтесь @Html.Partial("PartialFeedback", "формой обратной связи"), если хотите помочь в наполнение раздела.</p>
+</div>
+
+<h3 class="h3-groups">@Html.Raw(header)</h3>
+<div class="row">
+    @foreach (var item in Model.Series) {
+        <div class="col-sm-6 col-md-3" style="width: auto;">
+            <a class="thumbnail cover-text" title='Посмотреть серию «@item.Title»' href="@item.Url">
+                <div class="thumbnail" style="margin-bottom: 0;">
+                    <div class="caption">
+                        <h3>Серия @item.Episode</h3>
+                    </div>
+                    <img src="@item.ImageUrl" alt="Серия @item.Episode («@item.Title»)" style="display: block; height: 150px; width: auto;">
+                </div>
+            </a>
+        </div>
+    }
+</div>

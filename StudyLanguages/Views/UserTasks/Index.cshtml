@@ -1,0 +1,61 @@
+﻿@using BusinessLogic.ExternalData
+@using BusinessLogic.Formatters
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Helpers.Formatters
+@model StudyLanguages.Models.User.UserTasksModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    const SectionId SECTION_ID = SectionId.UserTasks;
+    ViewBag.ActiveItem = SECTION_ID;
+    ViewBag.IsCentered = false;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.Description);
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Index, TemplateId.Header);
+}
+
+<div id="contentContainerId" class="row">
+    <h3 class="h3-user-tasks">@header</h3>
+    @if (!Model.IsBanned) {
+        @Html.ActionLink("Добавить свое задание", "NewTaskIndex", RouteConfig.USER_TASKS_CONTROLLER)
+    }
+    <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>Задание</th>
+            <th>Размещено<th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach(var task in Model.Tasks) {
+            <tr>
+                <td>
+                    @Html.ActionLink(@OurHtmlHelper.HtmlInOneLineAndGetSubstr(task.Text), "DetailIndex", RouteConfig.USER_TASKS_CONTROLLER, new { authorId = task.AuthorId, key = task.Id }, null)
+                    @if (Model.NeedHighlightTask(task)) {
+                        <span class="user-task-highlight text-right" title="Ваше последнее добавленное задание"><span class="glyphicon glyphicon-ok user-task-new-icon"></span>новое задание</span>
+                    }
+                </td>
+                <td><span class="user-task-publication-time text-right">@DateTimeFormatter.ToDDMMYYYY_HHMMSS(task.CreationDate)</span><td>
+            </tr>
+        }
+      </tbody>
+    </table>
+</div>
+
+@*@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                AddTask: '@addTask'
+            }
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeFile("~/Scripts/Views/UserTasks.js")
+}*@

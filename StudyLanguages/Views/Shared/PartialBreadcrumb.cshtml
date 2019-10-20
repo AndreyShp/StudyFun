@@ -1,0 +1,35 @@
+﻿@using StudyLanguages.Models
+@model List<StudyLanguages.Models.BreadcrumbItem>
+@{
+    Func<BreadcrumbItem, string> attrGetter = item => {
+        var result = "";
+        if (item.IsActive) {
+            result = "active";
+        }
+        if (item.WithoutDelimiter) {
+            result += " li-without-divider";
+        }
+        if (!string.IsNullOrEmpty(item.LiClasses)) {
+            result += " " + item.LiClasses;
+        }
+        
+        if (!string.IsNullOrEmpty(result)) {
+            result = "class=\"" + result.Trim() + "\"";
+        }
+        return result;
+    };
+}
+
+<ol class="breadcrumb our-breadcrumb">
+    @foreach (BreadcrumbItem item in Model) {
+        object liContent;
+        if (!string.IsNullOrEmpty(item.ControllerName) && !string.IsNullOrEmpty(item.Action) && !string.IsNullOrEmpty(item.Title)) {
+            liContent = @Html.ActionLink(item.Title, item.Action, item.ControllerName, item.RouteValues, item.HtmlAttributes);
+        } else if (!string.IsNullOrEmpty(item.Html)) {
+            liContent = @Html.Raw(item.Html);
+        } else {
+            liContent = @Html.Raw(item.Title);
+        }
+        <li @Html.Raw(attrGetter(item))>@liContent</li>
+    }
+</ol>

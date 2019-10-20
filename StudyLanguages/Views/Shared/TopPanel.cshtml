@@ -1,0 +1,89 @@
+﻿@using BusinessLogic.ExternalData
+@using BusinessLogic.Validators
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Filters
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Main
+@using StudyLanguages.Models.TopPanel
+@model string
+@{
+    const string COMPANY_NAME = "Study fun";
+
+    SectionId currentMenuItem = ViewBag.ActiveItem;
+    string additionalBrandStyle = currentMenuItem == SectionId.Main ? "color: #fff;" : "";
+    //новогодняя тема
+    //additionalBrandStyle += "background: url('" + Url.Content("~/Content/images/NewYearTheme.png") + "') no-repeat scroll 35px 28px;";
+    //23 февраля тема
+    /*additionalBrandStyle += "background: url('" + Url.Content("~/Content/images/23FebraryTheme.png") + "') no-repeat scroll 30px 31px;";*/
+    //8 марта
+    /*"background: url('" + Url.Content("~/Content/images/8MarchTheme.png") + "') no-repeat scroll 40px 30px;";*/
+    //additionalBrandStyle += "background: url('" + Url.Content("~/Content/images/9may.png") + "') no-repeat scroll 33px 20px;";
+
+    const string BRAND_TITLE = /*"С Новым годом! Желаем счастья, здоровья, чудес и новых знаний!";*/
+    "Study fun :)"; //"С 72-ой годовщиной Великой Победы! Слава народу-победителю! Мы помним! Мы гордимся! Спасибо, дорогие ветераны.";
+    /*"Дорогие, милые, любимые женщины! Поздравляем с Международным женским днем! Желаем вам счастья, любви, здоровья, крепкой семьи!"*/
+    /*"С Днём защитника Отечества!"*/ 
+
+    string brandUrl = Url.Action("Index", RouteConfig.MAIN_CONTROLLER_NAME);
+    string brandImage = Url.Content("~/Content/images/" + WebSettingsConfig.Instance.Logo);
+
+    var menuItems = MenuItem.GetMenuItems(WebSettingsConfig.Instance.AvailableSections);
+
+    string profileUrl = Url.Action("Index", RouteConfig.PROFILE_CONTROLLER);
+
+    var userId = new UserIdAttribute().GetUserId(Context);
+}
+
+<div class="navbar-header">
+    <div title="@Model" class="upper-share-panel yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="vkontakte,twitter,facebook"></div>
+    <a href="@brandUrl" title="@BRAND_TITLE" style="@additionalBrandStyle" class="navbar-brand brand-name"><img class="brand-image" src="@brandImage" width="16" height="16" />@COMPANY_NAME</a>
+    <ul class="nav navbar-nav">
+        @foreach(var menuItem in menuItems) {
+            if (menuItem.HasChildren()) {
+                <li @if (menuItem.HasChildWithSectionId(currentMenuItem)) {
+                    @:class='dropdown active'
+                } else {
+                    @:class='dropdown'
+                }>
+                <a href="@CommonConstants.EMPTY_LINK" class="dropdown-toggle" data-toggle="dropdown">@Html.Raw(menuItem.Title)</a>
+                    <ul class="dropdown-menu">
+                        @foreach(var childItem in menuItem.Children) {
+                            if (childItem.NeedDivider) {
+                                <li class="divider"></li>
+                            }
+                            <li @if (childItem.SectionId == currentMenuItem) {
+                                    @:class='active' 
+                                }>
+                                @Html.ActionLink(childItem.Title, childItem.Action, childItem.Controller, childItem.RouteValues, null)
+                            </li>
+                        }
+                    </ul>
+                </li>
+            } else {
+                <li @if (menuItem.SectionId == currentMenuItem) {
+                        @:class='active'
+                    }>
+                    @if (string.IsNullOrEmpty(menuItem.Class)) {
+                        @Html.ActionLink(menuItem.Title, menuItem.Action, menuItem.Controller, menuItem.RouteValues, null)
+                    } else {
+                        <a href="@Url.Action(menuItem.Action, menuItem.Controller, menuItem.RouteValues, Request.Url.Scheme)" class="@menuItem.Class">@Html.Raw(menuItem.Title)</a>
+                    }
+                </li>
+            }
+        }
+        <li>
+            <div class="btn-group language-container">
+                <button class="btn" title="Нажмите для изменения языков" id="languagesPanel" onclick=" LanguagePanel.OnChangeLanguage(); " style="display: none;"></button>
+            </div>
+            @Html.Partial("PartialInterviewBtn")
+            @if (IdValidator.IsValid(userId)) {
+                <div class="profile-icon">
+                    <a href="@profileUrl" title="Ваша персональная информация">
+                        <span class="glyphicon glyphicon-user"><span class="profile-icon-text">Вы</span></span>
+                    </a>
+                </div>
+            }
+        </li>
+    </ul>
+</div>

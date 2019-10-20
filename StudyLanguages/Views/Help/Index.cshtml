@@ -1,0 +1,28 @@
+﻿@using BusinessLogic.ExternalData
+@using BusinessLogic.Mailer
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Models.Main
+@{
+    const string HEADER = "3 способа помочь сайту";
+    ViewBag.Title = HEADER;
+    ViewBag.Keywords = "Помощь проекту, помощь сайту, способы помощи";
+    ViewBag.Description = HEADER + ". Вы можете помочь проекту!";
+    ViewBag.IsCentered = false;
+    ViewBag.ActiveItem = SectionId.No;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string supportMail = MailAddresses.SUPPORT;
+    string domainWithProtocol = WebSettingsConfig.Instance.DomainWithProtocol;
+}
+
+<h3 class="text-center">@HEADER</h3>
+<p>Уважаемый пользователь! Вы можете помочь проекту!</p>
+<ol>
+    <li>Расскажите о нас друзьям и знакомым. Самый простой и быстрый способ – это послать ссылку на сайт: <a href="@domainWithProtocol">@domainWithProtocol</a>.<br />
+    Делитесь понравившейся страницей в социальных сетях! Один клик на панели внизу каждой страницы <img src="~/Content/images/HelpSharePanel.png" alt="Панель социальных сетей" /> и Вы окажете сайту неоценимую услугу.</li>
+    <li>Нам важно Ваше мнение! Расскажите нам чего Вам не хватает на сайте. Пишите плюсы, минусы сервиса и делитесь идеями на @Html.ActionLink("специальной странице", "Index", RouteConfig.COMMENT_CONTROLLER) или с помощью @Html.Partial("PartialFeedback", "формы обратной связи").</li>
+    <li>Обнаружив в тексте ошибку или опечатку, <a href="mailto:@supportMail">напишите нам письмо</a> или воспользуйтесь @Html.Partial("PartialFeedback", "формой обратной связи").</li>
+</ol>
+<p>Спасибо всем неравнодушным!</p>
+<p class="text-right help-regards">Команда StudyFun желает Вам каждый день узнавать что-то новое!</p>

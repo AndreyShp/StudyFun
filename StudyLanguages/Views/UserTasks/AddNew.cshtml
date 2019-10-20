@@ -1,0 +1,53 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Main
+@using StudyLanguages.Models.User
+@model List<string>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    const SectionId SECTION_ID = SectionId.UserTasks;
+    ViewBag.ActiveItem = SECTION_ID;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.AddNew, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.AddNew, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.AddNew, TemplateId.Description);
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.AddNew, TemplateId.Header);
+
+    var addTask = Url.Action("AddTask", RouteConfig.USER_TASKS_CONTROLLER, null, Request.Url.Scheme);
+}
+
+<div id="contentContainerId" class="row">
+    <ol class="breadcrumb our-breadcrumb">
+        <li>@Html.ActionLink("Все задания", "Index", RouteConfig.USER_TASKS_CONTROLLER)</li>
+        <li class="active">Добавление нового задания</li>
+    </ol>
+    <h3 class="h3-user-tasks">@header</h3>
+    <div class="form-group">
+        <label for="taskInput">Введите задание которое помогут выполнить другие пользователи: <sup style="color:#d43f3a" title="Обязательно для заполнения">*</sup></label>
+        <textarea class="form-control" rows="10" required placeholder="Введите задание для других пользователей" id="taskInput" autofocus="true" tabindex="1" maxlength="@UserTasksSettings.TASK_MAX_LENGTH"></textarea>
+    </div>
+    <button type="button" class="btn btn-success" tabindex="2" id="addNewTaskBtn">Добавить задание</button>
+    @Html.Partial("PartialAttentionMessage", Messages.ATTENTION_ADD_USER_TASK_MESSAGE)
+    <div id="messageContainer" style="display:none;" class="user-tasks-message"></div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                AddTask: '@addTask'
+            }
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/UserTasksNew.js")
+}

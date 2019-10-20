@@ -1,0 +1,19 @@
+﻿@using StudyLanguages
+@model StudyLanguages.Models.Sales.FailPaymentModel
+@{    
+    ViewBag.ActiveItem = Model.PageRequiredData.SectionId;
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+
+    ViewBag.Title = Model.PageRequiredData.Title;
+    ViewBag.Keywords = Model.PageRequiredData.Keywords;
+    ViewBag.Description = Model.PageRequiredData.Description;
+}
+
+<div id="contentContainerId" class="row">
+    <h3 class="text-center">@Model.Header</h3>
+    <p>
+        Если Вы оплатили покупку, но страница для скачивания Вам не открылась, Вы можете скачать покупку @Html.ActionLink("здесь", "Check", RouteConfig.PAYMENT_CONTROLLER).
+    </p>
+</div>

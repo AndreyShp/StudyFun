@@ -1,0 +1,46 @@
+﻿@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Groups
+@model GroupInfo
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+
+    var sectionId = Model.SectionId;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.AddNew, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.AddNew, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.AddNew, TemplateId.Description);
+
+    string baseControllerName = Model.BaseControllerName;
+    string controllerName = Model.ControllerName;
+
+    string urlAddNew = Url.Action("Add", controllerName, null, Request.Url.Scheme);
+
+    string header = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.AddNew, TemplateId.Header);
+} 
+
+<div id="contentContainerId" class="row">
+    <ol class="breadcrumb our-breadcrumb">
+        <li>@Html.ActionLink("Все темы", "Index", baseControllerName)</li>
+        <li class="active">@header</li>
+    </ol>
+    <h3>@Html.Raw(header)</h3>
+    <div class="container">
+        <div class="col-md-10">
+        
+        </div>
+    </div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            AddUrl: '@urlAddNew',
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/AddNewGroup.js")
+}

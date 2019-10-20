@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FA8D127D-4384-4E3E-9663-DB31D31B2BEA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BusinessLogic</RootNamespace>
+    <AssemblyName>BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DBreeze">
+      <HintPath>..\packages\DBreeze.1.64.0\lib\net45\DBreeze.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\packages\RavenDB.Database.1.0.989\lib\net40\Esent.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>..\packages\RavenDB.Database.1.0.989\lib\net40\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\packages\RavenDB.Database.1.0.989\lib\net40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Spatial">
+      <HintPath>..\packages\RavenDB.Database.1.0.989\lib\net40\Lucene.Net.Contrib.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SpellChecker">
+      <HintPath>..\packages\RavenDB.Database.1.0.989\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio">
+      <HintPath>..\External\NAudio\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WindowsMediaFormat">
+      <HintPath>..\External\NAudio\NAudio.WindowsMediaFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\StudyLanguages\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="yeti.mmedia">
+      <HintPath>..\External\yeti.mmedia.dll</HintPath>
+    </Reference>
+    <Reference Include="yeti.mp3">
+      <HintPath>..\External\yeti.mp3.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataQuery\Auxiliaries\AllMaterialsQuery.cs" />
+    <Compile Include="DataQuery\Auxiliaries\IInterviewsQuery.cs" />
+    <Compile Include="DataQuery\Auxiliaries\InterviewsQuery.cs" />
+    <Compile Include="DataQuery\Auxiliaries\CrossReferencesQuery.cs" />
+    <Compile Include="DataQuery\Auxiliaries\ICrossReferencesQuery.cs" />
+    <Compile Include="DataQuery\Auxiliaries\IdNameCache.cs" />
+    <Compile Include="DataQuery\BaseQuery.cs" />
+    <Compile Include="DataQuery\Comparisons\IComparisonsQuery.cs" />
+    <Compile Include="DataQuery\Comparisons\ComparisonsQuery.cs" />
+    <Compile Include="DataQuery\ICleaner.cs" />
+    <Compile Include="DataQuery\Money\ISalesSettings.cs" />
+    <Compile Include="DataQuery\Money\PurchasedGoodsQuery.cs" />
+    <Compile Include="DataQuery\Money\SalesSettings.cs" />
+    <Compile Include="DataQuery\NoSql\DBEngine.cs" />
+    <Compile Include="DataQuery\NoSql\KeyValueRepository.cs" />
+    <Compile Include="DataQuery\Knowledge\IKnowledgeGeneratorQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\IKnowledgeItem.cs" />
+    <Compile Include="DataQuery\Knowledge\KnowledgeGeneratorQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\KnowledgesParser.cs" />
+    <Compile Include="DataQuery\Knowledge\NextTimeCalculator.cs" />
+    <Compile Include="DataQuery\Knowledge\UserRepetitionVisualWordsQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\UserRepetitionGroupPhrasesQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\UserRepetitionGroupWordsQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\IUserRepetitionKnowledgeQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\UserRepetitionKnowledgeQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\IUserRepetitionIntervalQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\UserRepetitionIntervalQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\ItemsSearcher.cs" />
+    <Compile Include="DataQuery\Knowledge\IUserKnowledgeQuery.cs" />
+    <Compile Include="DataQuery\Knowledge\UserKnowledgeQuery.cs" />
+    <Compile Include="DataQuery\NoSql\SortOrder.cs" />
+    <Compile Include="DataQuery\Sentences\IPuzzleSentencesQuery.cs" />
+    <Compile Include="DataQuery\Sentences\PuzzleSentencesQuery.cs" />
+    <Compile Include="DataQuery\UserRepository\BanType.cs" />
+    <Compile Include="DataQuery\UserRepository\UserBanInfo.cs" />
+    <Compile Include="DataQuery\UserRepository\IRepositoryCache.cs" />
+    <Compile Include="DataQuery\UserRepository\RepositoryCache.cs" />
+    <Compile Include="DataQuery\UserRepository\Tasks\CommonTaskInfo.cs" />
+    <Compile Include="DataQuery\UserRepository\Tasks\BanRepository.cs" />
+    <Compile Include="DataQuery\UserRepository\Tasks\TaskComment.cs" />
+    <Compile Include="DataQuery\UserRepository\Tasks\UserTasksRepository.cs" />
+    <Compile Include="DataQuery\UserRepository\Texts\TextSeparator.cs" />
+    <Compile Include="DataQuery\UserRepository\Texts\UserTextsRepository.cs" />
+    <Compile Include="DataQuery\UserRepository\RepositoryFactory.cs" />
+    <Compile Include="DataQuery\UserRepository\Texts\TextWord.cs" />
+    <Compile Include="DataQuery\UsersQuery.cs" />
+    <Compile Include="DataQuery\IUsersQuery.cs" />
+    <Compile Include="DataQuery\Ratings\IRatingByIpsQuery.cs" />
+    <Compile Include="DataQuery\Ratings\IRatingQuery.cs" />
+    <Compile Include="DataQuery\Ratings\RatingByIpsQuery.cs" />
+    <Compile Include="DataQuery\IImageQuery.cs" />
+    <Compile Include="DataQuery\IRandomPortions.cs" />
+    <Compile Include="DataQuery\BaseRandomQuery.cs" />
+    <Compile Include="DataQuery\Sentences\SentenceWordsQuery.cs" />
+    <Compile Include="DataQuery\Sentences\ISentenceWordsQuery.cs" />
+    <Compile Include="DataQuery\Video\TVSeriesQuery.cs" />
+    <Compile Include="DataQuery\Video\IVideosQuery.cs" />
+    <Compile Include="DataQuery\Video\VideosQuery.cs" />
+    <Compile Include="DataQuery\Words\IPopularWordsQuery.cs" />
+    <Compile Include="DataQuery\Words\PopularWordsQuery.cs" />
+    <Compile Include="Data\Auxiliary\Interview.cs" />
+    <Compile Include="Data\Auxiliary\CrossReference.cs" />
+    <Compile Include="Data\Comparison\ComparisonItem.cs" />
+    <Compile Include="Data\Comparison\ComparisonRule.cs" />
+    <Compile Include="Data\Comparison\ComparisonRuleExample.cs" />
+    <Compile Include="Data\Comparison\GroupComparison.cs" />
+    <Compile Include="Data\Enums\TVSeriesDataType.cs" />
+    <Compile Include="Data\Enums\PuzzleSentenceSource.cs" />
+    <Compile Include="Data\Enums\Money\GoodsId.cs" />
+    <Compile Include="Data\Enums\VideoType.cs" />
+    <Compile Include="Data\Enums\Money\PurchasedStatus.cs" />
+    <Compile Include="Data\Enums\Money\PaymentSystem.cs" />
+    <Compile Include="Data\Enums\Money\PaymentStatus.cs" />
+    <Compile Include="Data\Enums\PopularWordType.cs" />
+    <Compile Include="Data\Enums\KnowledgeMark.cs" />
+    <Compile Include="Data\Enums\Knowledge\RepetitionType.cs" />
+    <Compile Include="Data\Enums\Knowledge\KnowledgeSourceType.cs" />
+    <Compile Include="Data\Enums\Knowledge\KnowledgeAddStatus.cs" />
+    <Compile Include="Data\Enums\Knowledge\KnowledgeStatus.cs" />
+    <Compile Include="Data\Enums\Knowledge\KnowledgeDataType.cs" />
+    <Compile Include="Data\Knowledge\UserKnowledge.cs" />
+    <Compile Include="Data\Knowledge\UserRepetitionInterval.cs" />
+    <Compile Include="Data\Money\Payment.cs" />
+    <Compile Include="Data\Money\PurchasedGoods.cs" />
+    <Compile Include="Data\Sentence\PuzzleSentence.cs" />
+    <Compile Include="Data\User.cs" />
+    <Compile Include="Data\Enums\CrossReferenceType.cs" />
+    <Compile Include="Data\Video\TVSeries.cs" />
+    <Compile Include="Data\Video\VideoSentence.cs" />
+    <Compile Include="Data\Video\Video.cs" />
+    <Compile Include="Data\Word\PopularWord.cs" />
+    <Compile Include="Downloaders\ComparisonDownloader.cs" />
+    <Compile Include="Downloaders\GroupDataDownloader.cs" />
+    <Compile Include="Downloaders\GeneratedKnowledgeDownloader.cs" />
+    <Compile Include="Downloaders\VideoTextDownloader.cs" />
+    <Compile Include="Downloaders\PopularWordsDownloader.cs" />
+    <Compile Include="Downloaders\VisualDictionaryDownloader.cs" />
+    <Compile Include="Export\DocumentSettings.cs" />
+    <Compile Include="Export\DocumentType.cs" />
+    <Compile Include="Export\IFileGenerator.cs" />
+    <Compile Include="Export\Pdf\PdfGenerator.cs" />
+    <Compile Include="Export\DocumentationGenerator.cs" />
+    <Compile Include="Export\Pdf\PageEvents.cs" />
+    <Compile Include="Export\Pdf\PdfTextSettings.cs" />
+    <Compile Include="Export\TableData.cs" />
+    <Compile Include="Export\TableDataCell.cs" />
+    <Compile Include="Export\TextFormat.cs" />
+    <Compile Include="Export\TxtGenerator.cs" />
+    <Compile Include="Extensions\DateTimeExtension.cs" />
+    <Compile Include="ExternalData\Auxiliaries\InterviewAnswer.cs" />
+    <Compile Include="ExternalData\Auxiliaries\Interview.cs" />
+    <Compile Include="ExternalData\Auxiliaries\CrossReference.cs" />
+    <Compile Include="ExternalData\Comparisons\ComparisonForUser.cs" />
+    <Compile Include="ExternalData\Comparisons\ComparisonItemForUser.cs" />
+    <Compile Include="ExternalData\Comparisons\ComparisonRuleForUser.cs" />
+    <Compile Include="ExternalData\Comparisons\ComparisonRuleExampleForUser.cs" />
+    <Compile Include="ExternalData\Comparisons\AdditionalType.cs" />
+    <Compile Include="ExternalData\ISourceWithTranslation.cs" />
+    <Compile Include="ExternalData\Knowledge\GeneratedKnowledgeItem.cs" />
+    <Compile Include="ExternalData\Knowledge\UserRepetitionIntervalItem.cs" />
+    <Compile Include="ExternalData\Knowledge\UserKnowledgeStatistic.cs" />
+    <Compile Include="ExternalData\Knowledge\UserKnowledgeItem.cs" />
+    <Compile Include="ExternalData\OrderWordsInSearch.cs" />
+    <Compile Include="DataQuery\UserRepository\Tasks\UserTask.cs" />
+    <Compile Include="DataQuery\UserRepository\Texts\UserText.cs" />
+    <Compile Include="ExternalData\SentenceWithWords.cs" />
+    <Compile Include="ExternalData\Sales\PurchasedGoodsForUser.cs" />
+    <Compile Include="ExternalData\Sales\SalesItemForUser.cs" />
+    <Compile Include="ExternalData\SectionId.cs" />
+    <Compile Include="ExternalData\Videos\TVSeriesInfo.cs" />
+    <Compile Include="ExternalData\Videos\TVSeriesWatch.cs" />
+    <Compile Include="Formatters\DateTimeFormatter.cs" />
+    <Compile Include="Video\Subtitles\SubtitlesAnalyzer.cs" />
+    <Compile Include="ExternalData\Videos\Subtitle.cs" />
+    <Compile Include="Video\Subtitles\VideoEpisodesMatcher.cs" />
+    <Compile Include="Video\VideoTransformation.cs" />
+    <Compile Include="ExternalData\Videos\VideoForUser.cs" />
+    <Compile Include="Helpers\Caches\DiskCache.cs" />
+    <Compile Include="Helpers\ConverterEntities.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\LanguagesHelper.cs" />
+    <Compile Include="Helpers\IdGenerator.cs" />
+    <Compile Include="Helpers\Md5Helper.cs" />
+    <Compile Include="Helpers\SentencesSearchEngines\NullSentencesSearchEngine.cs" />
+    <Compile Include="Helpers\SentencesSearchEngines\ISentencesSearchEngine.cs" />
+    <Compile Include="Helpers\SentencesSearchEngines\SentencesSearchEngine.cs" />
+    <Compile Include="Helpers\SentencesSearchEngines\SentencesSearchEngineFactory.cs" />
+    <Compile Include="Helpers\TextFormatter.cs" />
+    <Compile Include="Helpers\TextProcessor.cs" />
+    <Compile Include="DataQuery\Words\ShuffleWordsQuery.cs" />
+    <Compile Include="Data\Enums\RatingPageType.cs" />
+    <Compile Include="Data\Enums\ShuffleType.cs" />
+    <Compile Include="Data\Rating\RatingByIp.cs" />
+    <Compile Include="Data\Sentence\SentenceWord.cs" />
+    <Compile Include="Data\Word\ShuffleWord.cs" />
+    <Compile Include="ExternalData\IPronunciation.cs" />
+    <Compile Include="ExternalData\PronunciationForUser.cs" />
+    <Compile Include="Data\PronunciationEntity.cs" />
+    <Compile Include="DataQuery\IPronunciationQuery.cs" />
+    <Compile Include="ExternalData\LanguageShortName.cs" />
+    <Compile Include="DataQuery\Representations\RepresentationsQuery.cs" />
+    <Compile Include="DataQuery\Representations\IRepresentationsQuery.cs" />
+    <Compile Include="Data\Enums\SentenceType.cs" />
+    <Compile Include="Data\Enums\WordType.cs" />
+    <Compile Include="Data\Enums\GroupType.cs" />
+    <Compile Include="DataQuery\ILanguagesQuery.cs" />
+    <Compile Include="DataQuery\Sentences\GroupSentencesQuery.cs" />
+    <Compile Include="DataQuery\Sentences\IGroupSentencesQuery.cs" />
+    <Compile Include="DataQuery\Sentences\ISentencesQuery.cs" />
+    <Compile Include="DataQuery\LanguagesQuery.cs" />
+    <Compile Include="DataQuery\Sentences\SentencesQuery.cs" />
+    <Compile Include="DataQuery\Words\WordTranslationsQuery.cs" />
+    <Compile Include="DataQuery\Words\IWordTranslationsQuery.cs" />
+    <Compile Include="DataQuery\GroupsQuery.cs" />
+    <Compile Include="DataQuery\Words\IGroupsQuery.cs" />
+    <Compile Include="DataQuery\Words\IGroupWordsQuery.cs" />
+    <Compile Include="DataQuery\Words\GroupWordsQuery.cs" />
+    <Compile Include="DataQuery\Words\IWordsQuery.cs" />
+    <Compile Include="DataQuery\Words\WordsQuery.cs" />
+    <Compile Include="Data\DbAdapter.cs" />
+    <Compile Include="Data\IDbAdapter.cs" />
+    <Compile Include="Data\Representation\RepresentationArea.cs" />
+    <Compile Include="Data\Representation\Representation.cs" />
+    <Compile Include="Data\Language.cs" />
+    <Compile Include="Data\Sentence\GroupSentence.cs" />
+    <Compile Include="Data\Word\GroupWord.cs" />
+    <Compile Include="Data\Group.cs" />
+    <Compile Include="Data\Word\WordsByPattern.cs" />
+    <Compile Include="Data\Word\WordTranslation.cs" />
+    <Compile Include="Data\Word\Word.cs" />
+    <Compile Include="Data\Sentence\Sentence.cs" />
+    <Compile Include="Data\Sentence\ShuffleSentence.cs" />
+    <Compile Include="Data\StudyLanguageContext.cs" />
+    <Compile Include="Data\Sentence\SentenceTranslation.cs" />
+    <Compile Include="ExternalData\GroupForUser.cs" />
+    <Compile Include="ExternalData\SortInfo.cs" />
+    <Compile Include="ExternalData\SourceWithTranslation.cs" />
+    <Compile Include="ExternalData\ISeries.cs" />
+    <Compile Include="ExternalData\Representations\Size.cs" />
+    <Compile Include="ExternalData\Representations\Point.cs" />
+    <Compile Include="ExternalData\Representations\RepresentationAreaForUser.cs" />
+    <Compile Include="ExternalData\Representations\RepresentationForUser.cs" />
+    <Compile Include="ExternalData\Words\WordWithTranslation.cs" />
+    <Compile Include="Helpers\RatingHelper.cs" />
+    <Compile Include="Helpers\Speakers\NullSpeaker.cs" />
+    <Compile Include="Helpers\Speakers\EnglishSpeaker.cs" />
+    <Compile Include="Helpers\Speakers\ISpeaker.cs" />
+    <Compile Include="Helpers\Speakers\SpeakerFactory.cs" />
+    <Compile Include="Helpers\Speakers\AudioConverter.cs" />
+    <Compile Include="Helpers\GroupingHelper.cs" />
+    <Compile Include="IConfigurable.cs" />
+    <Compile Include="Logger\LoggerQuery.cs" />
+    <Compile Include="Logger\LoggingType.cs" />
+    <Compile Include="Logger\LoggerName.cs" />
+    <Compile Include="Logger\LoggerWrapper.cs" />
+    <Compile Include="Logger\LoggingSource.cs" />
+    <Compile Include="Logger\LogEntry.cs" />
+    <Compile Include="Mailer\ExceptionsRegister.cs" />
+    <Compile Include="Mailer\MailAddresses.cs" />
+    <Compile Include="Mailer\Mailer.cs" />
+    <Compile Include="Mailer\MailerAuthInfo.cs" />
+    <Compile Include="Mailer\MailerConfig.cs" />
+    <Compile Include="PaymentSystems\RobokassaApi.cs" />
+    <Compile Include="PaymentSystems\RobokassaPaymentResult.cs" />
+    <Compile Include="PaymentSystems\RobokassaSecurityParams.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ExternalData\UserLanguages.cs" />
+    <Compile Include="SalesGenerator\Colors\ColorsMap.cs" />
+    <Compile Include="SalesGenerator\Colors\OurColor.cs" />
+    <Compile Include="SalesGenerator\Colors\Painter.cs" />
+    <Compile Include="SalesGenerator\Colors\PartImageCreator.cs" />
+    <Compile Include="SalesGenerator\Colors\PartImageData.cs" />
+    <Compile Include="SalesGenerator\Colors\SimilarColors.cs" />
+    <Compile Include="SalesGenerator\Colors\WordsWriter.cs" />
+    <Compile Include="SalesGenerator\AllMaterialsSalesGenerator.cs" />
+    <Compile Include="SalesGenerator\RepresentationsSalesGenerator.cs" />
+    <Compile Include="SalesGenerator\SalesCalculator.cs" />
+    <Compile Include="SalesGenerator\ZipCompressor.cs" />
+    <Compile Include="Singleton.cs" />
+    <Compile Include="UserUniqueId.cs" />
+    <Compile Include="Validators\EnumValidator.cs" />
+    <Compile Include="Validators\IdValidator.cs" />
+    <Compile Include="Validators\EnumerableValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lame_enc.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NLog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Video\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NLP\NLPWrapper\NLPWrapper.csproj">
+      <Project>{d5d29cd6-d59e-4564-b2c3-41f2a0a0380f}</Project>
+      <Name>NLPWrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

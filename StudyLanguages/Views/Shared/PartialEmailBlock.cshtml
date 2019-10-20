@@ -1,0 +1,13 @@
+﻿@using StudyLanguages.Models
+@model EmailBlockModel
+@*@{
+    
+}*@
+
+<div id="mailBlock" style="display: none;" class="@Model.Cls">
+    <div class="input-group email-field-container pull-left">
+        <span class="input-group-addon">@@</span>
+        <input type="text" class="form-control" placeholder="Адрес электронной почты" id="emailField" tabindex="1">
+    </div>
+    <button type="button" class="btn btn-success" tabindex="2" id="sendUniqueIdBtn">Отправить идентификатор на почту</button>
+</div>

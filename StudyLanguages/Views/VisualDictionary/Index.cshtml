@@ -1,0 +1,126 @@
+﻿@using System.Web.Script.Serialization
+@using BusinessLogic.Data.Enums.Knowledge
+@using BusinessLogic.Export
+@using BusinessLogic.ExternalData
+@using BusinessLogic.ExternalData.Representations
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Helpers.Formatters
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Knowledge
+@using StudyLanguages.Models.Main
+@using StudyLanguages.Models.Sales
+@model StudyLanguages.Models.VisualDictionaryModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+    ViewBag.ActiveItem = SectionId.VisualDictionary;
+    string name = Model.Representation.Title;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SectionId.VisualDictionary, PageId.Detail, TemplateId.Title, name);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SectionId.VisualDictionary, PageId.Detail, TemplateId.Keywords, name);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SectionId.VisualDictionary, PageId.Detail, TemplateId.Description, name);
+
+    var urlsByTypes = new Dictionary<DocumentType, string> {
+                    {DocumentType.Pdf, Url.Action("Download", RouteConfig.VISUAL_DICTIONARY_CONTROLLER, new {group = name, type = DocumentType.Pdf})},
+                    {DocumentType.Txt, Url.Action("Download", RouteConfig.VISUAL_DICTIONARY_CONTROLLER, new {group = name, type = DocumentType.Txt})},
+                };
+
+    var areas = @Model.Representation.Areas;
+
+    var javaScriptSerializer = new JavaScriptSerializer();
+    string areasForClient = javaScriptSerializer.Serialize(areas);
+    string sizeForClient = javaScriptSerializer.Serialize(Model.Representation.Size);
+
+    int countInFirstColumn = VisualWordsFormatter.GetCountInFirstColumn(areas);
+    var leftAreas = areas.Take(countInFirstColumn);
+    var rightAreas = areas.Skip(countInFirstColumn);
+    var imageWidth = VisualWordsFormatter.GetRecommendedImageWidth(@Model.Representation);
+
+    //99, т.к. один процент про запас
+    int wordsColumnWidth = (99 - imageWidth) / 2;
+
+    var id = Model.Representation.Id;
+
+    string title = WebSettingsConfig.Instance.GetTemplateText(SectionId.VisualDictionary, PageId.Detail, TemplateId.SpeakTip);
+    bool canPronounce = WebSettingsConfig.Instance.CanPronounce;
+
+    //var visualDictionaryBtnModel = BtnModel.CreateBuyVisualDictionary(Url, id, name);
+}
+
+<div id="contentContainerId">
+    <ol class="breadcrumb our-breadcrumb breadcrumb-with-controls">
+        <li>@Html.ActionLink("Визуальные словари", "Index", RouteConfig.VISUAL_DICTIONARIES_CONTROLLER_NAME)</li>
+        <li class="active">Визуальный словарь на тему &laquo;@name&raquo;</li>
+        <li class="visual-btn-translation-container li-without-divider">
+            <a href="@CommonConstants.EMPTY_LINK" id="translationToogleId" onclick=" return VisualDictionaryController.ToogleTranslation(); " class="btn btn-info btn-xs">Спрятать перевод &raquo;</a>
+            @Html.Partial("PartialDownloadBtn", new DownloadBtnModel("Скачать&nbsp;слова", "Визуальный словарь " + name, urlsByTypes) { SizeBtn = DownloadBtnModel.Size.Small })
+            @Html.ActionLink("Карточки слов", "Index", RouteConfig.USER_TRAINER_VISUAL_WORDS_CONTROLLER, new { group = name }, new { title = "Карточки для запоминания слов", @class="visual-dictionary-trainer-link" })
+        </li>
+        <li class="li-without-divider">
+            <ul class="nav nav-pills without-float">
+                <li class="dropdown">
+                    <a href="@CommonConstants.EMPTY_LINK" data-toggle="dropdown" role="button" id="settingsDropMenu" class="our-dropdown-toogle dropdown-toggle" title="Дополнительные возможности">
+                        <b class="caret"></b>
+                    </a>
+                    <ul aria-labelledby="settingsDropMenu" role="menu" class="dropdown-menu" id="menu1">
+                        <li role="presentation">
+                            @Html.ActionLink(CommonConstants.FILL_GAPS, "GapsTrainer", RouteConfig.VISUAL_DICTIONARY_CONTROLLER, new { group = name }, new { role="menuitem", title = "Проверьте знание слов" })
+                        </li>
+                        @if (canPronounce) {
+                            <li role="presentation">
+                                <a role="menuitem" href="@CommonConstants.EMPTY_LINK">
+                                    <label class="checkbox thin-text checkbox-in-breadcrumb clickable-element" title="@title">
+                                        <input type="checkbox" autocomplete="off" id="autoPronounce" class="clickable-element"> Произносить при наведении
+                                    </label>
+                                </a>    
+                            </li>
+                        }
+                        <li role="presentation">
+                            <a role="menuitem" href="@CommonConstants.EMPTY_LINK">
+                                @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel { IsMany = true, IsVisible = true, DataType = KnowledgeDataType.WordTranslation }) Добавить все слова к Вам
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ol>
+    <img id="image" class="pull-left" style="height: auto; width: @imageWidth%;" src="@Url.Action("GetImageByName", RouteConfig.VISUAL_DICTIONARY_CONTROLLER, new { group = name, big = true }, Request.Url.Scheme)" alt="Визуальный словарь на тему &laquo;@name&raquo;">
+    <div id="leftWordsContainer" class="visual-words-container pull-left" style="width: @wordsColumnWidth%">
+        @foreach (RepresentationAreaForUser area in leftAreas)
+        {
+            @Html.Partial("PartialVisualItem", area)
+        }
+    </div>
+    <div id="rightWordsContainer" class="visual-words-container pull-left" style="width: @wordsColumnWidth%">
+        @foreach (RepresentationAreaForUser area in rightAreas)
+        {
+            @Html.Partial("PartialVisualItem", area)
+        }
+    </div>
+    <div class="visual-cross-references col-md-3 col-md-offset-9">
+        @Html.Partial("PartialCrossReferences", @Model.CrossReferencesModel)
+    </div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            UrlNewVisitor: '@Url.Action("NewVisitor", RouteConfig.VISUAL_DICTIONARY_CONTROLLER, new { id = id }, Request.Url.Scheme)'
+        };
+        ServerData.CanPronounce = @canPronounce.ToString().ToLowerInvariant();
+        ServerData.KnowledgeDataType = @((int)KnowledgeDataType.WordTranslation);
+        ServerData.Areas = @Html.Raw(@areasForClient);
+        ServerData.Size = @Html.Raw(@sizeForClient);
+        ServerData.Languages = {
+            from: @Html.Raw(@Model.JsLanguageFrom),
+            to: @Html.Raw(@Model.JsLanguageTo)
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/VisualDictionary.js")
+}

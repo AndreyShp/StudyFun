@@ -1,0 +1,50 @@
+﻿@using System.Web.Script.Serialization
+@using BusinessLogic.ExternalData
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Groups
+@model StudyLanguages.Models.Groups.GapsTrainerModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+    
+    SectionId sectionId = Model.PageRequiredData.SectionId;
+    ViewBag.ActiveItem = sectionId;
+    ViewBag.Title = Model.PageRequiredData.Title;
+    ViewBag.Keywords = Model.PageRequiredData.Keywords;
+    ViewBag.Description = Model.PageRequiredData.Description;
+
+    var javaScriptSerializer = new JavaScriptSerializer();
+    string serializedItems = javaScriptSerializer.Serialize(Model.Items);
+
+    var speakerType = (int)Model.SpeakerDataType;
+} 
+
+<div class="row">
+    @if (Model.BreadcrumbsItems != null) {
+        @Html.Partial("PartialBreadcrumb", Model.BreadcrumbsItems)
+    }
+    <h3 class="text-center">Впишите недостающие буквы в пустые ячейки</h3>
+    <div class="gaps-trainer-container" id="gapsTrainerContainer"></div>
+    <p class="attention-info"><span class="glyphicon glyphicon-warning-sign" style="color: #4cae4c;"></span>Если в вашем браузере курсор автоматически не перемещается между ячейками, используйте клавиши tab, shift+tab, space, backspace, &#8592;, &#8594;</p>
+
+    <button id="checkBtn" type="button" class="btn btn-success" onclick="return GapsTrainerController.Check();">Проверить ответы</button>
+    <button id="loadNextPortionBtn" type="button" class="btn btn-primary" onclick="return GapsTrainerController.LoadNextPortion();" style="display: none;">@Model.LoadNextBtnCaption</button>
+    <button id="answerToogleBtn" type="button" class="btn btn-info" onclick="return GapsTrainerController.ToogleAnswer();">Показать правильный ответ &raquo;</button>
+    <button id="translationToogleBtn" type="button" class="btn btn-info" onclick="return GapsTrainerController.ToogleTranslation();">Показать перевод &raquo;</button>
+    <div id="messageContainer" style="display: none;" class="gaps-trainer-message"></div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            GapChar: '@Model.GapChar',
+            SpeakerType: @speakerType,
+            MaxCount: @GapsTrainerModel.MAX_COUNT
+        };
+        ServerData.Elements = @Html.Raw(serializedItems);
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/GapsTrainer.js")
+}

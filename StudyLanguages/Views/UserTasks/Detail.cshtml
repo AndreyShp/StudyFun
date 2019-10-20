@@ -1,0 +1,96 @@
+﻿@using BusinessLogic.DataQuery.UserRepository.Tasks
+@using BusinessLogic.ExternalData
+@using BusinessLogic.Formatters
+@using BusinessLogic.Validators
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Helpers.Formatters
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Main
+@using StudyLanguages.Models.User
+@model BusinessLogic.DataQuery.UserRepository.Tasks.UserTask
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    const SectionId SECTION_ID = SectionId.UserTasks;
+    ViewBag.ActiveItem = SECTION_ID;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+
+    //TODO: получить имя пользователя
+    string userName = "гостя";
+    string shortText = OurHtmlHelper.HtmlInOneLineAndGetSubstr(Model.Text);
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Title, userName, shortText);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Keywords, userName, shortText);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Description, userName, shortText);
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Header, userName, shortText);
+
+    string addCommentUrl = Url.Action("AddComment", RouteConfig.USER_TASKS_CONTROLLER, null, Request.Url.Scheme);
+    string removeOrRestoreUrl = Url.Action("RemoveOrRestore", RouteConfig.USER_TASKS_CONTROLLER, null, Request.Url.Scheme);
+
+    List<TaskComment> comments = Model.GetComments();
+    bool hasComments = EnumerableValidator.IsNotEmpty(comments);
+}
+
+<div id="contentContainerId" class="row">
+    <ol class="breadcrumb our-breadcrumb">
+        <li>@Html.ActionLink("Все задания", "Index", RouteConfig.USER_TASKS_CONTROLLER)</li>
+        <li class="active">Просмотр задания</li>
+    </ol>
+    <h3 class="h3-user-tasks" style="margin-bottom: 0">@header</h3>
+    <span class="user-task-publication-time">Размещено @DateTimeFormatter.ToDDMMYYYY_HHMMSS(Model.CreationDate)</span>
+    <p class="user-task-text">@Html.Raw(Model.Text)</p>
+    @if (@Model.IsAllRights()) {
+        <p id="allRightsPanel">
+            <button type="button" class="btn btn-danger" id="deleteUserTaskBtn" title="Нажмите для удаления задания">
+                <span class="glyphicon glyphicon-remove user-task-btn-icon"></span>Удалить задание
+            </button>
+            <button type="button" class="btn btn-success" id="restoreUserTaskBtn" title="Нажмите для восстановления задания" style="display: none;">
+                <span class="glyphicon glyphicon-repeat user-task-btn-icon"></span>Восстановить задание
+            </button>
+        </p>
+    }
+    @if (!Model.IsBanned()) {
+        <div>
+            <div class="form-group">
+                <label for="commentInput">Ваш комментарий:</label>
+                <textarea class="form-control" rows="3" required placeholder="Введите ваш комментарий..." id="commentInput" tabindex="1" maxlength="@UserTasksSettings.COMMENT_MAX_LENGTH"></textarea>
+            </div>
+            <button type="button" class="btn btn-success" tabindex="2" id="addCommentBtn">Комментировать</button>
+            @Html.Partial("PartialAttentionMessage", Messages.ATTENTION_ADD_COMMENT_MESSAGE)
+        </div>
+    }
+    <div id="messageContainer" style="display: none;" class="user-tasks-message"></div>
+    @if (hasComments) {
+        <div class="user-task-comments-header">Комментарии:</div>
+    }
+    <ul class="user-tasks-comments" id="commentsList">
+        @foreach (TaskComment comment in comments) {
+            @Html.Partial("PartialTaskComment", comment)
+        }
+    </ul>
+    @if (!hasComments) {
+        @:<span id="noCommentsMessage">Ответа и комментария пока нет:( Будьте первым!</span>
+    }
+</div>
+
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                AddComment: '@addCommentUrl',
+                RemoveOrRestore: '@removeOrRestoreUrl'
+            },
+            TaskKey: '@Model.Id',
+            AuthorId: @Model.AuthorId
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/UserTasksDetails.js")
+}

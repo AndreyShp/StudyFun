@@ -1,0 +1,1 @@
+﻿KnowledgeGenerator={Generate:function(){var n=ServerData.GetPath(ServerData.Patterns.Urls.LoadingData);return $.getJSON(n,null,function(n){if(n==null||!n.length){PopupAlert.Show("Не удалось сгенерировать данные. Попробуйте еще раз");return}var t=$("#"+ServerData.Patterns.ItemsContainerId);t.empty(),$.each(n,function(n,i){t.append(i)})}),!1}};

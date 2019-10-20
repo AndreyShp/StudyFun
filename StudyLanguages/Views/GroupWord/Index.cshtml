@@ -1,0 +1,27 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Models.Groups
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.Groups.GroupModel
+@{
+    Layout = "~/Views/Shared/InnerGroup.cshtml";
+    ViewBag.ActiveItem = SectionId.GroupByWords;
+
+    var groupInfo = new GroupInfo {
+        Alt = "Слово \"{0}\" переводится как \"{1}\"",
+        ControllerName = RouteConfig.GROUP_WORD_CONTROLLER,
+        BaseControllerName = RouteConfig.GROUPS_BY_WORDS_CONTROLLER,
+        PrettyControllerName = RouteConfig.PRETTY_GROUP_WORD_CONTROLLER,
+        UserTrainerControllerName = RouteConfig.USER_TRAINER_GROUP_WORDS_CONTROLLER,
+        LowerManyElems = "слова",
+        LowerOneElem = "слов"
+    };
+
+    ViewBag.GroupInfo = groupInfo;
+}
+
+@section inlineScripts {
+    ServerData.getItemForUrl = function(item) {
+        return item.Text;
+    };
+}

@@ -1,0 +1,127 @@
+﻿@using System.Web.Script.Serialization
+@using BusinessLogic.Data.Enums.Knowledge
+@using BusinessLogic.ExternalData
+@using BusinessLogic.Validators
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Knowledge
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.ShuffleModel
+@{
+    const SectionId SECTION_ID = SectionId.Sentences;
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+    ViewBag.ActiveItem = SECTION_ID;
+
+    string titlePattern = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Title);
+    string keywordsPattern = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Keywords);
+    string descriptionPattern = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Description);
+
+    string translationUrl = UrlBuilder.GetSentenceHomeTrainerUrl("{0}", "{1}");
+    SourceWithTranslation current = Model.GetCurrent();
+
+    string sourceText;
+    string translationText;
+    string sourceTextWithPronunciation;
+    string translationTextWithPronunciation;
+    string prevUrl = CommonConstants.EMPTY_LINK;
+    string nextUrl = CommonConstants.EMPTY_LINK;
+    long id;
+    if (current != null) {
+        id = current.Id;
+        sourceTextWithPronunciation = OurHtmlHelper.GetSpeakerHtml(current.Source, SpeakerDataType.Sentence);
+        translationTextWithPronunciation = OurHtmlHelper.GetSpeakerHtml(current.Translation, SpeakerDataType.Sentence);
+        sourceText = CommonConstants.GetText(current.Source);
+        translationText = CommonConstants.GetText(current.Translation);
+        SourceWithTranslation item = Model.GetPrev();
+        if (item != null) {
+            prevUrl = UrlBuilder.GetSentenceHomeTrainerUrl(Request, item.Source.Id, item.Translation.Id);
+        }
+        item = Model.GetNext();
+        if (item != null) {
+            nextUrl = UrlBuilder.GetSentenceHomeTrainerUrl(Request, item.Source.Id, item.Translation.Id);
+        }
+    } else {
+        id = IdValidator.INVALID_ID;
+        sourceTextWithPronunciation = "Hello, Dear friend!";
+        translationTextWithPronunciation = "Здравствуйте, Дорогой друг!";
+        sourceText = sourceTextWithPronunciation;
+        translationText = translationTextWithPronunciation;
+    }
+    ViewBag.Title = string.Format(titlePattern, sourceText, translationText);
+    ViewBag.Keywords = string.Format(keywordsPattern, sourceText, translationText);
+    ViewBag.Description = string.Format(descriptionPattern, sourceText, translationText);
+    
+    var javaScriptSerializer = new JavaScriptSerializer();
+    string elems = javaScriptSerializer.Serialize(Model.ElemsWithTranslations);
+    
+    var knowledgeDataType = KnowledgeDataType.SentenceTranslation;
+    bool canPronounce = WebSettingsConfig.Instance.CanPronounce;
+} 
+
+<div id="contentContainerId">
+    <div class="row">
+        <div class="col-md-3 text-left">
+            <noindex>
+                @Html.ActionLink("Перемешать и начать сначала", "Reset", RouteConfig.HOME_CONTROLLER, null, new Dictionary<string, object> {
+                    {"class", "btn btn-info btn-xs shuffle-btn"},
+                    {"rel", "nofollow"},
+                    {"title", "Нажмите, чтобы стереть всю историю показанных вам предложений и начать показ сначала"}
+                })
+            </noindex>
+            @if (canPronounce) {
+                <div class="audio-auto-play">
+                    <label class="checkbox clickable-element thin-text" style="margin-top: 0px;">
+                        <input type="checkbox" id="autoPronounce" autocomplete="off" class="clickable-element"> Произносить после перехода
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="col-md-6">
+            <div class="pager our-pager">
+                <ul>
+                    <li id="prevBtn" class="@StyleBuilder.GetLinkClass(prevUrl)">
+                        <a href="@prevUrl" onclick=" return HomeController.MoveToPrev(); ">&#8249; Предыдущее предложение</a>
+                    </li>
+                    @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel {DataId = @id, DataType = knowledgeDataType, IsVisible = true, ClassName = "trainer-panel-btn trainer-side-margin"})
+                    <li id="nextBtn" class="@StyleBuilder.GetLinkClass(nextUrl)">
+                        <a href="@nextUrl" onclick=" return HomeController.MoveToNext(); ">Следующее предложение &#8250;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <h1 id="sourceContainerId" class="trainer-h1">@Html.Raw(sourceTextWithPronunciation)</h1>
+    <p><a href="@CommonConstants.EMPTY_LINK" id="translationToogleId" onclick=" return HomeController.ToogleTranslation(); " class="btn btn-info btn-lg">Спрятать перевод &raquo;</a></p>
+    <h2 id="translatedContainerId" class="trainer-h2">@Html.Raw(translationTextWithPronunciation)</h2>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                Translation: '@translationUrl',
+                MarkAsShowed: '@UrlBuilder.GetHomeActionUrl("MarkAsShowed")',
+                LoadPrev: '@UrlBuilder.GetHomeActionUrl("GetPrevPortion")',
+                NextPrev: '@UrlBuilder.GetHomeActionUrl("GetNextPortion")'
+            },
+            Title: '@titlePattern',
+            Keywords: '@keywordsPattern',
+            Description: '@descriptionPattern',
+            EmptyLink: '@CommonConstants.EMPTY_LINK'
+        };
+        ServerData.MinCountToLoadPortion = @Model.MinCountToLoadPortion;
+        ServerData.KnowledgeDataType = @((int) knowledgeDataType);
+        ServerData.Elements = @Html.Raw(elems);
+        ServerData.Languages = {
+            from: @Html.Raw(@Model.JsLanguageFrom),
+            to: @Html.Raw(@Model.JsLanguageTo)
+        };
+    </script>
+}
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Home.js")
+}

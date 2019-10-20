@@ -1,0 +1,10 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages
+@model List<BusinessLogic.ExternalData.GroupForUser>
+
+@{
+    Layout = "~/Views/Shared/Groups.cshtml";
+    ViewBag.ActiveItem = SectionId.GroupByPhrases;
+    ViewBag.InsideGroupController = RouteConfig.GROUP_SENTENCE_CONTROLLER;
+    ViewBag.InsideGroupAction = "Index";
+}

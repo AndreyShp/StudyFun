@@ -1,0 +1,49 @@
+﻿@using System.Web.Script.Serialization
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Trainer
+@model  StudyLanguages.Models.Trainer.TrainerModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+
+    ViewBag.ActiveItem = Model.PageRequiredData.SectionId;
+    ViewBag.Title = Model.PageRequiredData.Title;
+    ViewBag.Keywords = Model.PageRequiredData.Keywords;
+    ViewBag.Description = Model.PageRequiredData.Description;
+
+    string urlSetMark = Model.SetMarkUrl;
+
+    var javaScriptSerializer = new JavaScriptSerializer();
+    string items = javaScriptSerializer.Serialize(Model.Items);
+}
+
+<div class="container" id="contentContainerId">
+    @Html.Partial("PartialBreadcrumb", @Model.BreadcrumbsItems)
+
+    @Html.Partial("PartialTrainer", new PartialTrainerParams {
+        NeedShow = false, BtnClass = "btn-lg", LeftBtnContainerClass = "col-md-2 col-md-offset-2 text-right",
+        CenterBtnContainerClass = "col-md-4", RightBtnContainerClass = "col-md-2 text-left", TrainerPanelClass = "row trainer-panel-btns",
+        TagTitle = "h1", TagTranslation = "h2"
+    })
+    <div class="word-image trainer-panel-image">
+        <img id="imageContainerId" style="display: none;" alt="" class="word-image">
+    </div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                SetMark: '@urlSetMark'
+            }
+        };
+        ServerData.Items = @Html.Raw(@items);
+        ServerData.Languages = {
+            from: @Html.Raw(@Model.JsLanguageFrom),
+            to: @Html.Raw(@Model.JsLanguageTo)
+        };
+    </script>
+}
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Trainer.js")
+}

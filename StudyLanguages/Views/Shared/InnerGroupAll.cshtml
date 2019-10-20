@@ -1,0 +1,155 @@
+﻿@using System.Web.Script.Serialization
+@using BusinessLogic.Export
+@using BusinessLogic.ExternalData
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Groups
+@using StudyLanguages.Models.Knowledge
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.Groups.GroupModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+
+    var sectionId = (SectionId) ViewBag.ActiveItem;
+    
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.Detail, TemplateId.Title, Model.GroupName);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.Detail, TemplateId.Keywords, Model.GroupName);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.Detail, TemplateId.Description, Model.GroupName);
+
+    var groupInfo = (GroupInfo)ViewBag.GroupInfo;
+    
+    string baseControllerName = groupInfo.BaseControllerName;
+    string controllerName = groupInfo.ControllerName;
+    string trainerControllerName = groupInfo.UserTrainerControllerName;
+    string downloadTitle = string.Format("Скачать&nbsp;{0}", groupInfo.LowerManyElems);
+
+    string examplesUrl = Url.Action("Examples", controllerName, new { group = Model.GroupName });
+    string urlNewVisitor = Url.Action("NewVisitor", controllerName, new { id = Model.Id }, Request.Url.Scheme);
+    
+    var javaScriptSerializer = new JavaScriptSerializer();
+    string elems = javaScriptSerializer.Serialize(Model.ElemsWithTranslations);
+    var speakerType = (int)Model.SpeakerDataType;
+    var knowledgeDataType = Model.KnowledgeDataType;
+    
+    string header = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.Detail, TemplateId.Header, Model.GroupName);
+    string speakTip = WebSettingsConfig.Instance.GetTemplateText(sectionId, PageId.Detail, TemplateId.SpeakTip);
+    bool canPronounce = WebSettingsConfig.Instance.CanPronounce;
+
+    var urlsByTypes = new Dictionary<DocumentType, string> {
+                    {DocumentType.Pdf, Url.Action("Download", controllerName, new {group = Model.GroupName, type = DocumentType.Pdf})},
+                    {DocumentType.Txt, Url.Action("Download", controllerName, new {group = Model.GroupName, type = DocumentType.Txt})},
+                };
+    var downloadBtnModel = new DownloadBtnModel(downloadTitle, groupInfo.LowerManyElems + " по теме " + Model.GroupName, urlsByTypes);
+} 
+
+<div id="contentContainerId" class="row">
+    <ol class="breadcrumb our-breadcrumb">
+        <li>@Html.ActionLink("Все темы", "Index", baseControllerName)</li>
+        <li class="active">Все @groupInfo.LowerManyElems на тему &laquo;@Model.GroupName&raquo;</li>
+    </ol>
+    <h3>@Html.Raw(header)</h3>
+    <div style="clear: both;">
+        <div class="col-md-8 col-md-offset-2">
+            <table class="narrow-container-center" style="margin-top:0 !important;">
+                <tr>
+                    <td style="width:172px;">
+                        @Html.Partial("PartialDownloadBtn", downloadBtnModel)
+                    </td>
+                    <td style="width:120px;">
+                        @Html.ActionLink("Карточки " + @groupInfo.LowerOneElem, "Index", trainerControllerName, new {group = Model.GroupName}, new { title = "Карточки для запоминания " + @groupInfo.LowerOneElem })
+                    </td>
+                    <td style="text-align:left;width:165px">
+                        @Html.ActionLink("Ручной тренажер " + @groupInfo.LowerOneElem, "Trainer", controllerName, new {group = Model.GroupName + "/"}, new { title = "Ручной тренажер для запоминания " + @groupInfo.LowerOneElem })
+                    </td>
+                    <td style="text-align:left;width:145px">
+                        @Html.ActionLink(CommonConstants.FILL_GAPS, "GapsTrainer", controllerName, new {group = Model.GroupName + "/"}, new { title = "Проверьте знание " + @groupInfo.LowerOneElem})
+                    </td>
+                    @if (canPronounce) {
+                        <td style="text-align: left; width: 10px">
+                            <ul class="nav nav-pills">
+                                <li class="dropdown">
+                                    <a href="@CommonConstants.EMPTY_LINK" data-toggle="dropdown" role="button" id="settingsDropMenu" class="our-dropdown-toogle dropdown-toggle" title="Дополнительные возможности">
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul aria-labelledby="settingsDropMenu" role="menu" class="dropdown-menu" id="menu1">
+                                        <li role="presentation">
+                                            <a role="menuitem" href="@CommonConstants.EMPTY_LINK">
+                                                <label class="checkbox thin-text checkbox-in-breadcrumb clickable-element" title="@speakTip">
+                                                    <input type="checkbox" autocomplete="off" id="autoPronounce" class="clickable-element"> Произносить при наведении
+                                                </label>
+                                            </a>
+                                        
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </td>
+                    }
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div style="clear:both;">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <table class="table table-striped narrow-container-center text-left">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>@groupInfo.TableHeader</th>
+                        <th>Перевод</th>
+                        <th>@Html.Partial("PartialUserKnowledge", new KnowledgePanelModel { IsMany = true, IsVisible = true, DataType = knowledgeDataType })</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int number = 0;
+                        foreach (SourceWithTranslation item in Model.ElemsWithTranslations)
+                        {
+                            ++number;
+                            <tr class="row-with-data">
+                                <td>@number</td>
+                                <td class="source">
+                                    <span data-text="@item.Source.Text">@Html.Raw(OurHtmlHelper.GetSpeakerHtml(item.Source, Model.SpeakerDataType))</span>
+                                </td>
+                                <td class="translation">
+                                    <span data-text="@item.Translation.Text">@Html.Raw(OurHtmlHelper.GetSpeakerHtml(item.Translation, Model.SpeakerDataType))</span>
+                                </td>
+                                <td>
+                                    @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel { DataId = item.Id, DataType = knowledgeDataType, IsVisible = true })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2" style="margin-left: 0">
+            @Html.Partial("PartialCrossReferences", @Model.CrossReferencesModel)
+        </div>
+    </div>
+    @RenderBody()
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            ExamplesUrl: '@examplesUrl',
+            LowerManyItems: '@groupInfo.LowerManyElems',
+            UrlNewVisitor: '@urlNewVisitor',
+            SpeakerType: @speakerType
+        };
+        ServerData.KnowledgeDataType = @((int)knowledgeDataType);
+        ServerData.Elements = @Html.Raw(elems);
+        ServerData.Languages = {
+            from: @Html.Raw(@Model.JsLanguageFrom),
+            to: @Html.Raw(@Model.JsLanguageTo)
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/InnerGroupAll.js")
+}

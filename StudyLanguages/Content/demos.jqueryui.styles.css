@@ -1,0 +1,97 @@
+﻿@charset "UTF-8";
+/*
+ * jQuery File Upload Plugin CSS Example 1.1.1
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2012, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+body {
+    padding-top:60px;
+}
+.fade{
+    opacity:1;
+}
+.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+    width:1170px;
+}
+button {
+   font-size: 1em !important;
+}
+.ui-widget {
+   font-size: 1em !important;
+}
+.ui-button-text {
+   font-size: 1em !important;
+}
+select {
+    font-size: .9em;
+    margin-top: 12px;
+}
+
+td {
+  padding: 5px;
+}
+img {
+  border: 0;
+}
+
+.nav-collapse,
+ul.nav,
+ul.nav li {
+  display: inline-block;
+  margin-right: 10px;
+}
+.row {
+  zoom: 1;
+}
+.row:before, .row:after {
+  display: table;
+  content: "";
+}
+.row:after {
+  clear: both;
+}
+.span5, .span7 {
+  width: auto;
+  float: left;
+}
+
+
+.files .ui-progressbar-value, 
+.fileupload-buttonbar .ui-progressbar-value {
+  background: url(FileUpload/img/progressblue.gif);
+}
+.fileupload-progress {
+  margin-left:75px;
+}
+.progress-extended {
+    margin-top:2px;
+    font-size:10px;
+  color:#b0b0b0
+}
+
+/* Fix for IE 6: */
+* html .nav-collapse,
+* html ul.nav,
+* html ul.nav li {
+  display: inline;
+}
+* html .navbar-fixed-top {
+  margin-bottom: 35px;
+}
+
+/* Fix for IE 7: */
+* + html .nav-collapse,
+* + html ul.nav,
+* + html ul.nav li {
+  display: inline;
+}
+* + html .navbar-fixed-top {
+  margin-bottom: 35px;
+}
+

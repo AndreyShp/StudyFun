@@ -1,0 +1,53 @@
+﻿@using BusinessLogic.ExternalData
+@using BusinessLogic.Validators
+@using StudyLanguages.Configs
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.Main.MainModel
+@{
+    const SectionId SECTION_ID = SectionId.Main;
+    
+    ViewBag.ActiveItem = SECTION_ID;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Description);
+
+    int countItems = Model.Items.Count;
+
+    Func<int, DescriptionSection> sectionGetter = i => {
+        SectionId item = @Model.Items[i];
+        DescriptionSection section = @Model.Get(item);
+        return section;
+    };
+    
+    var anotherDomains = WebSettingsConfig.Instance.AnotherDomains;
+}
+
+@Html.Partial("TopBanner")
+@Html.Partial("TopMessage")
+@for (int i = 0; i < countItems; i += 2) {
+    <div class="row">
+        @Html.Partial("PartialDescriptionSection", @sectionGetter(i))
+        @if (i + 1 < countItems) {
+            @Html.Partial("PartialDescriptionSection", @sectionGetter(i + 1))
+        }
+    </div>
+}
+@if (EnumerableValidator.IsNotNullAndNotEmpty(anotherDomains)) {
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="main-clear">Добро пожаловать в мир других языков</h3>
+            <ul class="main-another-domains">
+                @foreach(var anotherDomain in anotherDomains) {
+                    string src = Url.Content("~/Content/images/" + anotherDomain.Flag);
+                    string title = anotherDomain.GetTitle(SECTION_ID) + " язык";
+                    <li class="main-another-domain-container">
+                        <a href='@anotherDomain.GetLink(SECTION_ID)' title='@title' class="main-another-domain-link" style='background-image: url("@src")'>@title</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}

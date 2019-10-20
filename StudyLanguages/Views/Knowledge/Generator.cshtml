@@ -1,0 +1,58 @@
+﻿@using BusinessLogic.Export
+@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.Knowledge.GeneratorModel
+@{
+    const SectionId SECTION_ID = SectionId.KnowledgeGenerator;
+    const string CONTAINER_ID = "generatedDataContainer";
+      
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+    ViewBag.ActiveItem = SECTION_ID;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Description);
+
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Header);
+
+    var urlsByTypes = new Dictionary<DocumentType, string> {
+                    {DocumentType.Pdf, Url.Action("Download", RouteConfig.KNOWLEDGE_GENERATOR_CONTROLLER, new {type = DocumentType.Pdf})},
+                    {DocumentType.Txt, Url.Action("Download", RouteConfig.KNOWLEDGE_GENERATOR_CONTROLLER, new {type = DocumentType.Txt})},
+                };
+    string urlToLoad = @Url.Action("Generate", RouteConfig.KNOWLEDGE_GENERATOR_CONTROLLER, null, Request.Url.Scheme);
+}
+
+<div class="container">
+    <div class="col-md-offset-1 col-md-10">
+        <h3 class="text-center">@header</h3>
+        <div class="text-center">
+            @Html.Partial("PartialDownloadBtn", new DownloadBtnModel("Скачать", "Генератор", urlsByTypes))
+            <button type="button" class="btn btn-primary" onclick="return KnowledgeGenerator.Generate();"><span class="glyphicon glyphicon-refresh"></span> Сгенерировать</button>
+            @Html.ActionLink("Стена знаний", "Index", RouteConfig.USER_KNOWLEDGE_CONTROLLER)
+        </div>
+        <div id="@CONTAINER_ID">
+            @foreach(var htmlItem in Model.HtmlItems) {
+                @Html.Raw(htmlItem)
+            }
+        </div>
+    </div>
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                LoadingData: '@urlToLoad'
+            },
+            ItemsContainerId: '@CONTAINER_ID'
+        };
+    </script>
+}
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/KnowledgeGenerator.js")
+}

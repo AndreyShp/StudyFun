@@ -1,0 +1,9 @@
+﻿@using BusinessLogic.Formatters
+@using StudyLanguages.Helpers
+@using StudyLanguages.Helpers.Formatters
+@model BusinessLogic.DataQuery.UserRepository.Tasks.TaskComment
+
+<li>
+    <span class="user-task-comment-name">@(string.IsNullOrEmpty(Model.Author) ? "Гость" : @Model.Author)</span><span class="user-task-comment-time">@DateTimeFormatter.ToDDMMYYYY_HHMMSS(Model.CreationDate)</span>
+    <p>@Html.Raw(Model.Text)</p>
+</li>

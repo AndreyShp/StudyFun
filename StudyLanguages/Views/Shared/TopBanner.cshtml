@@ -1,0 +1,17 @@
+﻿@using StudyLanguages
+@using StudyLanguages.Configs
+@{
+    const string COOKIE_NAME = "closeTopBanner";
+    
+    string bannerPath = WebSettingsConfig.Instance.PathToTopBanner;
+    HttpCookie cookie = Request.Cookies[COOKIE_NAME];
+}
+
+@if (!string.IsNullOrEmpty(bannerPath) && cookie == null) {
+    <div class="text-center" id="topBannerContainer">
+        <a href="@Url.Action("Vacations", RouteConfig.HELP_CONTROLLER, null, Request.Url.Scheme)" style="text-decoration: none;">
+            <img title="Узнайте больше" src="@bannerPath" alt="Давайте сотрудничать" width="468" height="60" />
+        </a>
+        <button class="btn btn-xs" onclick="GlobalBusiness.closeTopBanner('#topBannerContainer', '@COOKIE_NAME');">Не показывать мне баннер</button>
+    </div>
+}

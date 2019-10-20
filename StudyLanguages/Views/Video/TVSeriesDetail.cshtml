@@ -1,0 +1,83 @@
+﻿@using System.Text
+@using System.Web.Script.Serialization
+@using BusinessLogic.ExternalData
+@using BusinessLogic.Formatters
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@model BusinessLogic.ExternalData.Videos.TVSeriesWatch
+@{
+    const SectionId SECTION_ID = SectionId.TVSeries;
+
+    ViewBag.ActiveItem = SECTION_ID;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+
+    var seriesInfo = Model.GetSeriesInfo();
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Title, seriesInfo.Title, seriesInfo.OrigTitle, Model.TransTitle, Model.OrigTitle);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Keywords, seriesInfo.Title, seriesInfo.OrigTitle, Model.TransTitle, Model.OrigTitle);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Description, seriesInfo.Title, seriesInfo.OrigTitle, Model.TransTitle, Model.OrigTitle);
+
+    long id = Model.GetId();
+    string videoFileUrl = Url.Action("GetVideo", RouteConfig.TV_SERIES_CONTROLLER, new {urlPart = Model.GetUrlPart() }, Request.Url.Scheme);
+    string anotherSeriesUrl = Url.Action("GetAnotherSeries", RouteConfig.TV_SERIES_CONTROLLER, new { parentId = Model.GetParentId(), id = id }, Request.Url.Scheme);
+    
+    var htmlSubtitles = new StringBuilder();
+    foreach (var subtitle in Model.Subtitles) {
+        subtitle.Text = subtitle.Text.Replace("\r\n", "<br />");
+        htmlSubtitles.Append("<li>");
+        htmlSubtitles.Append(DateTimeFormatter.ToHHMMSS(subtitle.TimeFrom) + "-" + DateTimeFormatter.ToHHMMSS(subtitle.TimeTo) + " " + subtitle.Text);
+        if (Model.IsAdmin) {
+            //для администраторов добавляем возможность изменить время
+            htmlSubtitles.Append("<button type=\"button\" class=\"btn btn-xs btn-primary tv-series-admin-btn\" onclick=\"TVSeriesDetailAdmin.UpdateSubtitle(this);\">" +
+                                 "<i class=\"fa fa-pencil\"></i>" +
+                                 "</button>");
+            htmlSubtitles.Append("<button type=\"button\" class=\"btn btn-xs btn-primary tv-series-admin-btn\" onclick=\"TVSeriesDetailAdmin.RemoveSubtitle(this);\">" +
+                                 "<i class=\"fa fa-trash-o\"></i>" +
+                                 "</button>");
+        }
+        htmlSubtitles.Append("</li>");
+    }
+
+    var javaScriptSerializer = new JavaScriptSerializer();
+    var jsonSubtitles = javaScriptSerializer.Serialize(Model.Subtitles);
+}
+
+<div class="row">
+    @Html.Partial("PartialBreadcrumb", BreadcrumbsHelper.GetTVSeries(Url, seriesInfo, Model))
+    <h3>@Model.TransTitle / @Model.OrigTitle</h3>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <video id="mainPlayer" width="560" height="315" poster="poster.jpg" controls="controls" preload="none" style="z-index: 10">
+            <source type="video/mp4" src="@videoFileUrl" />
+        </video>
+    </div>
+    <div class="col-md-6 text-left tv-series-text-subtitles" id="subtitles">
+        <ol>
+            @Html.Raw(htmlSubtitles)
+        </ol>
+    </div>
+</div>
+<div class="row text-left tv-series-links-another-series">
+    <div class="col-md-12" id="anotherVideos" style="display: none;">Другие серии: </div>
+</div>
+
+@section styles {
+    @Minimizer.MinimizeCssFile("~/Content/videoplugin/mediaelementplayer.min.css")
+    @Minimizer.MinimizeCssFile("~/Content/Admin/Site.css")
+}
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Urls = {
+            AnotherSeries: '@anotherSeriesUrl'
+        };
+        ServerData.Subtitles = @Html.Raw(jsonSubtitles);
+    </script>
+}
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Content/videoplugin/mediaelement-and-player.min.js")
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/TVSeriesDetail.js")
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Admin/TVSeriesDetail.js")
+}

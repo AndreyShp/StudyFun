@@ -1,0 +1,47 @@
+﻿@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Sales
+@model StudyLanguages.Models.SearchPanelModel
+@{
+    const string SEARCH_FIELD_ID = "search";
+    const string FILTERED_ICON_ID = "filteredIcon";
+
+    //var visualDictionariesBtnModel = BtnModel.CreateBuyVisualDictionaries(Url);
+    //var allMaterialsBtnModel = BtnModel.CreateBuyAllMaterials(Url);
+    //bool hasAdditionalRow = visualDictionariesBtnModel != null || allMaterialsBtnModel != null;
+}
+
+<div class="search-panel row">
+    <div class="pull-left col-lg-6">
+        <div class="input-group">
+            <input id="@SEARCH_FIELD_ID" tabindex="1" class="form-control" type="text" style="margin-bottom: 0px" placeholder="@Model.Tip" value="" autocomplete="off" />
+            <span class="input-group-btn">
+                <button id="searchBtnId" tabindex="2" style="margin-top: 0px" onclick="return SearchPanel.Search();" type="button" class="btn btn-info">Найти</button>
+            </span>
+        </div>
+    </div>
+    <span id="@FILTERED_ICON_ID" class="partial-search-filter-icon glyphicon glyphicon-filter cursor-pointer" title="Нажмите для снятия фильтра" style="display: none;" onclick=" return SearchPanel.RemoveFilter(); "></span>
+    <ul class="nav nav-pills pull-left">
+        <li class="dropdown">
+            <a href="@CommonConstants.EMPTY_LINK" data-toggle="dropdown" role="button" id="filterDropMenu" class="our-dropdown-toogle dropdown-toggle" title="Нажмите для выбора сортировки">Сортировать по <b class="caret"></b></a>
+            <ul aria-labelledby="filterDropMenu" role="menu" class="dropdown-menu" id="menu1">
+                @{
+                    foreach (var item in Model.GetItems()) {
+                        <li role="presentation"><a role="menuitem" href="@CommonConstants.EMPTY_LINK" onclick="SearchPanel.SortBy(@item.Item1); " @if (item.Item3) {
+                                                                                                                                                      @:style='font-weight: bold' 
+                                                                                                                                                  }>@item.Item2</a></li>
+                    }
+                }
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    SearchPanelData = {
+        SearchField: '@SEARCH_FIELD_ID',
+        FilteredIcon: '@FILTERED_ICON_ID',
+        PatternToSearchContainer: '@Model.PatternToSearchContainer',
+        SortCookieName:'@GroupsSorter.COOKIE_NAME',
+        Elements: @Html.Raw(@Model.GetJsElements())
+    };
+</script>

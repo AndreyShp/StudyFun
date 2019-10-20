@@ -1,0 +1,62 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Controllers
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Main
+@model string
+@{
+    const SectionId SECTION_ID = SectionId.No;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = false;
+    ViewBag.ActiveItem = SECTION_ID;
+
+    ViewBag.Title = "Ваш профиль. Ваша персональная информация";
+    ViewBag.Keywords = "Ваш профиль. Персональная информация пользователя.";
+    ViewBag.Description = "Ваш профиль. Персональная информация пользователя.";
+}
+
+<div class="row">
+    <h3 class="text-center">Ваша персональная информация</h3>
+    <p>Каждому пользователю мы присваиваем уникальный идентификатор. Это необходимо, чтобы запоминать какие данные Вы добавляли к себе на стену знаний.</p>
+    <p>Если Вы пользуетесь сайтом с компьютера и с телефона, то мы воспринимаем Вас, как двух разных пользователей.<br />
+        Вам необходимо скопировать Ваш уникальный идентификатор на все Ваши устройства, чтобы мы воспринимали Вас как одного пользователя.</p>
+    
+    <div class="row">
+        <div class="col-md-11">
+            <p>Ваш уникальный идентификатор: <strong id="currentUniqueIdContainer">@Model</strong></p>
+        </div>
+        <div class="col-md-1">
+            <span id="showChangeUniqueBlockBtn" class="glyphicon glyphicon-edit clickable-element" title="Изменить мой идентификатор"></span>
+            <i id="showMailBlockBtn" class="fa fa-envelope clickable-element show-mail-block-btn" title="Отправить мой идентификатор на почту"></i>
+            <i id="copyToClipboardBtn" class="fa fa-clipboard clickable-element copy-to-clipboard-btn" title="Скопировать уникальный идентификатор в буфер обмена"></i>
+        </div>
+    </div>
+    <div id="changeUniqueIdBlock" class="row profile-change-unique-block" style="display: none;">
+        <div class="col-md-9">
+            <input class="form-control" type="text" placeholder="Скопируйте сюда ваш идентификатор с другого устройства" id="newUniqueId" tabindex="3" />
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-success" tabindex="4" id="setNewUniqueIdBtn">Изменить идентификатор</button>
+        </div>
+    </div>
+    @Html.Partial("PartialEmailBlock", new EmailBlockModel())
+    <div id="profileMessageContainer" style="display:none;" class="profile-message-container"></div>
+    @Html.Partial("PartialAttentionMessage", @ProfileController.Message)
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                SendToMail: '@Url.Action("SendToMail", RouteConfig.PROFILE_CONTROLLER, null, Request.Url.Scheme)',
+                SetNewValue: '@Url.Action("SetNewValue", RouteConfig.PROFILE_CONTROLLER, null, Request.Url.Scheme)'
+            }
+        };
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Profile.js")
+}

@@ -1,0 +1,88 @@
+﻿@using BusinessLogic.ExternalData
+@using BusinessLogic.ExternalData.Knowledge
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Models.Main
+@{
+    const SectionId SECTION_ID = SectionId.MyKnowledge;
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+    ViewBag.ActiveItem = SECTION_ID;
+
+    ViewBag.Title = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Title);
+    ViewBag.Keywords = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Keywords);
+    ViewBag.Description = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Description);
+
+    var countStatistic = new UserKnowledgeStatistic.CountStatistic();
+    var today = new Tuple<string, UserKnowledgeStatistic.CountStatistic>("Сегодня:", countStatistic);
+    var total = new Tuple<string, UserKnowledgeStatistic.CountStatistic>("За все время:", countStatistic);
+
+    string header = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Header);
+    
+    var carouselItems = new List<Tuple<string, string, SectionId>> {
+        new Tuple<string, string, SectionId>("Добавляйте слова из любимых тем", "ListAllWords.png", SectionId.GroupByWords),
+        new Tuple<string, string, SectionId>("Добавляйте примеры предложений", "FillDifference.png", SectionId.FillDifference),
+        new Tuple<string, string, SectionId>("Добавляйте слова из визуального словаря", "VisualDictionary.png", SectionId.VisualDictionary),
+        new Tuple<string, string, SectionId>("Добавляйте фразы из любимых тем", "ListAllPhrases.png", SectionId.GroupByPhrases),
+        new Tuple<string, string, SectionId>("Добавляйте данные из генератора знаний", "Generator.png", SectionId.KnowledgeGenerator),
+        new Tuple<string, string, SectionId>("Добавляйте слова и фразы из тренажера", "Trainer.png", SectionId.GroupByWords),
+        new Tuple<string, string, SectionId>("Добавляйте предложения", "RandomSentence.png", SectionId.Sentences),
+    };
+    carouselItems = carouselItems.Where(e => WebSettingsConfig.Instance.IsSectionAllowed(e.Item3)).ToList();
+}
+
+
+<div class="container">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-left">@Html.Raw(header)</div>
+            <div class="panel-body">
+                <div class="col-md-3 text-left">
+                    @Html.Partial("PartialCountStatistic", today)
+                </div>
+                <div class="col-md-3 text-left">
+                    @Html.Partial("PartialCountStatistic", total)
+                </div>
+                <div class="col-md-3">
+                    @Html.ActionLink("Генератор знаний", "Index", RouteConfig.KNOWLEDGE_GENERATOR_CONTROLLER)
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading text-left">Стена</div>
+            <div class="panel-body">
+                <h3>Запоминайте интересные для Вас слова, фразы и предложения вместе с нами</h3>
+                <h4>Пополняйте Ваши знания одним нажатием на кнопку <span class="glyphicon glyphicon-plus"></span> напротив слов, фраз и предложений</h4>
+                <div id="carouselContainer" class="carousel slide" data-ride="carousel" data-wrap="true" data-interval="3000">
+                  <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        @for (var i = 0; i < carouselItems.Count; i++) {
+                            <li data-target="#carousel-example-generic" data-slide-to="@i" @if (i == 0) { @:class="active" 
+                            }></li>
+                        }
+                    </ol>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        @for (var i = 0; i < carouselItems.Count; i++) {
+                            var item = carouselItems[i];
+                            <div class="item @if (i == 0) { @:active
+                                }">
+                                <div class="carousel-black">
+                                    <h4>@item.Item1</h4>
+                                </div>
+                                <img src="~/Content/images/@item.Item2" alt="@item.Item1">
+                            </div>
+                        }
+                    </div>
+                    <a class="left carousel-control carousel-button carousel-black" href="#carouselContainer" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control carousel-button carousel-black" href="#carouselContainer" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

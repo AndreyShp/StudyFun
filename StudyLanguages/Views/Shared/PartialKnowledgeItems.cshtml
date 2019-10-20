@@ -1,0 +1,15 @@
+﻿@using BusinessLogic.Data.Enums.Knowledge
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Knowledge
+@model Tuple<KnowledgeDataType, List<BusinessLogic.ExternalData.SourceWithTranslation>>
+@{
+    KnowledgeDataType knowledgeDataType = Model.Item1;
+    var speakerType = KnowledgeHelper.GetSpeakerType(knowledgeDataType);
+}
+<h4>@KnowledgeHelper.GetHeader(knowledgeDataType) @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel { IsMany = true, IsVisible = true, DataType = knowledgeDataType })</h4>
+@foreach (var item in @Model.Item2) {
+    @:<div>
+        @Html.Raw(OurHtmlHelper.GetSpeakerHtml(item.Source, speakerType)) @:&ndash; @Html.Raw(OurHtmlHelper.GetSpeakerHtml(item.Translation, speakerType))
+        @Html.Partial("PartialUserKnowledge", new KnowledgePanelModel {DataId = item.Id, DataType = knowledgeDataType, IsVisible = true})
+    @:</div>
+}

@@ -1,0 +1,23 @@
+﻿@using BusinessLogic.ExternalData.Auxiliaries
+@*@model StudyLanguages.Models.CrossReferencesModel*@
+
+<div class="container" id="likePanel">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default likePanelBtn" id="likeBtnOnLikePanel">
+            <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<span id="likeCountOnLikePanel">0</span>
+        </button>
+        <button type="button" class="btn btn-default likePanelBtn" id="dislikeBtnOnLikePanel">
+            <span class="glyphicon glyphicon-thumbs-down"></span>&nbsp;<span id="dislikeCountOnLikePanel">0</span>
+        </button>
+    </div>
+</div>
+
+@*.likePanelBtn {
+    font-size: 16px !important;
+    font-weight: bold !important;
+}
+
+    $('#likePanel .btn').click(function () {
+        $('#likePanel .btn').removeClass("active");
+        $(this).addClass("active");
+    });*@

@@ -1,0 +1,42 @@
+﻿@using BusinessLogic.Export
+@using StudyLanguages.Models
+@model StudyLanguages.Models.DownloadBtnModel
+@{
+    string idForGoal = Model.IdForGoal;
+    if (string.IsNullOrWhiteSpace(idForGoal)) {
+        idForGoal = Model.Title;
+    }
+
+    string cls = "btn btn-success";
+    if (Model.SizeBtn == DownloadBtnModel.Size.Small) {
+        cls += " btn-xs";
+    } else if (Model.SizeBtn == DownloadBtnModel.Size.Biggest) {
+        cls += " btn-lg";
+    }
+
+    var pdfUrl = Model.GetUrl(DocumentType.Pdf);
+    var txtUrl = Model.GetUrl(DocumentType.Txt);
+
+    var defaultUrl = pdfUrl;
+    if (defaultUrl == null) {
+        defaultUrl = txtUrl;
+    }
+    if (Model.Url != null && defaultUrl == null) {
+        defaultUrl = Model.Url;
+    }
+}
+
+<div class="btn-group">
+    <a onclick=" GlobalBusiness.Counter.reachGoal(GlobalBusiness.Counter.Ids.Download, { id: '@idForGoal' });return true; " href="@defaultUrl" class="@cls">
+        <span class="glyphicon glyphicon-download-alt"></span>&nbsp;@Html.Raw(@Model.Title)
+    </a>
+    @if (pdfUrl != null && txtUrl != null) {
+        <button type="button" class="@cls dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu text-left" role="menu">
+            <li><a href="@pdfUrl"><span class="download-btn-menu-item dowload-btn-icon-pdf">PDF</span></a></li>
+            <li><a href="@txtUrl"><span class="download-btn-menu-item dowload-btn-icon-txt">TXT</span></a></li>
+        </ul>
+    }
+</div>

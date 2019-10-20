@@ -1,0 +1,158 @@
+﻿@using BusinessLogic.Data.Enums.Knowledge
+@using BusinessLogic.ExternalData
+@using BusinessLogic.Mailer
+@using BusinessLogic.Validators
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@{
+    const string SHARE_TITLE = "Расскажите о нас друзьям";
+
+    const int WORD_TYPE = (int) SpeakerDataType.Word;
+    const int SENTENCE_TYPE = (int) SpeakerDataType.Sentence;
+
+    string supportMail = MailAddresses.SUPPORT;
+
+    SectionId sectionId = ViewBag.ActiveItem;
+
+    string yandexMetrikaId = WebSettingsConfig.Instance.YandexMetrikaId;
+    string counters = WebSettingsConfig.Instance.Counters;
+    bool needShowAnotherLanguages = sectionId != SectionId.Main && EnumerableValidator.IsNotNullAndNotEmpty(WebSettingsConfig.Instance.AnotherDomains);
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+        <meta name="keywords" content="@ViewBag.Keywords" />
+        <meta name="description" content="@ViewBag.Description" />
+        <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+        @Minimizer.MinimizeCssFile("~/Content/site.css")
+        @Minimizer.MinimizeCssFiles("~/Content/bootstrap/css/bootstrapCss",
+                                    "~/Content/bootstrap/css/bootstrap-glyphicons.css",
+                                    "~/Content/bootstrap/css/bootstrap.min.css")
+        @Minimizer.MinimizeCssFile("~/Content/font-awesome/css/font-awesome.min.css")
+        @RenderSection("styles", required: false)
+        @* @Scripts.Render("~/bundles/modernizr")*@
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-static-top navbar-default">
+            @Html.Partial("TopPanel", SHARE_TITLE)
+            @RenderSection("topPanel", required: false)
+        </div>
+        <div id="contentContainer" class="main-container container @if (ViewBag.IsCentered) {
+                                                                       @:text-center 
+                                                                   }">
+            @RenderBody()
+            <div class="left-pinned-panel" style="display: none;"><span class="glyphicon glyphicon-arrow-up"></span></div>
+        </div> <!-- /container -->
+        <footer class="container text-center our-navbar-bottom">
+            @if (needShowAnotherLanguages) {
+                <div class="row">
+                    <div class="col-md-12 text-left">
+                        Добро пожаловать в мир других языков:
+                        @foreach (AnotherDomainInfo anotherDomain in WebSettingsConfig.Instance.AnotherDomains) {
+                            string src = Url.Content("~/Content/images/" + anotherDomain.Flag);
+                            string title = anotherDomain.GetTitle(sectionId);
+                            string link = anotherDomain.GetLink(sectionId);
+                            <a href='@link' title='@title' class="footer-another-domain">
+                                <img src='@src' alt='@title' height='15' width='15' />
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-4 text-left"><span class="copyrights">&copy; Все права защищены</span></div>
+                <div class="col-md-4">
+                    <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"> </script>
+                    <div title="@SHARE_TITLE" class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="vkontakte,twitter,facebook,yaru,odnoklassniki,moimir,lj,moikrug,gplus"></div> 
+                </div>
+                <div class="col-md-4 text-right">
+                    <span class="big-footer-text" title="Предлагаем сотрудничество. Нажмите и узнайте больше">
+                        @Html.ActionLink("Давайте сотрудничать", "Vacations", RouteConfig.HELP_CONTROLLER, null, Request.Url.Scheme)
+                    </span>
+                    @*                    <span class="big-footer-text" title="Напишите нам Ваше мнение о сайте. Пишите плюсы, минусы, все чего Вам не хватает. Нам важно Ваше мнение!">
+                        @Html.Partial("PartialFeedback", "Скажите всё, что думаете о нас")
+                    </span>*@
+                    <span class="separator"> | </span>
+                    @Html.ActionLink("Как помочь проекту", "Index", RouteConfig.HELP_CONTROLLER, null, new {@class = "big-footer-text", title = "Нам нужна Ваша помощь. За одну минуту Вы можете оказать проекту неоценимую услугу"})<br />
+                    @Html.ActionLink("Ваши комментарии и предложения", "Index", RouteConfig.COMMENT_CONTROLLER)
+                    <span class="separator"> | </span><a href="mailto:@supportMail" target="_blank" title="Написать нам письмо">Написать нам письмо</a>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript">
+            ServerData = {
+                AddSlashIfNeed: function(url) {
+                    return (url[0] != '/' ? '/' : '') + url;
+                },
+                GetPath: function(url) {
+                    if (url == null || url == '' || url.indexOf('http://') == 0) {
+                        return url;
+                    }
+                    var host = '@Request.Url.Scheme://@Request.Url.Host';
+                    var result = '@Request.ApplicationPath';
+                    result = host + ServerData.AddSlashIfNeed(result);
+                    if (result[result.length - 1] != '/') {
+                        url = ServerData.AddSlashIfNeed(url);
+                    }
+                    return result + url;
+                }
+            };
+            ServerData.YandexMetrikaId = '@yandexMetrikaId';
+            ServerData.Interview = {
+                GetInterviewsUrl: '@Url.Action("GetInterviews", RouteConfig.SERVICE_CONTROLLER, null, Request.Url.Scheme)',
+                AnswerInterviewUrl: '@Url.Action("AnswerInterview", RouteConfig.SERVICE_CONTROLLER, null, Request.Url.Scheme)',
+            };
+            ServerData.Knowledge = {
+                AddUrl: '@Url.Action("Add", RouteConfig.USER_KNOWLEDGE_CONTROLLER, null, Request.Url.Scheme)',
+                AddManyUrl: '@Url.Action("AddMany", RouteConfig.USER_KNOWLEDGE_CONTROLLER, null, Request.Url.Scheme)',
+                GetExistenceIdsUrl: '@Url.Action("GetExistenceIds", RouteConfig.USER_KNOWLEDGE_CONTROLLER, null, Request.Url.Scheme)',
+                GetStatisticUrl: '@Url.Action("GetStatistic", RouteConfig.USER_KNOWLEDGE_CONTROLLER, null, Request.Url.Scheme)',
+            };
+            ServerData.SpeakerHelper = {
+                Ids: {
+                    Word: @WORD_TYPE,
+                    Sentence: @SENTENCE_TYPE
+                },
+                GetUrl: function(id, type, mp3Support) {
+                    var url = String.format('@Html.Raw(CommonConstants.PATTERN_URL)', id, type, mp3Support);
+                    return ServerData.GetPath(url);
+                },
+                GetHtml: function(id, type) {
+                    return String.format('@Html.Raw(OurHtmlHelper.SPEAKER_PATTERN_HTML)', id, type);
+                }
+            };
+            ServerData.Feedback = {
+                PostUrl: '@Url.Action("FeedbackMessage", RouteConfig.HELP_CONTROLLER, null, Request.Url.Scheme)'
+            };
+
+            @if (!ViewData.ContainsKey(OurHtmlHelper.ViewDataFlags.SKIP_POPUP_PANEL)) {
+                @:ServerData.PopupTrainerInitialUrl = '@Url.Action("LoadPopupTrainer", RouteConfig.USER_TRAINER_ALL_CONTROLLER, null, Request.Url.Scheme)';
+                @:ServerData.PopupTrainerSetMarkUrl = '@Url.Action("SetMark", RouteConfig.USER_TRAINER_ALL_CONTROLLER, null, Request.Url.Scheme)';
+                @:ServerData.PopupTrainerLoadDataUrl = '@Url.Action("LoadData", RouteConfig.USER_TRAINER_ALL_CONTROLLER, null, Request.Url.Scheme)';
+                @:ServerData.PopupTrainerRepetitionType = @((int) RepetitionType.Overdue);
+            };
+        </script>
+
+        @RenderSection("inlineScripts", required: false)
+        @Minimizer.MinimizeJsFile("~/Scripts/jquery-2.0.2.min.js")
+        @Minimizer.MinimizeJsFile("~/Scripts/jquery-ui-1.10.3.min.js")
+        @Minimizer.MinimizeJsFile("~/Content/bootstrap/js/bootstrap.min.js")
+        @Minimizer.MinimizeJsFile("~/Scripts/knockout-2.1.0.min.js")
+        @Minimizer.MinimizeJsFiles("~/Scripts/Controls/controls.js",
+                                   "~/Scripts/Controls/jquery.cookie.js",
+                                   "~/Scripts/Controls/jquery.sticky.js",
+                                   "~/Scripts/Controls/SeriesToogleElems.js",
+                                   "~/Scripts/Controls/typeahead.js",
+                                   "~/Scripts/Controls/ZeroClipboard.min.js")
+
+        @Minimizer.MinimizeJsFile("~/Scripts/Views/_Layout.js")
+        @RenderSection("scripts", required: false)
+        <noscript><a href="http://reformal.ru"><img src="http://media.reformal.ru/reformal.png" /></a><a href="http://studyfun.reformal.ru">Ваши предложения и пожелания</a></noscript>
+        
+        @Html.Raw(counters)
+    </body>
+</html>

@@ -1,0 +1,29 @@
+﻿@using BusinessLogic.ExternalData.Auxiliaries
+@model StudyLanguages.Models.CrossReferencesModel
+
+@if (!Model.HasCrossReferences) {
+    return;
+}
+
+<div style="text-align: left;">
+     @foreach (var titleByType in Model.SortedTitlesByTypes) {
+         string title = titleByType.Item2;
+         <div class="partial-cross-reference-title">@title</div>
+         <ul class="partial-cross-reference-items-container">
+             @foreach (CrossReference item in Model.GetReferencesByType(titleByType.Item1)) {
+                 string url = Model.GetUrl(Request, item);
+                 if (string.IsNullOrEmpty(url)) {
+                     continue;
+                 }
+                 string name = item.ReferenceName;
+                 var isTheSameName = Model.IsTheSameName(name);
+                 <li>
+                     <a style="text-decoration: none;">-&nbsp;</a><a href="@url" title="@name" @if (isTheSameName)
+                        {
+                            @:style='font-weight: bold;'
+                        }>@name</a>     
+                 </li>
+             }
+         </ul>
+     }
+</div>

@@ -1,0 +1,104 @@
+﻿@using BusinessLogic.Data.Enums.Knowledge
+@using BusinessLogic.Export
+@using BusinessLogic.ExternalData
+@using BusinessLogic.ExternalData.Comparisons
+@using BusinessLogic.Helpers
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models
+@using StudyLanguages.Models.Main
+@model BusinessLogic.ExternalData.Comparisons.ComparisonForUser
+@{
+    const string PATTERN_ID = "comparison_item_{0}";
+    const SectionId SECTION_ID = SectionId.FillDifference;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+    ViewBag.ActiveItem = SECTION_ID;
+    
+    string name = Model.Title;
+    string lowerName = name.ToLowerInvariant();
+
+    ViewBag.Title = Model.GetAdditionalInfoByType(AdditionalType.DetailTitle,
+                                                  WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Title, lowerName));
+    ViewBag.Keywords = Model.GetAdditionalInfoByType(AdditionalType.DetailKeywords,
+                                                     WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Keywords, lowerName));
+    ViewBag.Description = Model.GetAdditionalInfoByType(AdditionalType.ShortDescription,
+                                                        WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, PageId.Detail, TemplateId.Description, lowerName));
+
+    Func<int, string> getIdByIndex = i => string.Format(PATTERN_ID, i);
+
+    var urlsByTypes = new Dictionary<DocumentType, string> {
+                    {DocumentType.Pdf, Url.Action("Download", RouteConfig.COMPARISON_CONTROLLER, new {group = name, type = DocumentType.Pdf})},
+                    {DocumentType.Txt, Url.Action("Download", RouteConfig.COMPARISON_CONTROLLER, new {group = name, type = DocumentType.Txt})},
+                };
+}
+
+<div id="contentContainerId" class="row">
+    <ol class="breadcrumb" style="text-align: left;">
+        <li>@Html.ActionLink("Все правила употребления", "Index", RouteConfig.GROUPS_BY_COMPARISONS_CONTROLLER)</li>
+        <li class="active">@Model.Title</li>
+    </ol>
+    <h3>@Model.Title</h3>
+    @if (@Model.HasDescription) {
+        <div class="row">
+            <div class="col-md-12">
+                <span class="pull-left comparison-description">@TextFormatter.AppendCharIfNeed(Model.Description)</span>
+            </div>
+        </div>
+    }
+    <div class="row comparison-ctrls-panel">
+        <div class="col-md-12">
+            <div class="comparison-download-container">
+                @Html.Partial("PartialDownloadBtn", new DownloadBtnModel("Скачать&nbsp;правила&nbsp;с&nbsp;примерами", "Правила " + name, urlsByTypes))
+            </div>
+            <ul class="nav nav-pills comparison-menu">
+                <li class="dropdown">
+                    <a href="@CommonConstants.EMPTY_LINK" data-toggle="dropdown" role="button" id="comparisonDropMenu" class="our-dropdown-toogle dropdown-toggle" title="Нажмите для выбора сравниваемых подразделов">
+                        Сравниваем <b class="caret"></b>
+                    </a>
+                    <ul aria-labelledby="comparisonDropMenu" role="menu" class="dropdown-menu" id="menu1">
+                        @for (int i = 0; i < Model.Items.Count; i++) {
+                            string id = getIdByIndex(i);
+                            string title = Model.Items[i].Title;
+                            <li role="presentation">
+                                <a role="menuitem" href="@CommonConstants.EMPTY_LINK">
+                                    <label class="checkbox comparison-dropdown-checkbox">
+                                        <input type="checkbox" class="clickable-element" id="item_checkbox_@id" checked="checked" onclick=" ComparisonController.HideOrShow('@id    ') " autocomplete="off"> @title
+                                    </label>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </div>    
+    </div>
+    @for (int i = 0; i < Model.Items.Count; i++) {
+        bool needRow = i % 2 == 0;
+        if (needRow) {
+            @:<div class="row">
+        }
+        ViewBag.ItemId = getIdByIndex(i);
+        ComparisonItemForUser item = Model.Items[i];
+        @Html.Partial("PartialComparisonItem", item)
+        if (!needRow) {
+            @:</div>
+        }
+    }
+</div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            UrlNewVisitor: '@Url.Action("NewVisitor", RouteConfig.COMPARISON_CONTROLLER, new {id = Model.Id}, Request.Url.Scheme)',
+            CheckBoxId: '@PATTERN_ID'
+        };
+        ServerData.KnowledgeDataType = @((int) KnowledgeDataType.SentenceTranslation);
+    </script>
+}
+
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Comparison.js")
+}

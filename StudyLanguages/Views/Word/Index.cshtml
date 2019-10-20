@@ -1,0 +1,9 @@
+﻿@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Models.Main
+@{
+    Layout = "~/Views/Shared/Translator.cshtml";
+
+    ViewBag.ActiveItem = SectionId.WordTranslation;
+    ViewBag.ControllerName = RouteConfig.WORDS_TRANSLATION_CONTROLLER;
+}

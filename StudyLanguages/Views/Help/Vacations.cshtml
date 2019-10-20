@@ -1,0 +1,32 @@
+﻿@using BusinessLogic.ExternalData
+@using BusinessLogic.Helpers
+@using BusinessLogic.Mailer
+@using StudyLanguages.Configs
+@{
+    ViewBag.Title = "Давайте сотрудничать";
+    ViewBag.Keywords = "Давайте сотрудничать, сотрудничество, вакансии";
+    ViewBag.Description = "Давайте сотрудничать. Вакансии";
+    ViewBag.IsCentered = false;
+    ViewBag.ActiveItem = SectionId.No;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string supportMail = MailAddresses.SUPPORT;
+
+}
+
+<h3 class="text-center">Давайте сотрудничать</h3>
+<p>Если Вы знаете @LanguagesHelper.GetPrettyLowerName(WebSettingsConfig.Instance.DefaultLanguageFrom) язык, то мы предлагаем вам сотрудничать.</p>
+<p>От Вас:</p>
+<ol>
+    <li>Записать видео/аудио урок.</li>
+    <li>Выложить урок на сайт.</li>
+    <li>Назначить стоимость за просмотр/прослушивание урока.</li>
+</ol>
+<p>От нас:</p>
+<ol>
+    <li>Платформа для размещения видео/аудио уроков.</li>
+    <li>За каждый просмотр/прослушивание урока пользователем Вы получаете 90% от стоимости урока. Например, Вы указали стоимость 10 руб. за просмотр видео-урока. В день ваш урок просмотрело 200 пользователей. Ваш дневной доход: 200 * 10 * 0.9 = 1800 руб.</li>
+</ol>
+<p>Заинтересовались? Давайте обсудим более подробно. <a href="mailto:@supportMail">Напишите нам письмо</a> или воспользуйтесь @Html.Partial("PartialFeedback", "формой обратной связи") обязательно указав адрес электронной почты, чтобы мы могли Вам ответить.</p>
+<p>Если описанные способы Вам не подходят или Вы хотите сотрудничать в другом формате <a href="mailto:@supportMail">напишите нам письмо</a> или воспользуйтесь @Html.Partial("PartialFeedback", "формой обратной связи") обязательно указав адрес электронной почты, чтобы мы могли Вам ответить.</p>
+<p class="text-right vacations-sign">Команда StudyFun!</p>

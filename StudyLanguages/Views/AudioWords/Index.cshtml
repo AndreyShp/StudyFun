@@ -1,0 +1,136 @@
+﻿@using System.Globalization
+@using System.Web.Script.Serialization
+@using BusinessLogic.ExternalData
+@using StudyLanguages
+@using StudyLanguages.Configs
+@using StudyLanguages.Helpers
+@using StudyLanguages.Models.Main
+@model StudyLanguages.Models.ShuffleModel
+@{
+    const SectionId SECTION_ID = SectionId.Audio;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IsCentered = true;
+    ViewBag.ActiveItem = SECTION_ID;
+
+    string titlePattern = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Title);
+    string keywordsPattern = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Keywords);
+    string descriptionPattern = WebSettingsConfig.Instance.GetTemplateText(SECTION_ID, TemplateId.Description);
+
+    string translationUrl = UrlBuilder.GetAudioWordsTrainerUrl("{0}", "{1}");
+    SourceWithTranslation current = Model.GetCurrent();
+
+    string prevUrl = CommonConstants.EMPTY_LINK;
+    string nextUrl = CommonConstants.EMPTY_LINK;
+
+    SourceWithTranslation item = Model.GetPrev();
+    if (item != null) {
+        prevUrl = UrlBuilder.GetAudioWordsTrainerUrl(Request, item.Source.Id, item.Translation.Id);
+    }
+    item = Model.GetNext();
+    if (item != null) {
+        nextUrl = UrlBuilder.GetAudioWordsTrainerUrl(Request, item.Source.Id, item.Translation.Id);
+    }
+
+    string sourceText = CommonConstants.GetText(current.Source);
+    string translationText = CommonConstants.GetText(current.Translation);
+
+    ViewBag.Title = string.Format(titlePattern, sourceText, translationText);
+    ViewBag.Keywords = string.Format(keywordsPattern, sourceText, translationText);
+    ViewBag.Description = string.Format(descriptionPattern, sourceText, translationText);
+
+    string displayCssImage = current.HasImage ? "inline" : "none";
+
+    const string ALT_PATTERN = "Слово \"{0}\" переводится как \"{1}\"";
+    string imageUrl = UrlBuilder.GetAudioWordsImageUrl(Request, current.Id);
+    string imagePatternUrl = UrlBuilder.GetAudioWordsImageUrl("{0}");
+    string imageAlt = string.Format(ALT_PATTERN, sourceText, translationText);
+
+    var javaScriptSerializer = new JavaScriptSerializer();
+    string elems = javaScriptSerializer.Serialize(Model.ElemsWithTranslations);
+    bool canPronounce = WebSettingsConfig.Instance.CanPronounce;
+} 
+
+<div id="contentContainerId">
+    <div class="row">
+        <div class="col-md-3 text-left">
+            <noindex>
+                @Html.ActionLink("Перемешать и начать сначала", "Reset", RouteConfig.AUDIO_WORDS_CONTROLLER, null, new Dictionary<string, object> {
+                    {"class", "btn btn-info btn-xs shuffle-btn"},
+                    {"rel", "nofollow"},
+                    {"title", "Нажмите, чтобы стереть всю историю показанных вам слов и начать показ сначала"}
+                })
+            </noindex>
+            @if (canPronounce) {
+                <div class="audio-auto-play">
+                    <label class="checkbox clickable-element thin-text" style="margin-top: 0px;">
+                        <input type="checkbox" id="pronounceAfterShow" checked="checked" autocomplete="off" class="clickable-element"> Произносить после перехода
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="col-md-6">
+            <div class="pager our-pager">
+                <ul>
+                    <li id="prevBtn" class="@StyleBuilder.GetLinkClass(prevUrl)">
+                        <a href="@prevUrl" onclick=" return AudioController.MoveToPrev(); ">&#8249; Предыдущее слово</a>
+                    </li>
+                    <li>
+                        <img src="~/Content/images/speaker-big.png" onclick=" return AudioController.Speak(); " title="Прослушать слово" alt="Прослушать слово" class="clickable-element audio-speaker-big" />
+                    </li>
+                    <li id="nextBtn" class="@StyleBuilder.GetLinkClass(nextUrl)">
+                        <a href="@nextUrl" onclick=" return AudioController.MoveToNext(); ">Следующее слово &#8250;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <div class="input-group">
+                        <input id="checkField" tabindex="1" class="form-control" type="text" style="margin-bottom: 0px" placeholder="Что вы услышали?" value="" autocomplete="off" />
+                        <span class="input-group-btn">
+                            <button tabindex="2" style="margin-top: 0px" onclick=" return AudioController.Check(); " type="button" class="btn btn-success" title="Нажмите, чтобы проверить правильность услышанного">Проверить</button>
+                        </span>
+                    </div>
+                    <div id="message_container"></div>
+                </div>
+            </div>
+            <div style="margin: 10px 0;">
+                <a href="@CommonConstants.EMPTY_LINK" id="toogleBtn" onclick=" return AudioController.ToogleBlock(); " class="btn btn-info">Показать слово с переводом &raquo;</a>
+            </div>
+            <div id="toogleBlock" style="display: none;">
+                <h1 class="trainer-h1" id="sourceContainerId">@Html.Raw(sourceText)</h1>
+                <span>переводится как</span>
+                <h2 class="trainer-h2" id="translatedContainerId">@Html.Raw(translationText)</h2>
+                <div class="word-image">
+                    <img id="imageContainerId" style="display: @displayCssImage" src="@imageUrl" alt="@imageAlt" class="word-image">
+                </div>
+            </div>
+        </div>
+
+@section inlineScripts {
+    <script type="text/javascript">
+        ServerData.Patterns = {
+            Urls: {
+                Translation: '@translationUrl',
+                MarkAsShowed: '@UrlBuilder.GetAudioWordsActionUrl("MarkAsShowed")',
+                LoadPrev: '@UrlBuilder.GetAudioWordsActionUrl("GetPrevPortion")',
+                NextPrev: '@UrlBuilder.GetAudioWordsActionUrl("GetNextPortion")',
+                Reset: '@UrlBuilder.GetAudioWordsActionUrl("Reset")',
+                Image: '@imagePatternUrl',
+                Check: '@UrlBuilder.GetAudioWordsActionUrl("Check")'
+            },
+            Title: '@titlePattern',
+            Keywords: '@keywordsPattern',
+            Description: '@descriptionPattern',
+            EmptyLink: '@CommonConstants.EMPTY_LINK',
+            ImageAlt: '@ALT_PATTERN'
+        };
+        ServerData.MinCountToLoadPortion = @Model.MinCountToLoadPortion;
+        ServerData.Elements = @Html.Raw(elems);
+    </script>
+}
+@section scripts {
+    @Minimizer.MinimizeJsFile("~/Scripts/Views/Audio.js")
+}

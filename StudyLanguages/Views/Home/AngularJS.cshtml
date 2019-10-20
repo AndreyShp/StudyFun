@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "jQuery File Upload Demo with Backload - Basic Plus version";
+}
+
+@section styles { 
+    <!-- We use Backloads. bundeling feature to register only those client side javascript and style files of the jQuery File Upload Plugin that are needed  -->
+    @Styles.Render("~/bundles/fileupload/angularjs/css")
+
+    <!-- Optional: Some styles for this demo page -->
+    <link href="~/Content/demos.bootstrap.styles.css" rel="stylesheet" />
+}    
+    
+@section scripts {
+    <!-- We use Backloads. bundeling feature to register only those client side javascript and style files of the jQuery File Upload Plugin that are needed  -->
+    @Scripts.Render("~/bundles/fileupload/angularjs/js")
+
+    <!-- Initialize the jQuery File Upload Plugin -->
+    <script src="~/Scripts/demos.angularjs.js"></script>
+}
+
+
+<div class="page-header">
+    <h1>jQuery File Upload Demo</h1>
+    <h2 class="lead">AngularJS version</h2>
+    <ul class="nav nav-tabs">
+        <li><a href="/Home/Basic">Basic</a></li>
+        <li><a href="/Home/BasicPlus">Basic Plus</a></li>
+        <li><a href="/">Basic Plus UI</a></li>
+        <li class="active"><a href="/Home/AngularJS">AngularJS</a></li>
+        <li><a href="/Home/JQueryUI">JQuery UI</a></li>
+    </ul>
+    <blockquote>
+        <p>File Upload widget with multiple file selection, drag&drop support, progress bars, validation and preview images, audio and video for jQuery.
+        Supports cross-domain, chunked and resumable file uploads and client-side image resizing.</p>
+    </blockquote>
+</div>
+
+<!-- The file upload form used as target for the file upload widget -->
+<form id="fileupload" action="/Backload/UploadHandler" method="POST" enctype="multipart/form-data" data-ng-app="demo" data-ng-controller="DemoFileUploadController" data-file-upload="options" data-ng-class="{true: 'fileupload-processing'}[!!processing() || loadingFiles]">
+    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+    <noscript><input type="hidden" name="redirect" value="/"></noscript>
+    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+    <div class="row fileupload-buttonbar">
+        <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+                <i class="icon-plus icon-white"></i>
+                <span>Add files...</span>
+                <input type="file" name="files[]" multiple>
+            </span>
+            <button type="button" class="btn btn-primary start" data-ng-click="submit()">
+                <i class="icon-upload icon-white"></i>
+                <span>Start upload</span>
+            </button>
+            <button type="button" class="btn btn-warning cancel" data-ng-click="cancel()">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>Cancel upload</span>
+            </button>
+            <!-- The loading indicator is shown during file processing -->
+            <div class="fileupload-loading"></div>
+        </div>
+        <!-- The global progress information -->
+        <div class="span5 fade" data-ng-class="{true: 'in'}[!!active()]">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active" data-file-upload-progress="progress()"><div class="bar" data-ng-style="{width: num + '%'}"></div></div>
+            <!-- The extended global progress information -->
+            <div class="progress-extended">&nbsp;</div>
+        </div>
+    </div>
+    <!-- The table listing the files available for upload/download -->
+    <table class="table table-striped files ng-cloak" data-toggle="modal-gallery" data-target="#modal-gallery">
+        <tr data-ng-repeat="file in queue">
+            <td data-ng-switch data-on="!!file.thumbnail_url">
+                <div class="preview" data-ng-switch-when="true">
+                    <a data-ng-href="{{file.url}}" title="{{file.name}}" data-gallery="gallery" download="{{file.name}}"><img data-ng-src="{{file.thumbnail_url}}" alt=""></a>
+                </div>
+                <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
+            </td>
+            <td>
+                <p class="name" data-ng-switch data-on="!!file.url">
+                    <a data-ng-switch-when="true" data-ng-href="{{file.url}}" title="{{file.name}}" data-gallery="gallery" download="{{file.name}}">{{file.name}}</a>
+                    <span data-ng-switch-default>{{file.name}}</span>
+                </p>
+                <div data-ng-show="file.error"><span class="label label-important">Error</span> {{file.error}}</div>
+            </td>
+            <td>
+                <p class="size">{{file.size | formatFileSize}}</p>
+                <div class="progress progress-success progress-striped active fade" data-ng-class="{pending: 'in'}[file.$state()]" data-file-upload-progress="file.$progress()"><div class="bar" data-ng-style="{width: num + '%'}"></div></div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary start" data-ng-click="file.$submit()" data-ng-hide="!file.$submit">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Start</span>
+                </button>
+                <button type="button" class="btn btn-warning cancel" data-ng-click="file.$cancel()" data-ng-hide="!file.$cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                <button data-ng-controller="FileDestroyController" type="button" class="btn btn-danger destroy" data-ng-click="file.$destroy()" data-ng-hide="!file.$destroy">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Delete</span>
+                </button>
+            </td>
+        </tr>
+    </table>
+</form><br>
+
+<div class="well">
+    <h3>Demo Notes</h3>
+    <ul>
+        <li>If you need a different handling of uploaded images and other file types (e.g. pdf) you may use "uploadContext" or content type subfolders (<a href="https://github.com/blackcity/backload" target="_blank">Backload.</a>).</li>
+        <li>Uploaded files will be stored in the "~/Files" folder by default. This can be easiliy changed in the config file. Please refer to Backloads <a href="https://github.com/blackcity/backload/wiki" target="_blank">projects website</a>.</li>
+        <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage with Google Chrome, Mozilla Firefox and Apple Safari.</li>
+        <li>Please refer to the <a href="https://github.com/blueimp/jQuery-File-Upload" target="_blank">project website</a> and <a href="https://github.com/blueimp/jQuery-File-Upload/wiki" target="_blank">documentation</a> for more information.</li>
+        <li>Built with Twitter's <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap</a> toolkit and Icons from <a href="http://glyphicons.com/" target="_blank">Glyphicons</a>.</li>
+    </ul><br />
+    <h3>Backload server side component</h3>
+    <ul>
+        <li>Project website: <a href="https://github.com/blackcity/backload" target="_blank">Backload on GitHub</a></li>
+        <li>Documentation: <a href="https://github.com/blackcity/backload/wiki" target="_blank">Backload wiki</a></li>
+        <li>NuGet package: <a href="http://nuget.org/packages/Backload/" target="_blank">Backload on NuGet</a></li>
+        <li>Package manager console: <b>PM> Install-Package Backload</b></li>
+    </ul>
+</div>
+
+<!-- modal-gallery is the modal dialog used for the image gallery -->
+<div id="modal-gallery" class="modal modal-gallery hide fade" data-filter=":odd" tabindex="-1">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body"><div class="modal-image"></div></div>
+    <div class="modal-footer">
+        <a class="btn modal-download" target="_blank">
+            <i class="icon-download"></i>
+            <span>Download</span>
+        </a>
+        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
+            <i class="icon-play icon-white"></i>
+            <span>Slideshow</span>
+        </a>
+        <a class="btn btn-info modal-prev">
+            <i class="icon-arrow-left icon-white"></i>
+            <span>Previous</span>
+        </a>
+        <a class="btn btn-primary modal-next">
+            <span>Next</span>
+            <i class="icon-arrow-right icon-white"></i>
+        </a>
+    </div>
+</div>

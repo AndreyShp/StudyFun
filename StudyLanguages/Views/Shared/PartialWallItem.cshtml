@@ -1,0 +1,41 @@
+﻿@using BusinessLogic.Data.Enums.Knowledge
+@using BusinessLogic.ExternalData
+@using BusinessLogic.Formatters
+@using StudyLanguages.Helpers
+@using StudyLanguages.Helpers.Formatters
+@model BusinessLogic.ExternalData.Knowledge.UserKnowledgeItem
+@{
+    var parsedData = Model.ParsedData as SourceWithTranslation;
+    SpeakerDataType speakerType = KnowledgeHelper.GetSpeakerType(Model.DataType);
+    string cls;
+    switch (Model.DataType) {
+        case KnowledgeDataType.WordTranslation:
+            cls = "knowledge-wall-word";
+            break;
+        case KnowledgeDataType.PhraseTranslation:
+            cls = "knowledge-wall-phrase";
+            break;
+        case KnowledgeDataType.SentenceTranslation:
+            cls = "knowledge-wall-sentence";
+            break;
+        default:
+            cls = string.Empty;
+            break;
+    }
+}
+
+<div class="media knowledge-wall-item @cls" data-id="@Model.Id">
+    @*<a class="pull-left" href="#">
+            <img class="media-object" src="..." alt="...">
+            </a>*@
+    <div class="knowledge-wall-content">
+        <span class="source">@Html.Raw(OurHtmlHelper.GetSpeakerHtml(parsedData.Source, @speakerType))</span> &ndash; <span class="translation">@Html.Raw(OurHtmlHelper.GetSpeakerHtml(parsedData.Translation, @speakerType))</span>
+        <div>
+            <div class="knowledge-wall-date pull-left">@Html.Raw(DateTimeFormatter.ToDDMMYYYY_HHMMSS(Model.CreationDate))</div>
+            <span class="glyphicon glyphicon-remove knowledge-wall-btn pull-right" onclick=" KnowledgeWall.Remove(this) " title='Нажмите, чтобы удалить порцию знаний'></span>
+        </div>
+    </div>
+    <div class="knowledge-wall-restore">
+        Порция знаний удалена. <div class="knowledge-wall-btn glyphicon glyphicon-repeat pull-right" title='Нажмите, чтобы восстановить удаленную порцию знаний'>восстановить</div>
+    </div>
+</div>

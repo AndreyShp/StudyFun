@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+  <Domain>studyfun.ru</Domain>
+  <Logo>United-kingdom-round.png</Logo>
+  <CookieWideDomain>.studyfun.ru</CookieWideDomain>
+  <CanPronounce>true</CanPronounce>
+
+  <AnotherDomain name="Немецкий" link="http://german.studyfun.ru/" flag="Germany.png">
+    <Page sectionId="VisualDictionary" url="%D0%92%D0%B8%D0%B7%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D0%B8" title="Визуальные словари на немецком языке" />
+    <Page sectionId="MyKnowledge" url="%D0%A1%D1%82%D0%B5%D0%BD%D0%B0%20%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B9" title="Стена знаний по немецкому языку" />
+    <Page sectionId="GroupByWords" url="%D0%A1%D0%BB%D0%BE%D0%B2%D0%B0%20%D0%BF%D0%BE%20%D1%82%D0%B5%D0%BC%D0%B0%D0%BC" title="Слова по темам на немецком языке" />
+    <Page sectionId="GroupByPhrases" url="%D0%A4%D1%80%D0%B0%D0%B7%D1%8B%20%D0%BF%D0%BE%20%D1%82%D0%B5%D0%BC%D0%B0%D0%BC" title="Фразы по темам на немецком языке" />
+    <Page sectionId="WordTranslation" url="%D0%9F%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%20%D1%81%D0%BB%D0%BE%D0%B2" title="Немецко-русский переводчик" />
+  </AnotherDomain>
+
+  <AnotherDomain name="Французский" link="http://french.studyfun.ru/" flag="France.png">
+    <Page sectionId="VisualDictionary" url="%D0%92%D0%B8%D0%B7%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D0%B8" title="Визуальные словари на французском языке" />
+    <Page sectionId="MyKnowledge" url="%D0%A1%D1%82%D0%B5%D0%BD%D0%B0%20%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B9" title="Стена знаний по французскому языку" />
+    <Page sectionId="GroupByWords" url="%D0%A1%D0%BB%D0%BE%D0%B2%D0%B0%20%D0%BF%D0%BE%20%D1%82%D0%B5%D0%BC%D0%B0%D0%BC" title="Слова по темам на французском языке" />
+    <Page sectionId="GroupByPhrases" url="%D0%A4%D1%80%D0%B0%D0%B7%D1%8B%20%D0%BF%D0%BE%20%D1%82%D0%B5%D0%BC%D0%B0%D0%BC" title="Фразы по темам на французском языке" />
+    <Page sectionId="WordTranslation" url="%D0%9F%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%20%D1%81%D0%BB%D0%BE%D0%B2" title="Французско-русский переводчик" />
+  </AnotherDomain>
+
+  <AnotherDomain name="Испанский" link="http://spanish.studyfun.ru/" flag="Spain.png">
+    <Page sectionId="VisualDictionary" url="%D0%92%D0%B8%D0%B7%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D0%B8" title="Визуальные словари на испанском языке" />
+    <Page sectionId="MyKnowledge" url="%D0%A1%D1%82%D0%B5%D0%BD%D0%B0%20%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B9" title="Стена знаний по испанскому языку" />
+    <Page sectionId="GroupByWords" url="%D0%A1%D0%BB%D0%BE%D0%B2%D0%B0%20%D0%BF%D0%BE%20%D1%82%D0%B5%D0%BC%D0%B0%D0%BC" title="Слова по темам на испанском языке" />
+    <Page sectionId="GroupByPhrases" url="%D0%A4%D1%80%D0%B0%D0%B7%D1%8B%20%D0%BF%D0%BE%20%D1%82%D0%B5%D0%BC%D0%B0%D0%BC" title="Фразы по темам на испанском языке" />
+    <Page sectionId="WordTranslation" url="%D0%9F%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%20%D1%81%D0%BB%D0%BE%D0%B2" title="Испано-русский переводчик" />
+  </AnotherDomain>
+  
+  <AnotherDomain name="Итальянский" link="http://italian.studyfun.ru/" flag="Italy.png">
+    <Page sectionId="VisualDictionary" url="%D0%92%D0%B8%D0%B7%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D0%B8" title="Визуальные словари на итальянском языке" />
+    <Page sectionId="MyKnowledge" url="%D0%A1%D1%82%D0%B5%D0%BD%D0%B0%20%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B9" title="Стена знаний по итальянскому языку" />
+    <Page sectionId="GroupByWords" url="%D0%A1%D0%BB%D0%BE%D0%B2%D0%B0%20%D0%BF%D0%BE%20%D1%82%D0%B5%D0%BC%D0%B0%D0%BC" title="Слова по темам на итальянском языке" />
+    <Page sectionId="GroupByPhrases" url="%D0%A4%D1%80%D0%B0%D0%B7%D1%8B%20%D0%BF%D0%BE%20%D1%82%D0%B5%D0%BC%D0%B0%D0%BC" title="Фразы по темам на итальянском языке" />
+    <Page sectionId="WordTranslation" url="%D0%9F%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%20%D1%81%D0%BB%D0%BE%D0%B2" title="Итальяно-русский переводчик" />
+  </AnotherDomain>
+  
+  <DefaultLanguages>
+    <From>En</From>
+    <To>Ru</To>
+  </DefaultLanguages>
+
+  <AvailableSections>
+    <SectionId>VisualDictionary</SectionId>
+    <SectionId>MyKnowledge</SectionId>
+	  <SectionId>KnowledgeGenerator</SectionId>
+    <SectionId>FillDifference</SectionId>
+    <SectionId>GroupByWords</SectionId>
+    <SectionId>GroupByPhrases</SectionId>
+    <SectionId>Video</SectionId>
+    <SectionId>Sentences</SectionId>
+    <SectionId>Audio</SectionId>
+    <SectionId>WordTranslation</SectionId>
+    <SectionId>PhraseVerbTranslation</SectionId>
+  </AvailableSections>
+  <Patterns>
+    <!-- главная -->
+    <Section Id="Main" PageId="Index">
+        <Template key="Title" value="Английский язык онлайн. Английский язык онлайн бесплатно" />
+        <Template key="Keywords" value="Английский язык онлайн. Изучение английского языка онлайн, бесплатно, без регистрации" />
+        <Template key="Description" value="Английский язык онлайн. Английский язык онлайн бесплатно. Изучение английского языка онлайн" />
+        <Template key="VisualDictionaryDescription" value="Визуальный словарь – это картинка или фотография на определенную тему. При наведении курсора на часть изображения подсвечивается соответствующее слово." />
+        <Template key="MyKnowledgeDescription" value="Раздел содержит слова, фразы и предложения, которые Вы хотите запомнить. Вы сами формируете содержимое этого раздела для себя.&lt;br /&gt;Здесь Вы можете запоминать интересные Вам слова, фразы и предложения с помощью карточек. Мы показываем Вам чаще те карточки, которые Вы знаете хуже. Если Вы хорошо знаете слово, фразу или предложение, то мы показываем ее Вам все реже и реже." />
+        <Template key="KnowledgeGeneratorDescription" value="Позволяет сгенерировать случайные слова, фразы и предложения для обучения. Сгенерированный материал можно скачать или добавить к себе на стену знаний" />
+        <Template key="FillDifferenceDescription" value="В этом разделе сравниваются слова, сгруппированные по какому-либо общему признаку. Каждая тема содержит описание и примеры, когда лучше употреблять одно слово, а когда - другое." />
+        <Template key="GroupByWordsDescription" value="В этом разделе сгруппированы слова по темам. В каждой теме Вы можете просмотреть, скачать список слов, прослушать их произношение, а также быстро запомнить их с помощью карточек или тренажера." />
+        <Template key="GroupByPhrasesDescription" value="В этом разделе сгруппированы словосочетания и фразы по темам. В каждой теме Вы можете просмотреть, скачать список фраз, прослушать их произношение, а также быстро запомнить их с помощью карточек или тренажера." />
+        <Template key="VideoDescription" value="Раздел содержит короткие видеоролики на английском языке. Вы можете просмотреть видеоролик, а также прочитать текст с переводом." />
+        <Template key="SentencesDescription" value="Случайные предложения, которые Вы можете добавить в Ваши знания." />
+        <Template key="AudioDescription" value="Тренажер по восприятию на слух английских слов." />
+        <Template key="WordTranslationDescription" value="Переводчик слов с английского языка на русский и наоборот." />
+        <Template key="PhrasalVerbsTranslationDescription" value="Переводчик фразовых глаголов с английского языка на русский и наоборот." />
+    </Section>
+    <!-- визуальные словари -->
+    <Section Id="VisualDictionary" PageId="Index">
+      <Template key="Title" value="Визуальные словари онлайн. Визуальные английские словари онлайн. Визуальные словари английского языка онлайн. Интерактивные словари онлайн" />
+      <Template key="Keywords" value="Визуальные словари онлайн. Визуальные английские словари онлайн. Интерактивные словари онлайн" />
+      <Template key="Description" value="Визуальные словари онлайн. Визуальные английские словари онлайн. Визуальные словари английского языка онлайн. Интерактивные словари онлайн" />
+      <Template key="ImageAlt" value="Визуальный словарь на тему &quot;{0}&quot; на английском" />
+      <Template key="ThumbnailTip" value="Нажмите для просмотра визуального словаря на тему &quot;{0}&quot; на английском языке" />
+      <Template key="SearchTip" value="Введите тему визуального словаря для поиска" />
+      <Template key="ItemTipOnMainPage" value="Визуальный английский словарь на тему &quot;{0}&quot;" />
+    </Section>
+    <Section Id="VisualDictionary" PageId="Detail">
+      <Template key="Title" value="Визуальный словарь онлайн на тему &quot;{0}&quot;. Визуальный английский словарь онлайн на тему &quot;{0}&quot;." />
+      <Template key="Keywords" value="Визуальный словарь онлайн на тему &quot;{0}&quot;. Визуальный английский словарь онлайн на тему &quot;{0}&quot;. Интерактивный словарь онлайн на тему &quot;{0}&quot;" />
+      <Template key="Description" value="Визуальный словарь онлайн на тему &quot;{0}&quot;. Визуальный английский словарь на тему &quot;{0}&quot;. Интерактивный словарь английского языка онлайн на тему &quot;{0}&quot;. Русско-английский визуальный словарь онлайн на тему &quot;{0}&quot;. Визуальный словарь английских слов онлайн на тему &quot;{0}&quot;. Визуальный словарь русских слов онлайн на тему &quot;{0}&quot;" />
+      <Template key="SpeakTip" value="Произносить по-английски при наведении на слово или на часть изображения" />
+    </Section>
+    <Section Id="VisualDictionary" PageId="Cards">
+      <Template key="Title" value="Карточки для слов визуального словаря по теме &quot;{0}&quot;." />
+      <Template key="Keywords" value="Карточки, английский язык, визуальный словарь, изучение слов по карточкам, тема &quot;{0}&quot;" />
+      <Template key="Description" value="Карточки для слов визуального словаря по теме &quot;{0}&quot;. Изучение английских слов по карточкам из визуального словаря на тему &quot;{0}&quot;" />
+    </Section>
+    <!-- стена знания -->
+    <Section Id="MyKnowledge" PageId="Index">
+      <Template key="Title" value="Стена знаний по английскому языку - слова, фразы, предложения" />
+      <Template key="Keywords" value="Стена знаний. Английские слова, фразы и предложения" />
+      <Template key="Description" value="Знания пользователя по английскому языку - слова, фразы, предложения. Стена знаний пользователя по английскому языку" />
+      <Template key="Header" value="Стена ваших знаний по английскому языку" />
+    </Section>
+
+    <Section Id="MyKnowledge" PageId="Cards">
+      <Template key="Title" value="{0} по английскому языку" />
+      <Template key="Keywords" value="{0} по английскому языку" />
+      <Template key="Description" value="{0} по английскому языку. Изучение английского языка по карточкам" />
+    </Section>
+	
+    <!-- генератор знания -->
+    <Section Id="KnowledgeGenerator" PageId="Index">
+      <Template key="Title" value="Генератор знаний по английскому языку - слов, фраз, предложений" />
+      <Template key="Keywords" value="Генератор знаний. Генератор английских слов, фраз и предложений" />
+      <Template key="Description" value="Генератор знания по английскому языку. Генератор английских слов, фраз и предложений" />
+      <Template key="Header" value="Генератор знаний по английскому языку" />
+    </Section>
+	
+    <!-- почувствуй разницу -->
+    <Section Id="FillDifference" PageId="Index">
+      <Template key="Title" value="Правила употребления английских слов по группам с примерами. Различия в правилах употребления английских слов по группам" />
+      <Template key="Keywords" value="Правила употребления английских слов по группам с примерами. Различия в правилах употребления английских слов по группам" />
+      <Template key="Description" value="Правила употребления английских слов по группам. Различия в правилах употребления английских слов по группам. Правила употребления по группам" />
+      <Template key="ThumbnailTip" value="Нажмите для просмотра правил употребления слов {0}" />
+      <Template key="ShortDescription" value="Правила использования слов {0} с примерами" />
+      <Template key="SearchTip" value="Введите слова для поиска правил употребления" />
+      <Template key="ItemTipOnMainPage" value="Правила использования слов &quot;{0}&quot;" />
+    </Section>
+    <Section Id="FillDifference" PageId="Detail">
+      <Template key="Title" value="Правила использования слов {0} с примерами. Разница в употреблении {0} с примерами" />
+      <Template key="Keywords" value="Правила использования слов {0} с примерами. Разница в употреблении {0} с примерами" />
+      <Template key="Description" value="Правила использования слов {0} с примерами. Разница в употреблении {0} с примерами. Примеры английских предложений со словами {0}" />
+    </Section>
+
+    <!-- слова по темам -->
+    <Section Id="GroupByWords" PageId="Index">
+      <Template key="Title" value="Английские слова по темам. Английский язык слова по темам." />
+      <Template key="Keywords" value="Английские слова по темам. Английский язык слова по темам." />
+      <Template key="Description" value="Английские слова по темам онлайн. Английский язык слова по темам. Список английских слов по темам." />
+      <Template key="ImageAlt" value="Английские слова на тему &quot;{0}&quot;" />
+      <Template key="ThumbnailTip" value="Нажмите для просмотра английских слов на тему &quot;{0}&quot;" />
+      <Template key="SearchTip" value="Введите тему для поиска" />
+      <Template key="ItemTipOnMainPage" value="Английские слова на тему &quot;{0}&quot;" />
+    </Section>
+    <Section Id="GroupByWords" PageId="Detail">
+      <Template key="Title" value="Английские слова на тему &quot;{0}&quot;. Английские слова на тему &quot;{0}&quot; с переводом" />
+      <Template key="Keywords" value="Английские слова на тему &quot;{0}&quot;. Английские слова на тему &quot;{0}&quot; с переводом" />
+      <Template key="Description" value="Английские слова на тему &quot;{0}&quot;. Английские слова на тему &quot;{0}&quot; с переводом. Список слов на английском по теме &quot;{0}&quot;" />
+      <Template key="Header" value="Английские слова на тему &amp;laquo;{0}&amp;raquo;" />
+      <Template key="SpeakTip" value="Произносить слова по-английски при наведении" />
+    </Section>
+    <Section Id="GroupByWords" PageId="ManualTrainer">
+      <Template key="Title" value="Тренажер для изучения английских слов на тему &quot;{0}&quot; с переводом. Слово &quot;{1}&quot; переводится как &quot;{2}&quot;" />
+      <Template key="Keywords" value="Тренажер для изучения английских слов на тему &quot;{0}&quot; с переводом. Слово &quot;{1}&quot; переводится как &quot;{2}&quot;" />
+      <Template key="Description" value="Тренажер для изучения английских слов на тему &quot;{0}&quot; с переводом. Слово &quot;{1}&quot; переводится как  &quot;{2}&quot;" />
+      <Template key="SpeakTip" value="Произносить слово по-английски при переходе" />
+    </Section>
+    <Section Id="GroupByWords" PageId="Cards">
+      <Template key="Title" value="Карточки для изучения слов по теме &quot;{0}&quot;" />
+      <Template key="Keywords" value="Карточки, английский язык, изучение слов по карточкам, тема &quot;{0}&quot;" />
+      <Template key="Description" value="Карточки для изучения слов по теме &quot;{0}&quot;. Изучение английских слов по карточкам на тему &quot;{0}&quot;" />
+    </Section>
+
+    <!-- фразы по темам -->
+    <Section Id="GroupByPhrases" PageId="Index">
+      <Template key="Title" value="Английские фразы по темам. Фразы на английском языке по темам." />
+      <Template key="Keywords" value="Английские фразы по темам. Фразы на английском языке по темам." />
+      <Template key="Description" value="Английские фразы по темам. Фразы на английском языке по темам. Список английских фраз по темам." />
+      <Template key="ImageAlt" value="Английские фразы на тему &quot;{0}&quot;" />
+      <Template key="ThumbnailTip" value="Нажмите для просмотра фраз на английском языке по теме &quot;{0}&quot;" />
+      <Template key="SearchTip" value="Введите тему для поиска" />
+      <Template key="ItemTipOnMainPage" value="Английские фразы на тему &quot;{0}&quot;" />
+    </Section>
+    <Section Id="GroupByPhrases" PageId="Detail">
+      <Template key="Title" value="Английские фразы на тему &quot;{0}&quot;. Английские фразы на тему &quot;{0}&quot; с переводом" />
+      <Template key="Keywords" value="Английские фразы на тему &quot;{0}&quot;. Английские фразы на тему &quot;{0}&quot; с переводом" />
+      <Template key="Description" value="Английские фразы на тему &quot;{0}&quot;. Английские фразы на тему &quot;{0}&quot; с переводом. Список фраз на английском по теме &quot;{0}&quot;" />
+      <Template key="Header" value="Английские фразы на тему &amp;laquo;{0}&amp;raquo;" />
+      <Template key="SpeakTip" value="Произносить фразы по-английски при наведении" />
+    </Section>
+    <Section Id="GroupByPhrases" PageId="ManualTrainer">
+      <Template key="Title" value="Тренажер для изучения английских фраз на тему &quot;{0}&quot; с переводом. Фраза &quot;{1}&quot; переводится как &quot;{2}&quot;" />
+      <Template key="Keywords" value="Тренажер для изучения английских фраз на тему &quot;{0}&quot; с переводом. Фраза &quot;{1}&quot; переводится как &quot;{2}&quot;" />
+      <Template key="Description" value="Тренажер для изучения английских фраз на тему &quot;{0}&quot; с переводом. Фраза &quot;{1}&quot; переводится как &quot;{2}&quot;" />
+      <Template key="SpeakTip" value="Произносить фразу по-английски при переходе" />
+    </Section>
+    <Section Id="GroupByPhrases" PageId="Cards">
+      <Template key="Title" value="Карточки для изучения фраз по теме &quot;{0}&quot;" />
+      <Template key="Keywords" value="Карточки, английский язык, изучение фраз по карточкам, тема &quot;{0}&quot;" />
+      <Template key="Description" value="Карточки для изучения фраз по теме &quot;{0}&quot;. Изучение английских фраз по карточкам на тему &quot;{0}&quot;" />
+    </Section>
+
+    <!-- видео -->
+    <Section Id="Video" PageId="Index">
+      <Template key="Title" value="Английский язык видеоролики бесплатно. Видео на английском онлайн" />
+      <Template key="Keywords" value="Английский язык видеоролики онлайн. Видео на английском бесплатно" />
+      <Template key="Description" value="Видео на английском. Английский язык видеоролики онлайн. Английский язык бесплатное видео." />
+      <Template key="ImageAlt" value="Видеоролик &quot;{0}&quot;" />
+      <Template key="ThumbnailTip" value="Нажмите для просмотра видеоролика &quot;{0}&quot;" />
+      <Template key="SearchTip" value="Введите название видеоролика для поиска" />
+      <Template key="ItemTipOnMainPage" value="Видеоролик на английском &quot;{0}&quot;" />
+    </Section>
+    <Section Id="Video" PageId="Detail">
+      <Template key="Title" value="Английский язык видеоролик &quot;{0}&quot; бесплатно. Видео &quot;{0}&quot; на английском онлайн" />
+      <Template key="Keywords" value="Английский язык видеоролик &quot;{0}&quot; онлайн. Видео &quot;{0}&quot; на английском бесплатно" />
+      <Template key="Description" value="Видеоролик &quot;{0}&quot; на английском. Английский язык видео онлайн. Английский язык бесплатное видео." />
+      <Template key="Header" value="Видеоролик на английском &amp;laquo;{0}&amp;raquo" />
+    </Section>
+
+    <!-- предложения -->
+    <Section Id="Sentences" PageId="Index">
+      <Template key="Title" value="Предложения на английском языке. Предложения на английском с переводом. Предложение &quot;{{0}}&quot; переводится как &quot;{{1}}&quot;" />
+      <Template key="Keywords" value="Предложения на английском языке. Предложения на английском с переводом. Предложение &quot;{{0}}&quot; переводится как &quot;{{1}}&quot;" />
+      <Template key="Description" value="Предложения на английском языке. Предложения на английском с переводом. Предложение &quot;{{0}}&quot; переводится как &quot;{{1}}&quot;" />
+    </Section>
+
+    <!-- аудирование -->
+    <Section Id="Audio" PageId="Index">
+      <Template key="Title" value="Тренажер по восприятию на слух английских слов. Аудирование по английскому языку онлайн. Произношение английского слова: {{0}} - {{1}}" />
+      <Template key="Keywords" value="Тренажер по восприятию на слух английских слов. Аудирование по английскому языку онлайн. Произношение английского слова: {{0}} - {{1}}" />
+      <Template key="Description" value="Тренажер по восприятию на слух английских слов. Аудирование по английскому языку онлайн. Произношение английского слова: {{0}} - {{1}}" />
+    </Section>
+
+    <!-- перевод слов -->
+    <Section Id="WordTranslation" PageId="Index">
+      <Template key="Title" value="Русско-английский переводчик онлайн бесплатно. Русско-английский словарь онлайн. Русско-английский переводчик" />
+      <Template key="Keywords" value="Русско-английский переводчик онлайн бесплатно. Русско-английский словарь онлайн. Русско-английский переводчик" />
+      <Template key="Description" value="Русско-английский переводчик онлайн бесплатно. Русско-английский словарь онлайн. Русско-английский переводчик. Перевод английских слов на русский" />
+      <Template key="SearchTip" value="Введите слово" />
+    </Section>
+
+    <!-- перевод фразовых глаголов -->
+    <Section Id="PhraseVerbTranslation" PageId="Index">
+      <Template key="Title" value="Фразовые глаголы. Английские фразовые глаголы. Фразовые глаголы английского языка" />
+      <Template key="Keywords" value="Фразовые глаголы с переводом. Английские фразовые глаголы с переводом. Перевод фразовых глаголов" />
+      <Template key="Description" value="Перевод фразовых глаголов. Английские фразовые глаголы с переводом. Перевод фразовых глаголов онлайн бесплатно" />
+      <Template key="SearchTip" value="Введите фразовый глагол" />
+    </Section>
+  </Patterns>
+  
+  <Payment>
+    <Robokassa>
+      <Login>login.to.robokassa</Login>
+      <Password1>PassW0rd1</Password1>
+      <Password2>Pa$$W0rd2</Password2>
+    </Robokassa>
+    <SectionId>VisualDictionary</SectionId>
+    <Settings>
+      <VisualDictionary>
+        <SummPriceWithDiscount>88.23</SummPriceWithDiscount>
+        <Discount>0.25</Discount>
+        <DefaultPrice>1.85</DefaultPrice>
+        <PriceByName key="Пробный 1" value="12" />
+        <PriceByName key="Автомобиль" value="0" />
+        <PriceById key="89" value="123.45" />
+        <PriceById key="34" value="234.09" />
+        <PriceById key="877" value="-19.10" />
+      </VisualDictionary>
+    </Settings>
+  </Payment>
+
+  <Banners>
+    <TopPath>TestPath/Content/images/Banner_top_test.gif</TopPath>
+  </Banners>
+  
+  <Keyboard>
+    <FirstForeignChar>a</FirstForeignChar>
+    <LastForeignChar>z</LastForeignChar>
+    
+    <ToRussian key="~" value="ё" />
+    <ToRussian key="`" value="ё" />
+    <ToRussian key="q" value="й" />
+    <ToRussian key="w" value="ц" />
+    <ToRussian key="e" value="у" />
+    <ToRussian key="r" value="к" />
+    <ToRussian key="t" value="е" />
+    <ToRussian key="y" value="н" />
+    <ToRussian key="u" value="г" />
+    <ToRussian key="i" value="ш" />
+    <ToRussian key="o" value="щ" />
+    <ToRussian key="p" value="з" />
+    <ToRussian key="{" value="х" />
+    <ToRussian key="[" value="х" />
+    <ToRussian key="}" value="ъ" />
+    <ToRussian key="]" value="ъ" />
+    <ToRussian key="a" value="ф" />
+    <ToRussian key="s" value="ы" />
+    <ToRussian key="d" value="в" />
+    <ToRussian key="f" value="а" />
+    <ToRussian key="g" value="п" />
+    <ToRussian key="h" value="р" />
+    <ToRussian key="j" value="о" />
+    <ToRussian key="k" value="л" />
+    <ToRussian key="l" value="д" />
+    <ToRussian key=":" value="ж" />
+    <ToRussian key=";" value="ж" />
+    <ToRussian key="&quot;" value="э" />
+    <ToRussian key="'" value="э" />
+    <ToRussian key="z" value="я" />
+    <ToRussian key="x" value="ч" />
+    <ToRussian key="c" value="с" />
+    <ToRussian key="v" value="м" />
+    <ToRussian key="b" value="и" />
+    <ToRussian key="n" value="т" />
+    <ToRussian key="m" value="ь" />
+    <ToRussian key="&lt;" value="б" />
+    <ToRussian key="," value="б" />
+    <ToRussian key="&gt;" value="ю" />
+    <ToRussian key="." value="ю" />
+  </Keyboard>
+
+  <Counters>
+    <![CDATA[
+     <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-45035100-1']);
+            _gaq.push(['_setDomainName', 'studyfun.ru']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <!-- Yandex.Metrika counter --><script type="text/javascript"> (function(d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter21805750 = new Ya.Metrika({ id: 21805750, webvisor: true, clickmap: true, trackLinks: true, accurateTrackBounce: true });
+                } catch(e) {
+                }
+            });
+            var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function() { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else {
+                f();
+            }
+        })(document, window, "yandex_metrika_callbacks"); </script><noscript><div><img src="//mc.yandex.ru/watch/21805750" style="left: -9999px; position: absolute;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+    ]]>
+  </Counters>
+</data>
